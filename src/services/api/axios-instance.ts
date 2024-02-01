@@ -1,7 +1,7 @@
 import axios from 'axios';
 export const axiosInstance = axios.create();
 
-export const baseUrl = import.meta.env.NODE_ENV === 'production'
+export const baseUrl = import.meta.env.VITE_NODE_ENV === 'production'
     ? 'https://kmga-nest-backend.onrender.com/api'
     : 'http://localhost:3000/api';
 
