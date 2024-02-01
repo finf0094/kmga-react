@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 const DashboardPage: React.FC = () => {
   return (
     <div className='dashboard'>
       <div className="dashboard__title">
-        <h1></h1>
+        <Link to="/login">login</Link>
       </div>
     </div>
   );
