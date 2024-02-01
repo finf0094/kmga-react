@@ -11,7 +11,7 @@ const Header: React.FC = () => {
 
         <div className="profile">
           <div className="profile__info">
-            <span className="profile__mail">mikosh.armanov@gmail.com</span>
+            <span className="profile__mail">finf0094@gmail.com</span>
             <span className="profile__role">Пользователь</span>
           </div>
           <img src={profileIcon} alt="User" className="profile__icon" />
