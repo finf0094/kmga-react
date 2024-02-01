@@ -1,11 +1,9 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { FC } from "react";
 
-const DashboardPage: React.FC = () => {
+const DashboardPage: FC = () => {
   return (
     <div className='dashboard'>
       <div className="dashboard__title">
-        <Link to="/login">login</Link>
       </div>
     </div>
   );
