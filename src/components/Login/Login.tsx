@@ -4,12 +4,12 @@ import {login} from "@store/slices";
 
 const Login = () => {
     const dispatch = useAppDispatch();
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(login({ username, password }));
+        dispatch(login({ email, password }));
     };
 
     return (
@@ -21,8 +21,8 @@ const Login = () => {
                     <input
                         id="username"
                         type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div>

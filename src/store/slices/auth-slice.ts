@@ -22,7 +22,7 @@ interface IAuthResponse {
 
 export const login = createAsyncThunk(
     'auth/login',
-    async (loginData: { username: string; password: string; }, { rejectWithValue }) => {
+    async (loginData: { email: string; password: string; }, { rejectWithValue }) => {
         try {
             const response = await axios.post<IAuthResponse>(`${baseUrl}/auth/login`, loginData);
             return response.data;
