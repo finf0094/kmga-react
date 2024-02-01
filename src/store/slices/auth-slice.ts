@@ -24,7 +24,7 @@ export const login = createAsyncThunk(
     'auth/login',
     async (loginData: { username: string; password: string; }, { rejectWithValue }) => {
         try {
-            const response = await axios.post<IAuthResponse>(`${baseUrl}/login`, loginData);
+            const response = await axios.post<IAuthResponse>(`${baseUrl}/auth/login`, loginData);
             return response.data;
         } catch (error) {
             const axiosError = error as AxiosError; // Явное приведение типа к AxiosError
@@ -35,7 +35,7 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
     try {
-        await axios.post(`${baseUrl}/logout`);
+        await axios.post(`${baseUrl}/auth/logout`);
         return;
     } catch (error) {
         const axiosError = error as AxiosError; // Явное приведение типа к AxiosError
