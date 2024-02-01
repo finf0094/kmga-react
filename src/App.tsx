@@ -11,7 +11,7 @@ function App() {
         <Route path="/" element={<Layout />}>
 
             {/* default */}
-            <Route path="/login" element={<Login />}/>
+            <Route path="login" element={<Login />}/>
 
         </Route>
 
