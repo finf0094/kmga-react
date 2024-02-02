@@ -3,7 +3,6 @@ import useAuth from '../../hooks/useAuth.ts';
 import {Outlet} from "react-router-dom";
 
 const RequireAuth: React.FC<{ allowedRoles: string[] }> = ({allowedRoles}) => {
-
     const auth = useAuth()
 
     return (

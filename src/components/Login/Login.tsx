@@ -1,6 +1,6 @@
-import {useState} from "react";
-import {useAppDispatch} from "@store";
-import {login} from "@store/slices";
+import { useState } from "react";
+import { useAppDispatch } from "@store";
+import { login } from "@store/slices";
 
 const Login = () => {
     const dispatch = useAppDispatch();
@@ -11,6 +11,14 @@ const Login = () => {
         e.preventDefault();
         dispatch(login({ email, password }));
     };
+
+    const handleGoogleAuth = async () => {
+        window.open(`${import.meta.env.VITE_API_URL}/api/auth/google`, `_self`);
+    };
+
+    const handleYandexAuth = async  () => {
+        window.open(`${import.meta.env.VITE_API_URL}/api/auth/yandex`, `_self`);
+    }
 
     return (
         <div>
@@ -36,6 +44,8 @@ const Login = () => {
                 </div>
                 <button type="submit">Войти</button>
             </form>
+            <button onClick={handleGoogleAuth}>Войти через Google</button>
+            <button onClick={handleYandexAuth}>Войти через Yandex</button>
         </div>
     );
 };
