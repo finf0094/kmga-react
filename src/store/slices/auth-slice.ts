@@ -24,7 +24,9 @@ export const login = createAsyncThunk(
             const response = await axios.post<IAuthResponse>(`${baseUrl}/auth/login`, loginData);
             return response.data;
         } catch (error) {
-            const axiosError = error as AxiosError; // Явное приведение типа к AxiosError
+            const axiosError = error as AxiosError;
+            console.log(axiosError.response?.data);
+            
             return rejectWithValue(axiosError.response?.data);
         }
     }

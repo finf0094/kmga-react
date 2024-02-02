@@ -4,9 +4,9 @@ import { Outlet } from "react-router-dom";
 
 const Layout: FC = () => {
   return (
-    <div className="h-screen overflow-x-hidden">
+    <div style={{ height: '100vh', overflowX: 'hidden' }}>
       <Header />
-      <main>
+      <main style={{ height: '100%' }}>
         <Outlet />
       </main>
     </div>

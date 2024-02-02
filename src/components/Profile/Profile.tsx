@@ -1,24 +1,27 @@
 import profileIcon from "@assets/profile-icon.svg";
 import './Profile.css'
 import useAuth from "@hooks/useAuth.ts";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 const Profile = () => {
-    const {isAuthenticated, user} = useAuth();
-    const {email, roles} = user;
+	const { isAuthenticated, user } = useAuth();
 
-    if (!isAuthenticated) {
-        return <Link to='/login'>login</Link>
-    }
 
-    return (
-        <div className="profile">
-            <div className="profile__info">
-                <span className="profile__mail">{email}</span>
-                <span className="profile__role">{roles?.map((role: string) => role)}</span>
-            </div>
-            <img src={profileIcon} alt="User" className="profile__icon" />
-        </div>
-    );
+	return (
+		<div className="profile">
+			{isAuthenticated ? (
+				<div className="profile__user">
+					<div className="profile__info">
+						<span className="profile__mail">{user.email}</span>
+						<span className="profile__role">{user.roles?.map((role: string) => role === 'USER' ? 'Пользователь' : 'Админ')}</span>
+					</div>
+					<img src={profileIcon} alt="User" className="profile__icon" />
+				</div>
+			) : (
+				<Link className="profile__button" to='/login'>Войти</Link>
+			)}
+		</div>
+
+	);
 };
 
 export default Profile;

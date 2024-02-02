@@ -1,22 +1,49 @@
-.profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.profile__user {
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 
 .profile__info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 5px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 2px;
 }
 
 .profile__mail {
-    font-weight: 700;
-    font-family: 'Avanti', sans-serif !important;
+	font-family: var(--manrope-font);
+	color: var(--se-dark-grey);
+	font-weight: 600;
+}
 
+.profile__role {
+	color: var(--se-light-grey);
 }
 
 .profile__icon {
-    width: 45px;
+	width: 45px;
+}
+
+.profile__buttons {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.profile__button {
+	width: 130px;
+	height: 40px;
+	border-radius: 100px;
+	background: var(--se-life-green);
+
+	font-size: 18px;
+	font-weight: 600;
+	color: #fff;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	transition: .3s ease-out;
 }
