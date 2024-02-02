@@ -1,0 +1,22 @@
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.profile__mail {
+    font-weight: 700;
+    font-family: 'Avanti', sans-serif !important;
+
+}
+
+.profile__icon {
+    width: 45px;
+}

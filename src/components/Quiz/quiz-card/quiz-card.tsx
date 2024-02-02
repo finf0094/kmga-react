@@ -16,9 +16,9 @@ export default function QuizCard({title, description, status, tags, createdAt}: 
             <p>
                 {description}
             </p>
-            <p>
+            <button>
                 change button
-            </p>
+            </button>
             <span>
                 {status}
             </span>

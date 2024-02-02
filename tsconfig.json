@@ -66,6 +66,12 @@
       ],
       "@interfaces/*": [
         "src/interfaces/*"
+      ],
+      "@assets": [
+        "src/assets"
+      ],
+      "@assets/*": [
+        "src/assets/*"
       ]
     }
   },
