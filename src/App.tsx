@@ -1,6 +1,5 @@
-import { Route, Routes } from "react-router-dom"
-import Layout from "./components/Layout/Layout"
-import Login from "@components/Login/Login.tsx";
+import {Route, Routes} from "react-router-dom"
+import {Layout, Login} from "@components";
 
 function App() {
 
@@ -9,21 +8,21 @@ function App() {
       🛡️  Server starts on mode: ${import.meta.env.VITE_NODE_ENV} 🛡️
       ################################################
     `)
-
+    
     return (
-    <div className="app">
-      <Routes>
+        <div className="app">
+            <Routes>
 
-        <Route path="/" element={<Layout />}>
+                <Route path="/" element={<Layout/>}>
 
-            {/* default */}
-            <Route path="login" element={<Login />}/>
+                    {/* default */}
+                    <Route path="login" element={<Login/>}/>
 
-        </Route>
+                </Route>
 
-      </Routes>
-    </div>
-  )
+            </Routes>
+        </div>
+    )
 }
 
 export default App

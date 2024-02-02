@@ -2,6 +2,7 @@ import axios, {AxiosError} from 'axios';
 import Cookies from 'js-cookie';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {baseUrl} from "@src/services/api";
+import {RootState} from "@store/store.ts";
 
 enum Roles {
     ADMIN = "ADMIN",
@@ -28,6 +29,21 @@ export const login = createAsyncThunk(
             return response.data;
         } catch (error) {
             const axiosError = error as AxiosError; // Явное приведение типа к AxiosError
+            return rejectWithValue(axiosError.response?.data);
+        }
+    }
+);
+
+export const refreshTokens = createAsyncThunk(
+    'auth/refresh-tokens',
+    async (_, { getState, rejectWithValue }) => {
+        try {
+            const state = getState() as RootState;
+            const refreshToken = state.auth; // Assuming refreshToken is part of your auth state
+            const response = await axios.post<IAuthResponse>(`${baseUrl}/auth/refresh-tokens`, { refreshToken });
+            return response.data;
+        } catch (error) {
+            const axiosError = error as AxiosError;
             return rejectWithValue(axiosError.response?.data);
         }
     }
@@ -76,6 +92,15 @@ const authSlice = createSlice({
                 Cookies.remove('isAuthenticated');
                 Cookies.remove('access_token');
                 Cookies.remove('user');
+            })
+            .addCase(refreshTokens.fulfilled, (state, action) => {
+                state.isAuthenticated = true;
+                state.accessToken = action.payload.accessToken;
+                state.user = action.payload.user;
+
+                Cookies.set('isAuthenticated', 'true', { expires: 1 });
+                Cookies.set('access_token', action.payload.accessToken);
+                Cookies.set('user', JSON.stringify(action.payload.user));
             });
     },
 });
