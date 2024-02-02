@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import {configureStore, combineReducers} from '@reduxjs/toolkit';
 import {setupListeners} from "@reduxjs/toolkit/query";
 
 
@@ -6,12 +6,13 @@ import {setupListeners} from "@reduxjs/toolkit/query";
 import authReducer from "./slices/auth-slice.ts";
 
 // API
-
+import {quizApi} from "@store/api";
 
 
 // Объединение редьюсеров с поддержкой Redux Persist
 const rootReducer = combineReducers({
     auth: authReducer,
+    [quizApi.reducerPath]: quizApi.reducer,
 });
 
 // Создание хранилища
@@ -20,7 +21,9 @@ const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false
-        }).concat(),
+        }).concat(
+            quizApi.middleware
+        ),
 });
 
 // Настройка Redux Toolkit Query listeners
@@ -31,4 +34,4 @@ export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
 // Экспорт хранилища и persistor
-export { store };
+export {store};

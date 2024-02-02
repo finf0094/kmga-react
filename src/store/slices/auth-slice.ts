@@ -1,19 +1,15 @@
 import axios, {AxiosError} from 'axios';
 import Cookies from 'js-cookie';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {baseUrl} from "@src/services/api";
 import {RootState} from "@store/store.ts";
-
-enum Roles {
-    ADMIN = "ADMIN",
-    USER = "USER"
-}
+import {Roles} from "@interfaces";
+import {baseUrl} from "@src/services/api";
 
 interface IUserResponse {
     id: string,
     email: string,
     updatedAt: string,
-    roles: Roles
+    roles: Roles[]
 }
 
 interface IAuthResponse {

@@ -54,6 +54,18 @@
       ],
       "@utils/*": [
         "src/utils/*"
+      ],
+      "@pages": [
+        "src/pages"
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "@interfaces": [
+        "src/interfaces"
+      ],
+      "@interfaces/*": [
+        "src/interfaces/*"
       ]
     }
   },

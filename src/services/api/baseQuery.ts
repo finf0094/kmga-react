@@ -27,7 +27,6 @@ export const baseQueryWithReauth = async (
     if (result?.error?.status === 401) {
         // Attempt to refresh tokens
         const refreshResult = await api.dispatch(refreshTokens());
-
         if (refreshTokens.fulfilled.match(refreshResult)) {
             // If the refresh was successful, retry the original request
             result = await baseQuery(args, api, extraOptions);

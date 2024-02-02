@@ -1,9 +1,7 @@
 import axios from 'axios';
+import {baseUrl} from "@src/services/api/baseQuery.ts";
 export const axiosInstance = axios.create();
 
-export const baseUrl = import.meta.env.VITE_NODE_ENV === 'production'
-    ? 'https://kmga-nest-backend.onrender.com/api'
-    : 'http://localhost:3000/api';
 
 axiosInstance.interceptors.request.use(
     (config) => {
