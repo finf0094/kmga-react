@@ -16,6 +16,7 @@ const DashboardPage: FC = () => {
     return (
         <div className='dashboard'>
             <div className="dashboard__title">
+                <button >createQuiz</button>
                 {data?.data.map(item => (
                     <QuizCard key={item.id} title={item.title} description={item.description} tags={item.tags} status={item.status} createdAt={item.createdAt}/>
                 ))}

@@ -1,20 +1,32 @@
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { Layout } from "@components";
 import { LoginPage, DashboardPage } from "@pages";
-import { RequireAuth } from "@components/RequiredAuth";
+import { RequireAuth } from "@components";
 import { Roles } from "@interfaces";
 import useAuth from "./hooks/useAuth";
 import { useEffect } from "react";
+import { useAppDispatch } from "./store";
+import Cookies from "js-cookie";
+import { refreshTokens } from "./store/slices";
 
 function App() {
 
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch()
 
-	// console.log(`
-  //   ################################################
-  //     🛡️  Server starts on mode: ${import.meta.env.VITE_NODE_ENV} 🛡️
-  //     ################################################
-  //   `)
+	useEffect(() => {
+		// Предполагаем, что токен доступен в куках
+		const refreshtoken = Cookies.get('refreshtoken');
+		console.log(refreshtoken)
+
+		if (refreshtoken) {
+			dispatch(refreshTokens())
+			navigate('/dashboard');
+		} else {
+			// Если токен не найден, перенаправляем на страницу входа
+			navigate('/login');
+		}
+	}, [dispatch, navigate]);
 
 	const { isAuthenticated } = useAuth();
 	useEffect(() => {

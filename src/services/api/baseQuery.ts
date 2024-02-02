@@ -6,6 +6,7 @@ export const baseUrl = import.meta.env.VITE_API_URL + "/api"
 
 export const baseQuery = fetchBaseQuery({
     baseUrl,
+    credentials: 'include',
     prepareHeaders: (headers: Headers, { getState }) => {
         const state = getState() as RootState;
 

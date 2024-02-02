@@ -1,7 +1,6 @@
 import axios, {AxiosError} from 'axios';
 import Cookies from 'js-cookie';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {RootState} from "@store/store.ts";
 import {Roles} from "@interfaces";
 import {baseUrl} from "@src/services/api";
 
@@ -34,11 +33,9 @@ export const login = createAsyncThunk(
 
 export const refreshTokens = createAsyncThunk(
     'auth/refresh-tokens',
-    async (_, { getState, rejectWithValue }) => {
+    async (_, { rejectWithValue }) => {
         try {
-            const state = getState() as RootState;
-            const refreshToken = state.auth; // Assuming refreshToken is part of your auth state
-            const response = await axios.post<IAuthResponse>(`${baseUrl}/auth/refresh-tokens`, { refreshToken });
+            const response = await axios.get<IAuthResponse>(`${baseUrl}/auth/refresh-tokens`, { withCredentials: true });
             return response.data;
         } catch (error) {
             const axiosError = error as AxiosError;
