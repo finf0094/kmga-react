@@ -25,9 +25,10 @@ export const quizApi = createApi({
             })
         }),
 
-        createQuiz: builder.mutation<IQuiz, {title: string, description: string, status: string, tags: string[]}>({
+        createQuiz: builder.mutation<IQuiz, {title: string, description: string, status?: string, tags: string[]}>({
             query: ({title, description, tags, status}) => ({
                 url: `/quiz`,
+                method: 'POST',
                 body: {title: title, description: description, tags: tags, status: status}
             })
         }),

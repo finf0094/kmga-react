@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
-@font-face { font-family: 'Raleway'; font-weight: 300; src: url('./assets/fonts/Raleway-Light.ttf') format('truetype') };
-@font-face { font-family: 'Raleway'; font-weight: 400; src: url('./assets/fonts/Raleway-Regular.ttf') format('truetype') };
-@font-face { font-family: 'Raleway'; font-weight: 500; src: url('./assets/fonts/Raleway-Medium.ttf') format('truetype') };
-@font-face { font-family: 'Raleway'; font-weight: 600; src: url('./assets/fonts/Raleway-SemiBold.ttf') format('truetype') };
-@font-face { font-family: 'Raleway'; font-weight: 700; src: url('./assets/fonts/Raleway-Bold.ttf') format('truetype') };
+@font-face { font-family: 'Raleway'; font-weight: 300; src: url('./assets/fonts/Raleway-Light.ttf') format('truetype') }
+@font-face { font-family: 'Raleway'; font-weight: 400; src: url('./assets/fonts/Raleway-Regular.ttf') format('truetype') }
+@font-face { font-family: 'Raleway'; font-weight: 500; src: url('./assets/fonts/Raleway-Medium.ttf') format('truetype') }
+@font-face { font-family: 'Raleway'; font-weight: 600; src: url('./assets/fonts/Raleway-SemiBold.ttf') format('truetype') }
+@font-face { font-family: 'Raleway'; font-weight: 700; src: url('./assets/fonts/Raleway-Bold.ttf') format('truetype') }
 
-@font-face { font-family: 'Manrope'; font-weight: 400; src: url('./assets/fonts/Manrope-Regular.ttf') format('truetype') };
-@font-face { font-family: 'Manrope'; font-weight: 500; src: url('./assets/fonts/Manrope-Medium.ttf') format('truetype') };
-@font-face { font-family: 'Manrope'; font-weight: 700; src: url('./assets/fonts/Manrope-Bold.ttf') format('truetype') };
+@font-face { font-family: 'Manrope'; font-weight: 400; src: url('./assets/fonts/Manrope-Regular.ttf') format('truetype') }
+@font-face { font-family: 'Manrope'; font-weight: 500; src: url('./assets/fonts/Manrope-Medium.ttf') format('truetype') }
+@font-face { font-family: 'Manrope'; font-weight: 700; src: url('./assets/fonts/Manrope-Bold.ttf') format('truetype') }
 
-@font-face { font-family: 'Avanti'; font-weight: 400; src: url('./assets/fonts/avanti.ttf') format('opentype') };
-@font-face { font-family: 'Avanti'; font-weight: 700; src: url('./assets/fonts/avanti bold.otf') format('truetype') };
+@font-face { font-family: 'Avanti'; font-weight: 400; src: url('./assets/fonts/avanti.ttf') format('opentype') }
+@font-face { font-family: 'Avanti'; font-weight: 700; src: url('./assets/fonts/avanti bold.otf') format('truetype') }
 
 
 
@@ -21,7 +21,7 @@
   --manrope-font: 'Manrope', ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   --avanti-font: 'Avanti', ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   --inter-font: 'Inter', ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-  
+
   --se-life-green: #3DCD58;
   --se-light-grey: #9FA0A4;
   --se-dark-grey: #626469;

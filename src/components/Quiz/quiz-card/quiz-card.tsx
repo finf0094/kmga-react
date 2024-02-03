@@ -19,6 +19,9 @@ export default function QuizCard({title, description, status, tags, createdAt}: 
             <button>
                 change button
             </button>
+            <button>
+                три точки внутри статистика и добавить вопрос
+            </button>
             <span>
                 {status}
             </span>

@@ -4,14 +4,17 @@ import {setupListeners} from "@reduxjs/toolkit/query";
 
 // REDUCER
 import authReducer from "./slices/auth-slice.ts";
+import modalReducer from "@store/slices/modal-slice.ts";
 
 // API
 import {quizApi} from "@store/api";
 
 
+
 // Объединение редьюсеров с поддержкой Redux Persist
 const rootReducer = combineReducers({
     auth: authReducer,
+    modal: modalReducer,
     [quizApi.reducerPath]: quizApi.reducer,
 });
 

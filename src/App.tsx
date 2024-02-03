@@ -5,28 +5,10 @@ import { RequireAuth } from "@components";
 import { Roles } from "@interfaces";
 import useAuth from "./hooks/useAuth";
 import { useEffect } from "react";
-import { useAppDispatch } from "./store";
-import Cookies from "js-cookie";
-import { refreshTokens } from "./store/slices";
+import AuthSuccess from "@components/AuthSuccess/AuthSuccess.tsx";
 
 function App() {
-
 	const navigate = useNavigate();
-	const dispatch = useAppDispatch()
-
-	useEffect(() => {
-		// Предполагаем, что токен доступен в куках
-		const refreshtoken = Cookies.get('refreshtoken');
-		console.log(refreshtoken)
-
-		if (refreshtoken) {
-			dispatch(refreshTokens())
-			navigate('/dashboard');
-		} else {
-			// Если токен не найден, перенаправляем на страницу входа
-			navigate('/login');
-		}
-	}, [dispatch, navigate]);
 
 	const { isAuthenticated } = useAuth();
 	useEffect(() => {
@@ -45,6 +27,7 @@ function App() {
 				<Route path="/" element={<Layout />}>
 					{/* default */}
 					<Route path="login" element={<LoginPage />} />
+					<Route path="auth/success" element={<AuthSuccess />} />
 					{/* for admin or authorized user */}
 					<Route element={<RequireAuth allowedRoles={[Roles.USER, Roles.ADMIN]} />}>
 						<Route path="dashboard" element={<DashboardPage />} />
