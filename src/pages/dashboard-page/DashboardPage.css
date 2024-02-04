@@ -1,0 +1,96 @@
+.dashboard {
+    margin-top: 37px;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px; /* Добавьте отступы, если нужно */
+}
+
+.dashboard__head {
+    text-align: center;
+    margin-bottom: 46px;
+}
+
+.dashboard__title {
+    font-family: var(--raleway-font);
+    font-size: 42px;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 2px;
+}
+
+.dashboard__desc {
+    font-family: var(--raleway-font);
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--se-light-grey);
+}
+
+.dashboard__action {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    margin-bottom: 33px;
+}
+
+.dashboard__button {
+    font-family: var(--raleway-font);
+    font-weight: 700;
+    font-size: 18px;
+    background: var(--se-life-green);
+    padding: 18px 29px;
+    border-radius: 15px;
+    color: #fff;
+}
+
+.dashboard__button:hover {
+    background: #3abe52;
+}
+
+.select-custom {
+    font-family: var(--raleway-font);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 18px 105px 15px 24px;
+    border-radius: 10px;
+    border: 2px solid #F1F1F1;
+    color: var(--se-light-grey);
+    appearance: none; 
+    background-color: white;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg width="14" height="8" viewBox="0 0 14 8" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l6 6 6-6" stroke="%23999" stroke-width="2" fill="none" fill-rule="evenodd"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 14px 8px;
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    position: relative;
+}
+
+.select-custom:focus {
+    outline: none;
+    border-color: var(--se-life-green);
+}
+
+.select-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dashboard__content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .dashboard__content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard__content {
+        grid-template-columns: 1fr; 
+    }
+}

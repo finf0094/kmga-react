@@ -25,18 +25,15 @@ const LoginPage: FC = () => {
             setError('Заполните все поля!');
             return;
         } else {
-            try {
-                const data: any = await dispatch(login({email, password}));
-
-                if ('message' in data.payload) {
-                    setError(data.payload?.message);
+            await dispatch(login({email, password})).catch(error => {
+                if ('message' in error.data) {
+                    setError(error.data?.message);
                 } else {
                     navigate('/dashboard');
                 }
-            } catch (error) {
                 console.error(error);
                 setError(`Ошибка при авторизации: ${error}`);
-            }
+            })
         }
     };
 
