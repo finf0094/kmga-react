@@ -6,6 +6,7 @@ import { Roles } from "@interfaces";
 import useAuth from "./hooks/useAuth";
 import { useEffect } from "react";
 import AuthSuccess from "@components/AuthSuccess/AuthSuccess.tsx";
+import AddQuestionPage from "./pages/add-question/AddQuestionPage";
 
 function App() {
 	const navigate = useNavigate();
@@ -31,6 +32,7 @@ function App() {
 					{/* for admin or authorized user */}
 					<Route element={<RequireAuth allowedRoles={[Roles.USER, Roles.ADMIN]} />}>
 						<Route path="dashboard" element={<DashboardPage />} />
+						<Route path="add-question" element={<AddQuestionPage />} />
 					</Route>
 				</Route>
 			</Routes>

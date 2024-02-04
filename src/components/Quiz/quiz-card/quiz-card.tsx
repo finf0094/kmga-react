@@ -1,8 +1,10 @@
 import './quiz-card.css';
 import PlusIcon from "@assets/icons/plus.svg"
-import ChangeIcon from "@assets/icons/change.svg"
+import ChangeIcon from "@assets/icons/edit.svg"
 import { formatDate } from '@src/utils';
 import { getStatusText } from '@src/utils/getStatusText';
+import { Link } from 'react-router-dom';
+
 
 interface ICardProps {
     title: string,
@@ -27,8 +29,8 @@ export default function QuizCard({ title, status, tags, createdAt }: ICardProps)
                 </div>
                 <div className="quiz-card-header-right">
                     <div className="icons">
-                        <img src={PlusIcon} alt="Add" />
-                        <img src={ChangeIcon} alt="Edit" />
+                        <Link to="/add-question"><img src={PlusIcon} alt="Add" /></Link>
+                        <Link to=""><img src={ChangeIcon} alt="Edit" /></Link>
                     </div>
                     <div className="quiz-card-footer">
                         <div className="quiz-date">{`${day} ${month} ${year} года в ${hours}:${minutes}`}</div>

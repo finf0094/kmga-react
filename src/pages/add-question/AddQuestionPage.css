@@ -1,0 +1,445 @@
+.add-question-page {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 50px;
+    transition: width 0.3s ease;
+    background-color: white;
+    border: 1px solid #D9D9D9;
+    overflow: hidden;
+    position: relative;
+}
+
+.sidebar.closed {
+    width: 55px;
+}
+
+.sidebar.open {
+    width: 400px;
+}
+
+.sidebar-toggle {
+    display: block;
+    position: absolute;
+    width: 50px;
+    padding: 10px 0;
+    cursor: pointer;
+    background-color: inherit;
+    border: none;
+    outline: none;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+    background-color: var(--se-light-grey);
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 90px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-bottom: 10px;
+    transition: margin-bottom 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.sidebar-item.active {
+    background-color: var(--se-light-blue);
+    padding-bottom: 50px;
+}
+
+.sidebar-item-number {
+    font-family: var(--raleway-font);
+    font-weight: 700;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    line-height: 35px;
+    text-align: center;
+    background-color: #D9D9D9;
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.sidebar.closed .sidebar-item {
+    color: transparent;
+}
+
+.sidebar.closed .sidebar-item .sidebar-item-number {
+    background-color: #ddd;
+}
+
+.sidebar-item-text {
+    color: var(--se-dark-grey);
+    font-family: var(--raleway-font);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.sidebar.closed .sidebar-item-text {
+    display: none;
+}
+
+.sidebar-item-actions {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    right: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.sidebar-action-button {
+    background-color: var(--se-life-green);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: white;
+    margin-left: 10px;
+}
+
+.sidebar-action-button.edit {
+    color: blue;
+}
+
+.sidebar-action-button.delete {
+    color: red;
+}
+
+.sidebar-action-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: invert(100%);
+    flex-shrink: 0;
+}
+
+.question-form {
+    flex-grow: 1;
+    background-color: #fff;
+}
+
+.form-title-container {
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #D9D9D9;
+}
+
+.form-title {
+    font-family: var(--manrope-font);
+    font-weight: 700;
+    font-size: 28px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-label {
+    font-family: var(--manrope-font);
+    font-weight: 600;
+    font-size: 24px;
+    margin-left: 20px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    font-family: var(--raleway-font);
+    font-weight: 600;
+    font-size: 24px;
+    width: calc(100% - 40px);
+    margin: 20px;
+    border-radius: 12px;
+}
+
+.form-input.error {
+    border: 1px solid red;
+}
+
+.form-error-message {
+    font-family: var(--raleway-font);
+    font-weight: 600;
+    font-size: 24px;
+    color: red;
+    font-size: 14px;
+    margin: 5px 0 15px 40px;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.option-radio {
+    margin-left: 10px;
+    cursor: pointer;
+}
+.option-radio {
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 2em;
+    height: 2em;
+    border: 1px solid #D9D9D9;
+    border-radius: 50%;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+}
+
+/* Стиль для иконки внутри радиокнопки, когда она выбрана */
+.option-radio:checked::before {
+    content: '';
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background-color: var(--se-life-green);
+    transform: scale(0.5);
+}
+
+/* Стиль для радиокнопки при наведении */
+.option-radio:hover {
+    border-color: #a0a0a0;
+}
+
+/* Стиль для радиокнопки при фокусе (для доступности) */
+.option-radio:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 255, 0.5);
+}
+
+.option-input {
+    width: calc(100% - 160px);
+}
+
+.option-input.error {
+    border: 1px solid red;
+}
+
+.options-section {
+    margin-bottom: 20px;
+}
+
+.options-list {
+    margin-bottom: 10px;
+}
+
+
+.button-group {
+    text-align: right;
+}
+
+.button {
+    font-family: var(--raleway-font);
+    font-weight: 700;
+    padding: 13px 45px;
+    color: white;
+    border: none;
+    border-radius: 41px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.cancel {
+    background-color: #D9D9D9;
+    color: white;
+}
+
+.submit {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+/* Стили для ноутбуков выше */
+
+/* Стили для больших экранов компьютеров */
+@media (min-width: 1441px) {
+    .sidebar {
+        width: 70px; /* Увеличиваем ширину сайдбара */
+    }
+
+    .sidebar.open {
+        width: 350px; /* Увеличиваем ширину открытого сайдбара */
+    }
+
+    .sidebar-item-number,
+    .sidebar-item-text,
+    .form-title,
+    .form-label,
+    .form-input,
+    .option-input,
+    .form-error-message,
+    .button {
+        font-size: 18px; /* Увеличиваем размер шрифта для лучшей читаемости */
+    }
+
+    .sidebar-item {
+        padding: 10px 15px; /* Увеличиваем отступы для элементов сайдбара */
+    }
+
+    .sidebar-item-number {
+        width: 40px;
+        height: 40px;
+        line-height: 35px; /* Возвращаем размеры круглых номеров элементов к исходным */
+    }
+
+    .sidebar-action-button {
+        width: 40px;
+        height: 40px; /* Увеличиваем размеры кнопок действий */
+    }
+
+    .form-input,
+    .option-input {
+        margin: 20px; /* Увеличиваем отступы вокруг полей ввода */
+        width: calc(100% - 40px); /* Возвращаем ширину полей ввода к исходным значениям */
+    }
+
+    .button-group {
+        text-align: right; /* Кнопки оставляем выровненными по правому краю */
+    }
+
+    .option-input {
+        width: calc(100% - 120px);
+    }
+}
+
+/* Стили для мобильных устройств и планшетов выше */
+
+/* Стили для ноутбуков */
+@media (min-width: 1024px) and (max-width: 1440px) {
+    .sidebar {
+        width: 60px; /* Чуть больше места для сайдбара */
+    }
+
+    .sidebar.open {
+        width: 300px; /* Уменьшенная ширина открытого сайдбара для экономии пространства */
+    }
+
+    .sidebar-item-number,
+    .sidebar-item-text,
+    .form-title,
+    .form-label,
+    .form-input,
+    .option-input,
+    .form-error-message,
+    .button {
+        font-size: 16px; /* Немного увеличиваем размер шрифта для лучшей читаемости */
+    }
+
+    .sidebar-item {
+        padding: 10px; /* Увеличиваем отступы для элементов сайдбара */
+    }
+
+    .sidebar-item-number {
+        width: 45px;
+        height: 45px;
+        line-height: 45px;
+    }
+
+    .sidebar-action-button {
+        width: 34px;
+        height: 34px; /* Незначительно увеличиваем размеры кнопок действий */
+    }
+
+    .form-input,
+    .option-input {
+        margin: 15px; /* Увеличиваем отступы вокруг полей ввода */
+        width: calc(100% - 30px); /* Немного увеличиваем ширину полей ввода */
+    }
+
+    .button-group {
+        text-align: right; /* Кнопки оставляем выровненными по правому краю */
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .sidebar.open {
+        width: 250px;
+        /* Adjusted for smaller screens */
+    }
+
+    .sidebar-item-number,
+    .sidebar-item-text,
+    .form-title,
+    .form-label,
+    .form-input,
+    .option-input,
+    .form-error-message,
+    .button {
+        font-size: 14px;
+        /* Smaller font sizes for readability on smaller screens */
+    }
+
+    .sidebar-item {
+        padding: 5px;
+        /* Adjusted padding for smaller screens */
+    }
+
+    .sidebar-item-number {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .sidebar-action-button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .form-input,
+    .option-input {
+        margin: 10px;
+        /* Adjusted margin for smaller screens */
+        width: calc(100% - 20px);
+        /* Adjusted width for smaller screens */
+    }
+
+    .button {
+        padding: 8px 20px; /* Уменьшаем отступы для кнопок */
+        font-size: 14px; /* Уменьшаем размер шрифта для кнопок */
+        margin: 5px; /* Уменьшаем внешний отступ для кнопок */
+        border-radius: 20px; /* Скругляем углы кнопок */
+    }
+
+    .button-group {
+        text-align: center; /* Выравниваем кнопки по центру */
+        margin-top: 10px; /* Добавляем отступ сверху для группы кнопок */
+    }
+
+    .cancel,
+    .submit {
+        width: 100%; /* Кнопки на всю ширину контейнера */
+        margin-right: 0; /* Убираем правый отступ */
+        margin-bottom: 10px; /* Добавляем отступ снизу для разделения кнопок */
+    }
+}
