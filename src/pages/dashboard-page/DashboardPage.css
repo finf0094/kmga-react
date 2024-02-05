@@ -1,44 +1,20 @@
 .dashboard {
-    margin-top: 37px;
-    max-width: 1440px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 20px; /* Добавьте отступы, если нужно */
-}
-
-.dashboard__head {
-    text-align: center;
-    margin-bottom: 46px;
-}
-
-.dashboard__title {
-    font-family: var(--raleway-font);
-    font-size: 42px;
-    font-weight: 600;
-    color: #000000;
-    margin-bottom: 2px;
-}
-
-.dashboard__desc {
-    font-family: var(--raleway-font);
-    font-weight: 400;
-    font-size: 20px;
-    color: var(--se-light-grey);
+    padding-bottom: 40px;
+    height: auto !important;
 }
 
 .dashboard__action {
     display: flex;
-    gap: 28px;
+    gap: 15px;
     align-items: center;
     margin-bottom: 33px;
 }
 
 .dashboard__button {
-    font-family: var(--raleway-font);
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 600;
+    font-size: 20px;
     background: var(--se-life-green);
-    padding: 18px 29px;
+    padding: 15px 30px;
     border-radius: 15px;
     color: #fff;
 }
@@ -48,11 +24,11 @@
 }
 
 .select-custom {
-    font-family: var(--raleway-font);
+    width: 300px;
     font-weight: 600;
-    font-size: 14px;
-    padding: 18px 105px 15px 24px;
-    border-radius: 10px;
+    font-size: 20px;
+    padding: 15px 20px;
+    border-radius: 13px;
     border: 2px solid #F1F1F1;
     color: var(--se-light-grey);
     appearance: none; 
@@ -79,7 +55,7 @@
 .dashboard__content {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
-    gap: 20px;
+    gap: 30px;
     justify-content: center;
 }
 

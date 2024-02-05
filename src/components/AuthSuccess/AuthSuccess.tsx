@@ -1,9 +1,9 @@
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "@store";
 import {refreshTokens} from "@store/slices";
 
-const AuthSuccess = () => {
+const AuthSuccess: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
 

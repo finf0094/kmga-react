@@ -2,9 +2,9 @@ import profileIcon from "@assets/profile-icon.svg";
 import './Profile.css'
 import useAuth from "@hooks/useAuth.ts";
 import { Link } from "react-router-dom";
-const Profile = () => {
-	const { isAuthenticated, user } = useAuth();
 
+const Profile: React.FC = () => {
+	const { isAuthenticated, user } = useAuth();
 
 	return (
 		<div className="profile">

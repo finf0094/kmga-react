@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './modal.css';
 import { useDispatch } from 'react-redux';
-import {closeModal} from "@store/slices";
+import { closeModal } from "@store/slices";
 
 interface ModalProps {
     id: string;
     title: string;
+    subtitle: string;
+    width: string;
     button: boolean;
     buttonText: string;
     buttonDisabled: boolean;
@@ -15,12 +17,7 @@ interface ModalProps {
     onConfirm: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ id, title, button, buttonText, buttonDisabled, children, isOpen, onClose, onConfirm }) => {
-
-    const onSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        onConfirm();
-    }
+const Modal: React.FC<ModalProps> = ({ id, title, subtitle, width, button, buttonText, buttonDisabled, children, isOpen, onClose, onConfirm }) => {
 
     const [isModalVisible, setIsModalVisible] = useState<boolean>(isOpen);
     const [animationClass, setAnimationClass] = useState("");
@@ -70,16 +67,16 @@ const Modal: React.FC<ModalProps> = ({ id, title, button, buttonText, buttonDisa
     return (
         isModalVisible ? (
             <div className={`modal ${modalClass} ${animationClass}`}>
-                <div className={`modal__wrapper ${modalClass} ${animationClass}`} onClick={e => e.stopPropagation()}>
+                <div className={`modal__wrapper ${modalClass} ${animationClass}`} style={{ width: `${width}px` }} onClick={e => e.stopPropagation()}>
                     <button className="modal__close" onClick={handleToggleModal}>&times;</button>
-
-                    <form onSubmit={(e) => onSubmit(e)} className="modal__form">
+                    <div className="modal__head">
                         <h1 className="modal__title">{title}</h1>
+                        <p className="modal__subtitle">{subtitle}</p>
+                    </div>
 
-                        {children}
+                    <div className="modal__content">{children}</div>
 
-                        {button && <button className="modal__button" disabled={buttonDisabled}>{buttonText}</button>}
-                    </form>
+                    {button && <button className="modal__button" onClick={onConfirm} disabled={buttonDisabled}>{buttonText}</button>}
                 </div>
             </div>
         ) : null

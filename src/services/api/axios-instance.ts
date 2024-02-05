@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
                 originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
-                console.error('Не удалось обновить токен', refreshError);
+                console.error('Не удалось обновить токен. Ошибка:', refreshError);
                 return Promise.reject(refreshError);
             }
         }

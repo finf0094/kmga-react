@@ -1,12 +1,12 @@
-import { FC } from "react";
+import * as React from "react";
 import Header from "../Header/Header";
 import { Outlet } from "react-router-dom";
 
-const Layout: FC = () => {
+const Layout: React.FC = () => {
   return (
     <div style={{ height: '100vh', overflowX: 'hidden' }}>
       <Header />
-      <main style={{ height: '100%' }}>
+      <main>
         <Outlet />
       </main>
     </div>

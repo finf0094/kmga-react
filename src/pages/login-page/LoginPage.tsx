@@ -1,10 +1,10 @@
-import {FC, useState} from "react";
+import React, { useState } from "react";
 import {useAppDispatch} from "@store";
 import {login} from "@store/slices";
 import './LoginPage.css'
 import {useNavigate} from "react-router-dom";
 
-const LoginPage: FC = () => {
+const LoginPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [email, setEmail] = useState('');

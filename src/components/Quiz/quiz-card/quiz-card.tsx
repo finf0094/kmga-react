@@ -37,12 +37,18 @@ export default function QuizCard({ title, status, tags, createdAt }: ICardProps)
                     </div>
                 </div>
             </div>
-            <div className="quiz-card-footer">
-                <span className="quiz-card-tags-title">Тэги</span>
-                <ul className='quiz-card-tags'>
-                    {tags.map((tag, index) => <li className="quiz-tag" key={index}>{tag}</li>)}
-                </ul>
-            </div>
+            {tags.length > 0 ? (
+                <div className="quiz-card-footer">
+                    <span className="quiz-card-tags-title">Тэги</span>
+                    <ul className='quiz-card-tags'>
+                        {tags.map((tag, index) => <li className="quiz-tag" key={index}>{tag}</li>)}
+                    </ul>
+                </div>
+            ) : (
+                <div className="quiz-card-footer">
+                    <span className="quiz-card-tags-title">Нету тэгов</span>
+                </div>
+            )}
         </div>
     )
 }

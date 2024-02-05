@@ -1,3 +1,7 @@
+.profile {
+	position: relative;
+}
+
 .profile__user {
 	display: flex;
 	align-items: center;
