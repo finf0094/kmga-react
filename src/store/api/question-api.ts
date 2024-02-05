@@ -24,7 +24,7 @@ interface IQuestionCreate {
 }
 
 interface IQuestionUpdate {
-    quizId: string;
+    questionId: string;
     title: string;
     options: {
         id: string
@@ -34,10 +34,10 @@ interface IQuestionUpdate {
 }
 
 export const questionApi = createApi({
-    reducerPath: 'quizApi',
+    reducerPath: 'questionApi',
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
-        getAllQuestion: builder.query<{id: string, title: string}, string>({
+        getAllQuestion: builder.query<{id: string, title: string}[], string>({
             query: (quizId: string) => ({
                 url: `/question/all/${quizId}`,
                 method: 'GET',
@@ -57,13 +57,13 @@ export const questionApi = createApi({
             })
         }),
         updateQuestion: builder.mutation<{ id: string, title: string}, IQuestionUpdate>({
-            query: ({quizId, title, options}: IQuestionUpdate) => ({
-                url: `/question/${quizId}`,
+            query: ({questionId, title, options}: IQuestionUpdate) => ({
+                url: `/question/${questionId}`,
                 method: 'PUT',
                 body: {title: title, options: options}
             })
         }),
-        deleteQuestion: builder.query<void, string>({
+        deleteQuestion: builder.mutation<void, string>({
             query: (id: string) => ({
                 url: `/question/${id}`,
                 method: 'DELETE'
@@ -81,7 +81,8 @@ export const questionApi = createApi({
 export const {
     useGetAllQuestionQuery,
     useCreateQuestionMutation,
-    useDeleteQuestionQuery,
+    useDeleteQuestionMutation,
+    useUpdateQuestionMutation,
     useGetQuestionByIdQuery,
     useGetQuestionStatisticsQuery
 } = questionApi;

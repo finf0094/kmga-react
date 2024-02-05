@@ -6,10 +6,22 @@ import "./AddQuestionPage.css"
 import { useForm } from 'react-hook-form';
 import UIField from '@src/components/Base UI/UIField';
 import UIForm from '@src/components/Base UI/UIForm';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCreateQuestionMutation, useDeleteQuestionMutation, useGetAllQuestionQuery } from '@src/store/api/question-api';
+import { ErrorResponse } from '@src/interfaces';
+import toast from 'react-hot-toast';
 
 const AddQuestionPage: React.FC = () => {
+    // OTHER
     const navigate = useNavigate();
+    const { quizId } = useParams() as { quizId: string };
+
+    // API
+    const { data: questions, refetch } = useGetAllQuestionQuery(quizId);
+    const [ deleteQuestion ] = useDeleteQuestionMutation();
+    const [ createQuestion ] = useCreateQuestionMutation();
+
+    // LOCAL STATE
     const { register, handleSubmit, formState: { errors } } = useForm<{
         title: string;
         options: { value: string; isCorrect: boolean }[];
@@ -17,7 +29,6 @@ const AddQuestionPage: React.FC = () => {
     }>();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [activeItem, setActiveItem] = useState<number | null>(null);
-
     const toggleSidebar = () => {
         if (isSidebarOpen) {
             setActiveItem(null);
@@ -31,31 +42,64 @@ const AddQuestionPage: React.FC = () => {
         setActiveItem(index === activeItem ? null : index);
     };
 
-    const onSubmit = (data: { title: string; options: { value: string; isCorrect: boolean }[], correctOption: string; }) => {
+
+    // SUBMIT
+    const onSubmit = async (data: { title: string; options: { value: string; isCorrect: boolean }[], correctOption: string; }) => {
         const updatedOptions = data.options.map((option, index) => ({
             ...option,
             isCorrect: data.correctOption === String(index) // Сравниваем с индексом правильного варианта
         }));
         const submitData = {
+            quizId,
             title: data.title,
             options: updatedOptions
         };
-        console.log(submitData);
+        try {
+            const res = await createQuestion(submitData).unwrap();
+            toast.success(`${res.title} создано`)
+            refetch();
+        } catch (err) {
+            const error = err as ErrorResponse
+            if (error.status === 401) {
+                toast.error('Не хватает прав!')
+            }
+            console.error(err);
+        }
     };
 
+    // DELETE
+    const handleDelete = async (questionId: string) => {
+        try {
+            await deleteQuestion(questionId).unwrap();
+            toast.success("Успешно удалено");
+            refetch();
+        } catch (err) {
+            const error = err as ErrorResponse
+            if (error.status === 401) {
+                toast.error('Не хватает прав!')
+            }
+            console.error(err);
+        }
+    }
+
+    // EDIT
+    const handleEdit = (questionId: string) => {
+        navigate(`/quiz/${quizId}/question/${questionId}`);
+    };
+    
     return (
         <div className="add-question">
             <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
                 <img src={SidebarIcon} alt="sidebar icon" onClick={toggleSidebar} className='sidebar__toggle' />
                 <div className="sidebar__content">
-                    {['UseEffect', 'Sssss', 'Hhjnbv'].map((text, index) => (
+                    {questions?.map((question, index) => (
                         <div key={index} className={`sidebar__item ${activeItem === index ? 'active' : ''}`} onClick={() => handleItemClick(index)}>
                             <span className="sidebar__item-number">{index + 1}</span>
-                            <span className="sidebar__item-text">{text}</span>
+                            <span className="sidebar__item-text">{question.title}</span>
                             {activeItem === index && (
                                 <div className="sidebar__item-actions">
-                                    <button className="sidebar__action-button edit"><img src={EditIcon} alt="edit" /></button>
-                                    <button className="sidebar__action-button delete"><img src={DeleteIcon} alt="delete" /></button>
+                                    <button className="sidebar__action-button edit" onClick={() => handleEdit(question.id)}><img src={EditIcon} alt="edit" /></button>
+                                    <button className="sidebar__action-button delete" onClick={() => handleDelete(question.id)}><img src={DeleteIcon} alt="delete" /></button>
                                 </div>
                             )}
                         </div>

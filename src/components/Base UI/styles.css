@@ -93,3 +93,29 @@
 .dropdown li.selectedOption {
   background: #e0e0e027;
 }
+
+/* UI INPUT */
+.ui-input-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.ui-input-field__label {
+  margin-bottom: 5px;
+}
+
+.ui-input-field__input {
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.ui-input-field__input--error {
+  border-color: red;
+}
+
+.ui-input-field__error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}

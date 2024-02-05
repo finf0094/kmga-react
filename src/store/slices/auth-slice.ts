@@ -46,7 +46,7 @@ export const refreshTokens = createAsyncThunk(
 
 export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
     try {
-        await axios.post(`${baseUrl}/auth/logout`);
+        await axios.get(`${baseUrl}/auth/logout`);
         return;
     } catch (error) {
         const axiosError = error as AxiosError; // Явное приведение типа к AxiosError
