@@ -3,10 +3,14 @@ import PlusIcon from "@assets/icons/plus.svg"
 import ChangeIcon from "@assets/icons/edit.svg"
 import StatisticsIcon from "@assets/icons/statistics.svg"
 import QuestionStatisticsIcon from "@assets/icons/question-statistics.svg"
-import { formatDate } from '@src/utils';
+import LinkIcon from '@assets/icons/link.svg'
+import { copyToClipboard, formatDate } from '@src/utils';
 import { getStatusText } from '@src/utils/getStatusText';
 import { Link } from 'react-router-dom';
-
+import { useDeleteQuizByIdMutation } from '@src/store/api';
+import { ErrorResponse } from '@src/interfaces';
+import toast from 'react-hot-toast';
+import DeleteIcon from '@assets/icons/delete.svg'
 
 interface ICardProps {
     id: string;
@@ -19,6 +23,21 @@ interface ICardProps {
 
 export default function QuizCard({ id, title, status, tags, createdAt }: ICardProps) {
     const { day, month, year, hours, minutes } = formatDate(createdAt);
+    const [deleteQuestion] = useDeleteQuizByIdMutation();
+
+    const handleDelete = async (quizId: string) => {
+        try {
+            await deleteQuestion(quizId).unwrap();
+            toast.success("Успешно удалено")
+        } catch (err: unknown) {
+            const error = err as ErrorResponse
+            if (error?.status === 403) {
+                toast.error("Не хватает прав")
+            }
+            console.error('Failed to create quiz:', err);
+        }
+    };
+
 
     return (
         <div className="quiz-card">
@@ -36,6 +55,8 @@ export default function QuizCard({ id, title, status, tags, createdAt }: ICardPr
                         <Link to={`/quiz/${id}/statistics`}><img src={StatisticsIcon} alt="statistics" /></Link>
                         <Link to={`/quiz/${id}/question/statistics`}><img src={QuestionStatisticsIcon} alt="question statistics" /></Link>
                         <Link to={`/quiz/${id}/edit`}><img src={ChangeIcon} alt="Edit" /></Link>
+                        <span style={{cursor: 'pointer'}} onClick={() => copyToClipboard(`http://localhost/quiz/${id}/pass`)}><img src={LinkIcon} alt="Edit" /></span>
+                        <span style={{cursor: 'pointer'}} onClick={() => handleDelete(id)}><img src={DeleteIcon} width="24px" height="24px" alt="delete" /></span>
                     </div>
                     <div className="quiz-card-footer">
                         <div className="quiz-date">{`${day} ${month} ${year} года в ${hours}:${minutes}`}</div>

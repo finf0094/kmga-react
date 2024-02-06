@@ -7,4 +7,5 @@ export interface IQuiz {
     tags: string[];
     title: string;
     updatedAt: string;
+    uniqueToken: string;
 }

@@ -20,6 +20,8 @@ function App() {
 					{/* default */}
 					<Route path="login" element={<LoginPage />} />
 					<Route path="auth/success" element={<AuthSuccess />} />
+					<Route path="quiz/:quizId/pass" element={<PlayerScreenPage />} />
+
 					{/* for admin or authorized user */}
 					<Route element={<RequireAuth allowedRoles={[Roles.USER, Roles.ADMIN]} />}>
 						<Route path="dashboard" element={<DashboardPage />} />
@@ -28,7 +30,6 @@ function App() {
 						<Route path="quiz/:quizId/question/:questionId" element={<EditQuestionPage />} />
 						<Route path="quiz/:quizId/statistics" element={<QuizStatisticsPage />} />
 						<Route path="quiz/:quizId/question/statistics" element={<QuestionStatisticsPage/>}/>
-						<Route path="quiz/:quizId/pass" element={<PlayerScreenPage />} />
 
 						<Route path="response/:responseId/statistics" element={<ResponseStatisticsPage />} />
 					</Route>

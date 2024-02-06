@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useGetAllQuestionQuery, useGetQuestionByIdQuery, useCreateResponseMutation } from '@store/api';
 import { Loader } from '@src/components';
 import useAuth from '@src/hooks/useAuth';
+import { baseUrl } from '@src/services/api';
 
 interface SelectedOption {
     [questionId: string]: string;
@@ -25,6 +26,17 @@ export default function PlayerScreenPage() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOptions, setSelectedOptions] = useState<SelectedOption>({});
     const [createResponse, { isLoading: isSubmitting, isSuccess }] = useCreateResponseMutation();
+    const [email, setEmail] = useState<string>('');
+    const [accessGranted, setAccessGranted] = useState<boolean>(false);
+
+    const checkAccess = async () => {
+        const response = await fetch(`${baseUrl}/quizzes/check-access?quizId=${quizId}&email=${email}`);
+        if (response.ok) {
+            setAccessGranted(true);
+        } else {
+            alert('Доступ запрещен');
+        }
+    };
 
     const currentQuestionId = questions?.[currentQuestionIndex]?.id;
     const { data: currentQuestion, isLoading: isLoadingCurrentQuestion, error } = useGetQuestionByIdQuery(currentQuestionId || '', {
@@ -60,6 +72,20 @@ export default function PlayerScreenPage() {
 
     if (isLoadingQuestions || isLoadingCurrentQuestion || !currentQuestion) return <Loader />;
     if (error) return <div>Произошла ошибка при загрузке вопроса</div>;
+
+    if (!accessGranted) {
+        return (
+            <div>
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Введите ваш email"
+                />
+                <button onClick={checkAccess}>Проверить доступ</button>
+            </div>
+        );
+    }
 
     return (
         <div className="player-screen">

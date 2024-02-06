@@ -44,6 +44,7 @@ const DashboardPage: FC = () => {
         }
     };
 
+
     if (isLoading) return <div className="loading">Загрузка...</div>
     if (isError) {
         console.error(error)

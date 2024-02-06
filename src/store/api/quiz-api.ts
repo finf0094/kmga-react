@@ -43,7 +43,14 @@ export const quizApi = createApi({
             })
         }),
 
-        deleteQuizById: builder.query<void, string>({
+        getQuizByToken: builder.query<IQuiz, string>({
+            query: (token: string) => ({
+                url: `/quiz?token=${token}`,
+                method: 'GET'
+            })
+        }),
+
+        deleteQuizById: builder.mutation<void, string>({
             query: (id: string) => ({
                 url: `/quiz/${id}`,
                 method: 'DELETE'
@@ -66,11 +73,12 @@ export const quizApi = createApi({
         })
     }),
 });
+
 export const {
     useGetAllQuizQuery,
     useGetQuizByIdQuery,
     useCreateQuizMutation,
-    useDeleteQuizByIdQuery,
+    useDeleteQuizByIdMutation,
     useUpdateQuizMutation,
     useGetStatisticsQuery,
 } = quizApi;
