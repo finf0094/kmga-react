@@ -9,6 +9,7 @@ import modalReducer from "@store/slices/modal-slice.ts";
 // API
 import {quizApi} from "@store/api";
 import { questionApi } from './api/question-api.ts';
+import { responseApi } from './api/response-api.ts';
 
 
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     modal: modalReducer,
     [quizApi.reducerPath]: quizApi.reducer,
     [questionApi.reducerPath]: questionApi.reducer,
+    [responseApi.reducerPath]: responseApi.reducer,
 });
 
 // Создание хранилища
@@ -27,7 +29,7 @@ const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: false
         }).concat(
-            quizApi.middleware, questionApi.middleware,
+            quizApi.middleware, questionApi.middleware, responseApi.middleware,
         ),
 });
 

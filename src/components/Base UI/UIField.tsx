@@ -4,7 +4,7 @@ import './styles.css'
 interface UIFieldProps {
   id: string;
   label: string;
-  error: string | undefined;
+  error?: string | undefined;
   inputProps: object;
 }
 

@@ -5,30 +5,21 @@ import { CreateQuizModal } from "@components/Quiz";
 import './DashboardPage.css'
 import UITitle from "@src/components/Base UI/UITitle";
 import toast from "react-hot-toast";
-import { ErrorResponse } from "@src/interfaces";
-
+import { ErrorResponse, QuizStatus } from "@src/interfaces";
 
 const DashboardPage: FC = () => {
-    const { data, isLoading, isError, error } = useGetAllQuizQuery({ page: 1, perPage: 10 })
+    //LOCAL STATE
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedStatus, setSelectedStatus] = useState<QuizStatus | null>(null);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+
+    // API
+    const { data, isLoading, isError, error } = useGetAllQuizQuery({ page: 1, perPage: 10, status: selectedStatus });
     const [create] = useCreateQuizMutation()
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
-
-    if (isLoading) {
-        return <div className="loading">Загрузка...</div>
-    }
-
-    if (isError) {
-        console.error(error)
-        return <div className="loading">Произошла ошибка: {JSON.stringify(error)}</div>
-    }
-
+    // HANDLERS
     const onSubmit = async (quizData: { title: string; description: string; tags: string[] }) => {
         try {
             await create(quizData).unwrap();
@@ -44,6 +35,20 @@ const DashboardPage: FC = () => {
             console.error('Failed to create quiz:', err);
         }
     };
+    const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const { value } = event.target;
+        if (value === 'Все') {
+            setSelectedStatus(null);
+        } else {
+            setSelectedStatus(value as QuizStatus);
+        }
+    };
+
+    if (isLoading) return <div className="loading">Загрузка...</div>
+    if (isError) {
+        console.error(error)
+        return <div className="loading">Произошла ошибка: {JSON.stringify(error)}</div>
+    }
 
     return (
         <div className='dashboard page'>
@@ -51,11 +56,11 @@ const DashboardPage: FC = () => {
             <div className="dashboard__action">
                 <button type="submit" className="dashboard__button" onClick={openModal}>Новый опрос</button>
                 <div className="select-container">
-                    <select className="select-custom">
-                        <option>Все</option>
-                        <option>Активные</option>
-                        <option>Неактивные</option>
-                        <option>Черновик</option>
+                    <select className="select-custom" onChange={handleStatusChange}>
+                        <option value="Все">Все</option>
+                        <option value={QuizStatus.ACTIVE}>Активные</option>
+                        <option value={QuizStatus.INACTIVE}>Неактивные</option>
+                        <option value={QuizStatus.DRAFT}>Черновик</option>
                     </select>
                 </div>
             </div>

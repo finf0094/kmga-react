@@ -1,26 +1,29 @@
 import {createApi} from "@reduxjs/toolkit/query/react";
 import {baseQueryWithReauth} from "@src/services/api/baseQuery.ts";
-import {IPagination} from "@interfaces";
+import {IPagination, IQuiz, QuizStatus} from "@interfaces";
 
 
-interface IQuiz {
-    allowedEmails: string[];
-    createdAt: string;
-    description: string;
+
+interface UserList {
+    count: number;
+    users: User[];
+  }
+  
+  interface User {
     id: string;
-    status: string;
-    tags: string[];
-    title: string;
+    email: string;
     updatedAt: string;
-}
+    roles: string[];
+    responseId: string;
+  }
 
 export const quizApi = createApi({
     reducerPath: 'quizApi',
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
-        getAllQuiz: builder.query<IPagination<IQuiz>, {page?: number, perPage?: number, search?: string}>({
-            query: ({page = 1, perPage = 10, search = ''}) => ({
-                url: `/quiz?page=${page}&perPage=${perPage}&search=${search}`,
+        getAllQuiz: builder.query<IPagination<IQuiz>, {page?: number, perPage?: number, search?: string, status?: QuizStatus | null}>({
+            query: ({page = 1, perPage = 10, search = '', status = null}) => ({ // Use `status` here instead of `quizStatus`
+                url: `/quiz?page=${page}&perPage=${perPage}&search=${search}&status=${status}`,
                 method: 'GET',
             })
         }),
@@ -53,6 +56,13 @@ export const quizApi = createApi({
                 method: 'PATCH',
                 body: {title, description, tags, status}
             })
+        }),
+        
+        getStatistics: builder.query<UserList, string>({
+            query: (quizId: string) => ({
+                url: `quiz/${quizId}/stats`,
+                method: 'GET',
+            })
         })
     }),
 });
@@ -62,4 +72,5 @@ export const {
     useCreateQuizMutation,
     useDeleteQuizByIdQuery,
     useUpdateQuizMutation,
+    useGetStatisticsQuery,
 } = quizApi;

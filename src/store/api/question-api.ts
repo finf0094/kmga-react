@@ -1,18 +1,9 @@
 import {createApi} from "@reduxjs/toolkit/query/react";
+import { IQuestion } from "@src/interfaces";
 import {baseQueryWithReauth} from "@src/services/api/baseQuery.ts";
 
 
-interface IQuestion {
-    id: string;
-    title: string;
-    quizId: string;
-    options: {
-        id: string;
-        value: string;
-        isCorrect: boolean;
-        questionId: string;
-    }[];
-}
+
 
 interface IQuestionCreate {
     quizId: string;
@@ -69,7 +60,7 @@ export const questionApi = createApi({
                 method: 'DELETE'
             })
         }),
-        getQuestionStatistics: builder.query<{question: string, options: {value: string, count: number}, updatedAt: string }, string>({
+        getQuestionStatistics: builder.query<{question: string, options: {value: string, count: number}[], updatedAt: string }, string>({
             query: (id: string) => ({
                 url: `/question/${id}/statistics`,
                 method: 'GET',

@@ -1,0 +1,63 @@
+
+.player-screen {
+    height: 92vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+  }
+  
+  /* Элементы блока */
+  .player-screen__content {
+    display: flex;
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .player-screen__sidebar {
+    /* Стили для Sidebar, если нужно */
+  }
+  
+  .player-screen__main {
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .player-screen__header {
+    min-height: 8%;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    padding: 16px;
+    justify-content: space-between;
+  }
+  
+  .player-screen__question-counter {
+    margin-top: auto;
+    display: none; /* для sm:block нужно будет использовать медиа-запросы */
+  }
+  
+  .player-screen__progress-bar {
+    background-color: #f3f4f6; /* bg-gray-200 */
+    border-radius: 9999px;
+    height: 4px;
+    width: 112px; /* w-28 */
+  }
+  
+  .player-screen__progress-bar-inner {
+    background-color: #6366f1; /* bg-indigo-600 */
+    border-radius: 9999px;
+    height: 4px;
+  }
+  
+  .player-screen__submit-button {
+    /* Стили для кнопки, если используете стандартный HTML button */
+  }
+  
+  /* Модификаторы */
+  .player-screen__question-counter--visible {
+    display: block;
+  }
+  
+  .player-screen__progress-bar--large {
+    width: 192px; /* w-48 */
+  }

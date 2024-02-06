@@ -2,6 +2,7 @@ import './quiz-card.css';
 import PlusIcon from "@assets/icons/plus.svg"
 import ChangeIcon from "@assets/icons/edit.svg"
 import StatisticsIcon from "@assets/icons/statistics.svg"
+import QuestionStatisticsIcon from "@assets/icons/question-statistics.svg"
 import { formatDate } from '@src/utils';
 import { getStatusText } from '@src/utils/getStatusText';
 import { Link } from 'react-router-dom';
@@ -13,7 +14,7 @@ interface ICardProps {
     description?: string,
     status: string,
     tags: string[],
-    createdAt: string
+    createdAt: string,
 }
 
 export default function QuizCard({ id, title, status, tags, createdAt }: ICardProps) {
@@ -32,8 +33,9 @@ export default function QuizCard({ id, title, status, tags, createdAt }: ICardPr
                 <div className="quiz-card-header-right">
                     <div className="icons">
                         <Link to={`/quiz/${id}/question`}><img src={PlusIcon} alt="Add" /></Link>
-                        <Link to={`/quiz/${id}/statistics`}><img src={StatisticsIcon} alt="Add" /></Link>
-                        <Link to=""><img src={ChangeIcon} alt="Edit" /></Link>
+                        <Link to={`/quiz/${id}/statistics`}><img src={StatisticsIcon} alt="statistics" /></Link>
+                        <Link to={`/quiz/${id}/question/statistics`}><img src={QuestionStatisticsIcon} alt="question statistics" /></Link>
+                        <Link to={`/quiz/${id}/edit`}><img src={ChangeIcon} alt="Edit" /></Link>
                     </div>
                     <div className="quiz-card-footer">
                         <div className="quiz-date">{`${day} ${month} ${year} года в ${hours}:${minutes}`}</div>
