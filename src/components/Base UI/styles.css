@@ -27,6 +27,7 @@
 /* UIForm */
 
 .ui-form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -36,6 +37,7 @@
   margin-top: 20px;
   background: var(--se-life-green);
   color: #fff;
+  padding: 14px 0;
   font-size: 18px;
 }
 

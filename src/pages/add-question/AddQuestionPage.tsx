@@ -56,12 +56,12 @@ const AddQuestionPage: React.FC = () => {
         };
         try {
             const res = await createQuestion(submitData).unwrap();
-            toast.success(`${res.title} создано`)
+            toast.success(`Вопрос "${res.title}" был успешно создан!`);
             refetch();
         } catch (err) {
             const error = err as ErrorResponse
             if (error.status === 401) {
-                toast.error('Не хватает прав!')
+                toast.error('Не хватает прав для создания вопроса!')
             }
             console.error(err);
         }
@@ -71,13 +71,14 @@ const AddQuestionPage: React.FC = () => {
     const handleDelete = async (questionId: string) => {
         try {
             await deleteQuestion(questionId).unwrap();
-            toast.success("Успешно удалено");
+            toast.success("Вопрос был успешно удален!");
             refetch();
         } catch (err) {
             const error = err as ErrorResponse
             if (error.status === 401) {
-                toast.error('Не хватает прав!')
+                toast.error('Не хватает прав для удаления вопроса!')
             }
+            toast.error(`${error.message}`);
             console.error(err);
         }
     }
@@ -107,6 +108,11 @@ const AddQuestionPage: React.FC = () => {
                 </div>
             </div>
             <UIForm submitFn={handleSubmit(onSubmit)} isButton={false}>
+                <div className="question-form__back" onClick={() => navigate('/dashboard')}>Назад</div>
+                <div className="ui-title__head" style={{ textAlign: 'left', marginBottom: '10px' }}>
+                    <h1 className="ui-title__title" style={{ fontSize: '38px' }}>Добавить вопрос</h1>
+                    <h1 className="ui-title__desc">Добавить вопрос</h1>
+                </div>
                 <UIField
                     label='Название'
                     id='questionTitle'

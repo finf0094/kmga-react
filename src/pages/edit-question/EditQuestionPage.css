@@ -1,7 +1,10 @@
-.edit-question {
+
+
+.edit-question input[type="text"] {
     width: 100%;
-    height: calc(100vh - var(--header-height));
-    display: flex;
-    justify-content: center;
-    align-items: center; 
+}
+
+.edit-question .ui-field__label, .edit-question .form-label {
+    font-size: 18px;
+    font-weight: 600;
 }

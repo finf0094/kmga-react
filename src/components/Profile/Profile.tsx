@@ -12,7 +12,7 @@ const Profile: React.FC = () => {
 				<div className="profile__user">
 					<div className="profile__info">
 						<span className="profile__mail">{user.email}</span>
-						<span className="profile__role">{user.roles?.map((role: string) => role === 'USER' ? 'Пользователь' : 'Админ')}</span>
+						<span className="profile__role">{user.roles?.map((role: string) => role.includes('USER') ? 'Пользователь' : role.includes('ADMIN') && 'Админ')}</span>
 					</div>
 					<img src={profileIcon} alt="User" className="profile__icon" />
 				</div>

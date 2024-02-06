@@ -61,6 +61,7 @@
   background: var(--se-life-green);
   color: #fff;
   font-size: 18px;
+  padding: 14px 0;
 }
 
 .login__button:hover {
@@ -90,6 +91,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
+  padding: 14px 0;
   transition: .3s ease-out;
 }
 

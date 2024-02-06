@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetQuestionByIdQuery, useUpdateQuestionMutation } from '@src/store/api/question-api';
 import UIField from '@src/components/Base UI/UIField';
-import { UIForm } from '@src/components/Base UI';
+import { UIForm, UITitle } from '@src/components/Base UI';
 import './EditQuestionPage.css';
 import toast from 'react-hot-toast';
 import { ErrorResponse } from '@src/interfaces';
@@ -49,21 +49,22 @@ const EditQuestionPage = () => {
         };
         
         try {
-            const res = await updateQuestion(submitData).unwrap();
-            toast.success(`${res.title} обновлено`);
-            navigate('/dashboard');
-            
+            await updateQuestion(submitData).unwrap();
+            toast.success(`Вопрос был успешно обновлён! Обновите страницу`);
+            navigate(-1);
         } catch (err) {
             const error = err as ErrorResponse;
             if (error.status === 403) {
-                toast.error('Не хватает прав!');
+                toast.error('Не хватает прав для обновления вопроса!');
             }
+            toast.error(`${error.message}`);
             console.error(err);
         }
     };
 
     return (
-        <div className="edit-question">
+        <div className="edit-question page">
+            <UITitle title='Вопрос' subtitle='Редактирование вопроса' />
             <UIForm submitFn={handleSubmit(onSubmit)} isButton={false}>
                 <UIField
                     label='Название'

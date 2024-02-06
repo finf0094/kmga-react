@@ -12,8 +12,6 @@
     width: 55px;
     padding: 15px 13px;
     border-right: 1px solid #F1F1F1;
-    overflow: hidden;
-    white-space: nowrap;
     transition: 0.3s ease;
 }
 
@@ -40,8 +38,14 @@
     display: flex;
     align-items: center;
     gap: 10px;
-
     cursor: pointer;
+}
+
+.sidebar__item-text {
+    width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .sidebar__item-actions {
@@ -74,12 +78,26 @@
 
 /* Question Form */
 
-.add-question .ui__form {
+.add-question .ui-form {
     padding: 20px;
 }
 
 .add-question input {
     padding: 12px 14px;
+}
+
+.add-question label {
+    font-size: 18px;
+}
+
+.add-question input[type="text"] {
+    width: 100%;
+}
+
+.question-form__back {
+    color: var(--se-dark-grey);
+    cursor: pointer;
+    font-weight: 600;
 }
 
 .options-list {
@@ -88,6 +106,7 @@
 }
 
 .option-item {
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -107,7 +126,7 @@
 }
 
 .add-question__button {
-    width: 10%;
+    width: 100%;
     padding: 12px 14px;
     font-size: 18px;
     border-radius: 12px;

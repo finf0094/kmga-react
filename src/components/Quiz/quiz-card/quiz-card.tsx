@@ -28,11 +28,12 @@ export default function QuizCard({ id, title, status, tags, createdAt }: ICardPr
     const handleDelete = async (quizId: string) => {
         try {
             await deleteQuestion(quizId).unwrap();
-            toast.success("Успешно удалено")
+            toast.success(`Вопрос был успешно удален!`);
+            window.location.reload();
         } catch (err: unknown) {
             const error = err as ErrorResponse
             if (error?.status === 403) {
-                toast.error("Не хватает прав")
+                toast.error("Не хватает прав для удаления вопроса!")
             }
             console.error('Failed to create quiz:', err);
         }

@@ -6,7 +6,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 3 0px;
+    gap: 30px;
     padding: 22px;
     width: 100%;
 }

@@ -108,6 +108,16 @@ button {
   letter-spacing: -3px;
 }
 
+.back {
+  position: absolute;
+  left: 20px;
+  top: 90px;
+
+  color: var(--se-dark-grey);
+  cursor: pointer;
+  font-weight: 600;
+}
+
 .fade-enter {
   opacity: 0.01;
 }

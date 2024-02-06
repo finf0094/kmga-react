@@ -29,7 +29,7 @@ const DashboardPage: FC = () => {
             const error = err as ErrorResponse
 
             if (error?.status === 403) {
-                toast.error("Не хватает прав")
+                toast.error("Не хватает прав для создания теста!")
             }
 
             console.error('Failed to create quiz:', err);
