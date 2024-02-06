@@ -36,7 +36,7 @@ export default function PlayerScreenPage() {
 
   const checkAccess = async () => {
     const response = await fetch(
-      `${baseUrl}/quizzes/check-access?quizId=${quizId}&email=${email}`,
+      `${baseUrl}/quiz/verify-access?quizId=${quizId}&email=${email}`,
     );
     if (response.ok) {
       setAccessGranted(true);
