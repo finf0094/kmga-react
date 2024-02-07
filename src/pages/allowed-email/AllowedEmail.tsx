@@ -4,10 +4,11 @@ import {
   useGetAllowedEmailsQuery,
   useDeleteAllowedEmailMutation,
 } from "@store/api";
-import { UIField } from "@components/Base UI";
+import { UIField, UITitle } from "@components/Base UI";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Loader } from "@components";
+import './AllowedEmail.css'
 
 const AllowedEmailPage = () => {
   const { quizId } = useParams() as { quizId: string };
@@ -54,28 +55,39 @@ const AllowedEmailPage = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <div>
-      <UIField
-        id={`email-${quizId}`}
-        inputProps={{
-          value: email,
-          onChange: handleEmailChange,
-          type: "email",
-        }}
-        label="Email"
-      />
-      <button onClick={handleSubmit}>Добавить</button>
-      <div>
-        <h3>Allowed Emails</h3>
-        <ul>
+    <div className="allowed-email page">
+      <UITitle title="Доступ" subtitle="Дать доступ пользователю к тесту" />
+      <div className="allowed-email__create">
+        <UIField
+          id={`email-${quizId}`}
+          inputProps={{
+            value: email,
+            onChange: handleEmailChange,
+            type: "email",
+          }}
+          label="Email"
+        />
+        <button onClick={handleSubmit} className="allowed-email__button">Добавить</button>
+      </div>
+      <div className="allowed-email__table">
+        <table>
+          <thead>
+            <tr>
+              <td className='user'><span>Пользователь</span> <span>Посмотреть</span></td>
+            </tr>
+          </thead>
+          <tbody>
           {allowedEmails &&
             allowedEmails?.allowedEmails.map((email, index) => (
-              <li key={index}>
-                {email}{" "}
-                <button onClick={() => handleDelete(email)}>Удалить</button>
-              </li>
+              <tr>
+                <td key={index} className='user'>
+                  {email}{" "}
+                  <button onClick={() => handleDelete(email)} className="allowed-email__delete">Удалить</button>
+                </td>
+              </tr>
             ))}
-        </ul>
+          </tbody>
+        </table>
       </div>
     </div>
   );
