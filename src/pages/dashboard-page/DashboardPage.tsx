@@ -6,6 +6,7 @@ import './DashboardPage.css'
 import UITitle from "@src/components/Base UI/UITitle";
 import toast from "react-hot-toast";
 import { ErrorResponse, QuizStatus } from "@src/interfaces";
+import { Loader } from "@src/components";
 
 const DashboardPage: FC = () => {
     //LOCAL STATE
@@ -32,6 +33,7 @@ const DashboardPage: FC = () => {
                 toast.error("Не хватает прав для создания теста!")
             }
 
+            toast.error(`${error.data?.message}`);
             console.error('Failed to create quiz:', err);
         }
     };
@@ -45,7 +47,7 @@ const DashboardPage: FC = () => {
     };
 
 
-    if (isLoading) return <div className="loading">Загрузка...</div>
+    if (isLoading) return <Loader />
     if (isError) {
         console.error(error)
         return <div className="loading">Произошла ошибка: {JSON.stringify(error)}</div>

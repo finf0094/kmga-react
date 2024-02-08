@@ -1,4 +1,5 @@
 import "./quiz-card.css";
+import UserIcon from "@assets/icons/user.svg";
 import PlusIcon from "@assets/icons/plus.svg";
 import ChangeIcon from "@assets/icons/edit.svg";
 import StatisticsIcon from "@assets/icons/statistics.svg";
@@ -60,7 +61,7 @@ export default function QuizCard({
         <div className="quiz-card-header-right">
           <div className="icons">
             <Link to={`/quiz/${id}/allowed-emails`}>
-              <img src={PlusIcon} alt="Add" />
+              <img src={UserIcon} alt="Add" />
             </Link>
             <Link to={`/quiz/${id}/question`}>
               <img src={PlusIcon} alt="Add" />
@@ -77,7 +78,7 @@ export default function QuizCard({
             <span
               style={{ cursor: "pointer" }}
               onClick={() =>
-                copyToClipboard(`http://localhost/quiz/${id}/pass`)
+                copyToClipboard(`http://localhost:5173/quiz/${id}/pass`)
               }
             >
               <img src={LinkIcon} alt="Edit" />

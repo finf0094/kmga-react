@@ -1,80 +1,86 @@
-
 .player-screen {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
+  padding: 25px;
 }
 
-.question {
+.player-screen__check {
+  width: 100%;
+  display: grid;
+  grid-gap: 20px;
+}
+
+.player-screen__button {
+  width: 250px;
+  margin: 0 auto;
+  background: var(--se-life-green);
+  padding: 15px 0;
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+}
+
+.player-screen input {
+  width: 100%;
+}
+
+.player-screen .ui-title__head {
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.player-screen__name {
+  font-size: 22px;
+  font-weight: 500;
   margin-bottom: 20px;
 }
 
-.navigation-buttons button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+.player-screen__answers {
+  width: 100%;
+  display: grid;
+  grid-gap: 10px;
+  margin-bottom: 30px;
 }
 
-.quiz-completion-message {
-  margin-top: 20px;
-  font-size: 18px;
-  color: green;
+.player-screen__answer {
+  border: 1px solid #F1F1F1;
+  border-radius: 10px;
+  padding: 13px 20px;
+  cursor: pointer;
+  transition: .25s ease-out;
 }
-  
-  /* Элементы блока */
-  .player-screen__content {
-    display: flex;
-    flex: 1;
-    overflow-y: auto;
-  }
-  
-  .player-screen__sidebar {
-    /* Стили для Sidebar, если нужно */
-  }
-  
-  .player-screen__main {
-    flex: 1;
-    overflow-y: auto;
-  }
-  
-  .player-screen__header {
-    min-height: 8%;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    padding: 16px;
-    justify-content: space-between;
-  }
-  
-  .player-screen__question-counter {
-    margin-top: auto;
-    display: none; /* для sm:block нужно будет использовать медиа-запросы */
-  }
-  
-  .player-screen__progress-bar {
-    background-color: #f3f4f6; /* bg-gray-200 */
-    border-radius: 9999px;
-    height: 4px;
-    width: 112px; /* w-28 */
-  }
-  
-  .player-screen__progress-bar-inner {
-    background-color: #6366f1; /* bg-indigo-600 */
-    border-radius: 9999px;
-    height: 4px;
-  }
-  
-  .player-screen__submit-button {
-    /* Стили для кнопки, если используете стандартный HTML button */
-  }
-  
-  /* Модификаторы */
-  .player-screen__question-counter--visible {
-    display: block;
-  }
-  
-  .player-screen__progress-bar--large {
-    width: 192px; /* w-48 */
-  }
+
+.player-screen__answer:hover {
+  background: #F1F1F1;
+}
+
+.player-screen__answer.selected {
+  background: var(--se-sky-blue);
+  color: #fff;
+}
+
+.quiz-button {
+  margin: 0;
+  width: 270px;
+}
+
+.player-screen__finish {
+  height: 100%;
+  font-size: 42px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.player-screen__finish a {
+  color: var(--se-sky-blue);
+  transition: .25s ease-out;
+}
+
+.player-screen__finish a:hover {
+  text-decoration: underline;
+}

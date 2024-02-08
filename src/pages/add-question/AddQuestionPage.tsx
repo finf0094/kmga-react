@@ -63,6 +63,7 @@ const AddQuestionPage: React.FC = () => {
             if (error.status === 401) {
                 toast.error('Не хватает прав для создания вопроса!')
             }
+            toast.error(`${error.data?.message}`);
             console.error(err);
         }
     };
@@ -78,7 +79,7 @@ const AddQuestionPage: React.FC = () => {
             if (error.status === 401) {
                 toast.error('Не хватает прав для удаления вопроса!')
             }
-            toast.error(`${error.message}`);
+            toast.error(`${error.data?.message}`);
             console.error(err);
         }
     }
@@ -108,10 +109,10 @@ const AddQuestionPage: React.FC = () => {
                 </div>
             </div>
             <UIForm submitFn={handleSubmit(onSubmit)} isButton={false}>
-                <div className="question-form__back" onClick={() => navigate('/dashboard')}>Назад</div>
+                <div className="question-form__back" onClick={() => navigate(-1)}>Назад</div>
                 <div className="ui-title__head" style={{ textAlign: 'left', marginBottom: '10px' }}>
-                    <h1 className="ui-title__title" style={{ fontSize: '38px' }}>Добавить вопрос</h1>
-                    <h1 className="ui-title__desc">Добавить вопрос</h1>
+                    <h1 className="ui-title__title" style={{ fontSize: '36px' }}>Добавить вопрос</h1>
+                    <h1 className="ui-title__desc" style={{ fontSize: '18px' }}>Добавить вопрос для текущего теста</h1>
                 </div>
                 <UIField
                     label='Название'

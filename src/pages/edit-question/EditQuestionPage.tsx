@@ -57,13 +57,14 @@ const EditQuestionPage = () => {
             if (error.status === 403) {
                 toast.error('Не хватает прав для обновления вопроса!');
             }
-            toast.error(`${error.message}`);
+            toast.error(`${error.data?.message}`);
             console.error(err);
         }
     };
 
     return (
         <div className="edit-question page">
+            <div className="back" onClick={() => navigate(-1)}>Назад</div>
             <UITitle title='Вопрос' subtitle='Редактирование вопроса' />
             <UIForm submitFn={handleSubmit(onSubmit)} isButton={false}>
                 <UIField

@@ -1,18 +1,21 @@
 import './QuizStatisticsPage.css';
 import UITitle from '@src/components/Base UI/UITitle';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useGetStatisticsQuery } from '@store/api'; // Предполагается, что вы экспортировали хук из сервиса API
+import { Loader } from '@src/components';
 
 
 const QuizStatisticsPage = () => {
   const { quizId } = useParams() as {quizId: string}; // Получаем quizId из URL
   const { data: statistics, isLoading, isError } = useGetStatisticsQuery(quizId);
+  const navigate = useNavigate();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError || !statistics) return <div>Error loading statistics</div>;
+  if (isLoading) return <Loader />;
+  if (isError || !statistics) return <div className='loading'>Ошибка при загрузке статистики</div>;
 
   return (
     <div className="quiz-statistics page">
+      <div className="back" onClick={() => navigate(-1)}>Назад</div>
       <UITitle title='Статистика' subtitle='Статистика данного опроса' />
 
       <div className="statistics__content">

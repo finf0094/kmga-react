@@ -81,7 +81,7 @@ const QuestionStatisticsPage = () => {
         <Suspense fallback={<Loader />}>
             <div className='question-stat page'>
                 <div className="question-stat__inner">
-                    <div className="back" onClick={() => navigate('/dashboard')}>Назад</div>
+                    <div className="back" onClick={() => navigate(-1)}>Назад</div>
                     <UITitle title='Статистика' subtitle='Статистика вопроса' />
                     <div className='question-stat__nav'>
                         <button className={chartType === 'doughnut' ? 'selected' : ''} onClick={() => setChartType('doughnut')}>Круговая</button>

@@ -7,6 +7,7 @@ import { useGetQuizByIdQuery, useUpdateQuizMutation } from '@store/api';
 import { QuizStatus } from '@interfaces';
 import { UITitle } from '@src/components/Base UI';
 import toast from 'react-hot-toast';
+import { Loader } from '@src/components';
 
 interface EditQuizForm {
     title: string;
@@ -73,12 +74,12 @@ const EditQuizPage: React.FC = () => {
 	// Watch the tags to update the local state when they change
 	watch('tags');
 
-    if (isLoading) return <div className='loader'>Загрузка...</div>;
+    if (isLoading) return <Loader />;
     if (error) return <div className='loader'>Ошибка при загрузке страницы теста</div>;
 
     return (
         <div className='edit-quiz page'>
-            <div className="back" onClick={() => navigate('/dashboard')}>Назад</div>
+            <div className="back" onClick={() => navigate(-1)}>Назад</div>
             <UITitle title='Тест' subtitle='Редактирование теста' />
             <UIForm submitFn={handleSubmit(onSubmit)} isButton={true} buttonText='Обновить'>
                 <UIField label='Название' id='quizTitle' inputProps={{ ...register('title', { required: 'This field is required!' }) }} error={errors.title?.message} />

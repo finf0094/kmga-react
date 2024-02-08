@@ -37,13 +37,3 @@
   text-align: center;
   margin-bottom: 15px;
 }
-
-.question-stat__back {
-  position: absolute;
-  left: 20px;
-  top: 90px;
-
-  color: var(--se-dark-grey);
-  cursor: pointer;
-  font-weight: 600;
-}

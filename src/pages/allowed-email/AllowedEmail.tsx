@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useAddAllowedEmailMutation,
   useGetAllowedEmailsQuery,
@@ -12,6 +12,7 @@ import './AllowedEmail.css'
 
 const AllowedEmailPage = () => {
   const { quizId } = useParams() as { quizId: string };
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
 
   const [addAllowedEmail] = useAddAllowedEmailMutation();
@@ -45,6 +46,7 @@ const AllowedEmailPage = () => {
     try {
       await deleteAllowedEmail({ quizId, email: emailToDelete });
       toast.success("Email успешно удален.");
+      setTimeout(() => window.location.reload(), 500);
       refetch(); // Обновить список после удаления
     } catch (error) {
       console.error("Ошибка при удалении email:", error);
@@ -56,6 +58,7 @@ const AllowedEmailPage = () => {
 
   return (
     <div className="allowed-email page">
+      <div className="back" onClick={() => navigate(-1)}>Назад</div>
       <UITitle title="Доступ" subtitle="Дать доступ пользователю к тесту" />
       <div className="allowed-email__create">
         <UIField
@@ -81,7 +84,7 @@ const AllowedEmailPage = () => {
             allowedEmails?.allowedEmails.map((email, index) => (
               <tr>
                 <td key={index} className='user'>
-                  {email}{" "}
+                  {email}
                   <button onClick={() => handleDelete(email)} className="allowed-email__delete">Удалить</button>
                 </td>
               </tr>

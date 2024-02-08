@@ -8,6 +8,8 @@ import {
 import { Loader } from "@src/components";
 import useAuth from "@src/hooks/useAuth";
 import { baseUrl } from "@src/services/api";
+import { UITitle } from "@src/components/Base UI";
+import './PlayerScreenPage.css'
 
 interface SelectedOption {
   [questionId: string]: string;
@@ -25,13 +27,11 @@ interface CreateResponsePayload {
 export default function PlayerScreenPage() {
   const { quizId } = useParams() as { quizId: string };
   const { user } = useAuth();
-  const { data: questions, isLoading: isLoadingQuestions } =
-    useGetAllQuestionQuery(quizId);
+  const { data: questions, isLoading: isLoadingQuestions } = useGetAllQuestionQuery(quizId);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<SelectedOption>({});
-  const [createResponse, { isLoading: isSubmitting, isSuccess }] =
-    useCreateResponseMutation();
-  const [email, setEmail] = useState<string>("");
+  const [createResponse, { isLoading: isSubmitting }] = useCreateResponseMutation();
+  const [email, setEmail] = useState<string>(user.email);
   const [accessGranted, setAccessGranted] = useState<boolean>(false);
 
   const checkAccess = async () => {
@@ -90,48 +90,43 @@ export default function PlayerScreenPage() {
 
   if (!accessGranted) {
     return (
-      <div>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Введите ваш email"
-        />
-        <button onClick={checkAccess}>Проверить доступ</button>
+      <div className="page">
+        <UITitle title="Доступ" subtitle="Проверить доступ к тесту" />
+        <div className="player-screen__check">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Введите ваш email"
+          />
+          <button onClick={checkAccess} className="player-screen__button">Проверить доступ</button>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="player-screen">
-      <h1>Вопросы</h1>
-      <div key={currentQuestion.id}>
-        <h3>{currentQuestion.title}</h3>
-        <ul>
-          {currentQuestion.options.map((option) => (
-            <li key={option.id}>
-              <label>
-                <input
-                  type="radio"
-                  name={`question-${currentQuestion.id}`}
-                  value={option.id}
-                  checked={selectedOptions[currentQuestion.id] === option.id}
-                  onChange={() => handleOptionChange(option.id)}
-                />
+      <div className="player-screen__quiz">
+        <UITitle title="Тест" subtitle="Пройдите тест" />
+        <div key={currentQuestion.id}>
+          <h3 className="player-screen__name">{currentQuestion.title}</h3>
+          <ul className="player-screen__answers">
+            {currentQuestion.options.map((option) => (
+              <li key={option.id} onClick={() => handleOptionChange(option.id)} className={selectedOptions[currentQuestion.id] === option.id ? 'player-screen__answer selected' : 'player-screen__answer'}>
                 {option.value}
-              </label>
-            </li>
-          ))}
-        </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {currentQuestionIndex < (questions?.length ?? 0) - 1 ? (
+          <button onClick={handleNextQuestion} className="player-screen__button quiz-button">Следующий вопрос</button>
+        ) : (
+          <button onClick={handleSubmit} disabled={isSubmitting} className="player-screen__button quiz-button">
+            Отправить ответы
+          </button>
+        )}
       </div>
-      {currentQuestionIndex < (questions?.length ?? 0) - 1 ? (
-        <button onClick={handleNextQuestion}>Следующий вопрос</button>
-      ) : (
-        <button onClick={handleSubmit} disabled={isSubmitting}>
-          Отправить ответы
-        </button>
-      )}
-      {isSuccess && <div>Спасибо за прохождение квиза!</div>}
     </div>
   );
 }
