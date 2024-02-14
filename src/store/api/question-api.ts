@@ -58,7 +58,7 @@ export const questionApi = createApi({
             question: string,
             options: { value: string, count: number }[]
         }, string>({
-            query: (questionId) => `statistics/questions/${questionId}/statistics`,
+            query: (questionId) => `statistics/questions/${questionId}`,
         }),
     }),
 });

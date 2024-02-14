@@ -2,29 +2,38 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Loader } from '@src/components'; 
 import { UITitle } from '@src/components/Base UI';
 import './ResponseStatistics.css'
+import {useSessionStatisticsQuery} from "@store/api";
 
 const ResponseStatisticsPage = () => {
-  const { responseId } = useParams() as { responseId: string };
-  const { data: response, isLoading, isError } = useGetResponseQuery(responseId);
+  const { sessionId } = useParams() as { sessionId: string };
+  const { data, isLoading, isError } = useSessionStatisticsQuery(sessionId);
   const navigate = useNavigate();
 
   if (isLoading) return <Loader />;
-  if (isError || !response) return <div>Ошибка загрузки деталей ответа</div>;
+  if (isError || !data) return <div>Ошибка загрузки деталей ответа</div>;
 
   return (
     <div className="response-statistics page">
       <div className="back" onClick={() => navigate(-1)}>Назад</div>
-      <UITitle title={`Тест ${response.Quiz.title}`} subtitle={`Пользователь ${response.User.email}`} />
+      <UITitle title={`Тест ${data.quizTitle}`} subtitle={`Пользователь ${data.email}`} />
       <div className='response-statistics__answers'>
-        {response.ResponseQuestion.map((rq, index) => (
+        {data.questions.map((question, index) => (
           <div key={index} className='response-statistics__answer'>
-            <h3>{rq.Question.title}</h3>
-            <div>Ответ: <span>{rq.Option.value}</span></div>
+            <h3>{question.title}</h3>
+              <div>Ответ:
+                  <span>
+                {question.options
+                    .filter(option => option.isSelected)
+                    .map((option, optionIndex) => (
+                        <span key={optionIndex}>{option.value}</span>
+                    ))
+                }
+              </span>
+              </div>
           </div>
         ))}
       </div>
-      <p className='response-statistics__date'><span>Дата ответа:</span> {new Date(response.createdAt).toLocaleDateString()}</p>
-      <p className='response-statistics__date'><span>Последнее обновление:</span> {new Date(response.updatedAt).toLocaleDateString()}</p>
+      <p className='response-statistics__date'><span>Дата ответа:</span> {new Date(data.createdAt).toLocaleDateString()}</p>
     </div>
   );
 };

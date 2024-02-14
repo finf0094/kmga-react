@@ -50,6 +50,8 @@ const QuestionStatisticsPage = () => {
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
     const [chartType, setChartType] = useState('doughnut');
 
+    console.log(averageScore)
+
     const { data: statistics, isLoading: isLoadingStatistics } = useGetQuestionStatisticsQuery(selectedQuestionId ?? '', {
         skip: !selectedQuestionId,
     });
@@ -119,7 +121,7 @@ const QuestionStatisticsPage = () => {
                             )}
                         </div>
                     ) : (
-                        <h1 className="loading">Общий балл теста: {averageScore}</h1>
+                        <h1 className="loading">Общяя: {averageScore?.averageScorePercentage}</h1>
                     )}
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "@components";
-import { LoginPage, DashboardPage } from "@pages";
+import {LoginPage, DashboardPage, ResponseStatistics} from "@pages";
 import { RequireAuth } from "@components";
 import { Roles } from "@interfaces";
 import AuthSuccess from "@components/AuthSuccess/AuthSuccess.tsx";
@@ -42,10 +42,10 @@ function App() {
               element={<AllowedEmailPage />}
             />
 
-            {/*<Route*/}
-            {/*  path="response/:responseId/statistics"*/}
-            {/*  element={<ResponseStatisticsPage />}*/}
-            {/*/>*/}
+            <Route
+              path="session/:sessionId/statistics"
+              element={<ResponseStatistics />}
+            />
           </Route>
         </Route>
       </Routes>

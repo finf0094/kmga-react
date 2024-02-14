@@ -74,7 +74,7 @@ export default function PlayerScreenPage() {
     const endQuiz = async () => {
         try {
             await endQuizFn(sessionId);
-            toast.success("Тест успешно окончен!");
+            toast.success("Опрос успешно окончен!");
             setIsQuizFinished(true);
         } catch (error) {
             console.error("Ошибка при завершении теста:", error);
@@ -88,8 +88,8 @@ export default function PlayerScreenPage() {
                 <div className="player-screen__quiz player-screen__start">
                     <UITitle title="Тест" subtitle="Начало теста"/>
                     <div className="player-screen__start-content">
-                        <h1 className="player-screen__title">Для начала теста нажмите на кнопку ниже</h1>
-                        <button onClick={startQuiz} className="player-screen__button">Начать тест</button>
+                        <h1 className="player-screen__title">Для начала опроса нажмите на кнопку ниже</h1>
+                        <button onClick={startQuiz} className="player-screen__button">Начать опрос</button>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@ export default function PlayerScreenPage() {
         <div className="player-screen">
             {!isQuizFinished ? (
                 <div className="player-screen__quiz">
-                    <UITitle title={`Тест "${session.quiz.title}"`} subtitle="Пройдите тест"/>
+                    <UITitle title={`Опрос "${session.quiz.title}"`} subtitle="Пройдите опрос"/>
                     <div key={currentQuestion?.id}>
                         <h3 className="player-screen__name">{currentQuestion?.title}</h3>
                         <ul className="player-screen__answers">
@@ -131,7 +131,7 @@ export default function PlayerScreenPage() {
                 </div>
             ) : (
                 <div className="player-screen__finish">
-                    <h1>Тест был пройден! Можете закрыть эту страницу.</h1>
+                    <h1>Опрос был пройден! Можете закрыть эту страницу.</h1>
                 </div>
             )}
         </div>

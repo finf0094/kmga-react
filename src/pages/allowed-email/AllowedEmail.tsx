@@ -63,6 +63,8 @@ const AllowedEmailPage = () => {
 		}
 	};
 
+	console.log(sessions?.data)
+
 	if (isLoading || isSessionsLoading || isDeleting) return <Loader />;
 
 	return (
@@ -98,9 +100,9 @@ const AllowedEmailPage = () => {
 					</thead>
 					<tbody>
 						{sessions && sessions.data?.map((session) => (
-							<tr>
-								<td key={session.id} className='user'>
-									{session.status === 'COMPLETED' ? <span>{session?.email?.email}</span> : <Link to={``} />}
+							<tr key={session.id}>
+								<td className='user'>
+									{session.status === 'COMPLETED' ? <Link to={`/session/${session.id}/statistics`} >{session?.email?.email}</Link> : <span>{session?.email?.email}</span>}
 									{session.status === 'COMPLETED' && 'Завершено' || session.status === 'NOT_STARTED' && 'Не начато' || session.status === 'IN_PROGRESS' && 'В прохождении'}
 									<button className="allowed-email__delete" onClick={() => handleDelete(session.id)}>Удалить</button>
 								</td>

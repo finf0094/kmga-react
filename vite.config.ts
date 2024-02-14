@@ -5,6 +5,19 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    port: 5173,
+    proxy: {
+      "/api": {
+        target: "http://195.49.210.212:3002",
+        changeOrigin: true,
+        secure: false,
+        cookiePathRewrite: {
+          "*": "/",
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       '@src': path.resolve(__dirname, './src'),

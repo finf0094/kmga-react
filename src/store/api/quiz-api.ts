@@ -68,9 +68,9 @@ export const quizApi = createApi({
       }),
     }),
 
-    getQuizStatistics: builder.query<number, string>({
+    getQuizStatistics: builder.query<{averageScorePercentage: number}, string>({
       query: (quizId: string) => ({
-        url: `/statistics/${quizId}/statistics`,
+        url: `/statistics/quiz/${quizId}`,
         method: "GET",
       }),
     }),

@@ -3,6 +3,23 @@ import { baseQueryWithReauth } from "@src/services/api";
 import {Session} from "@interfaces/session.ts";
 import {IPagination, SessionStatus} from "@interfaces";
 
+interface Option {
+    value: string;
+    isSelected: boolean;
+}
+
+interface Question {
+    title: string;
+    options: Option[];
+}
+
+interface SessionStatistics {
+    createdAt: string;
+    email: string;
+    quizTitle: string;
+    questions: Question[];
+}
+
 export const sessionApi = createApi({
     reducerPath: 'sessionApi',
     baseQuery: baseQueryWithReauth,
@@ -48,6 +65,12 @@ export const sessionApi = createApi({
             }),
         }),
 
+        sessionStatistics: builder.query<SessionStatistics, string>({
+            query: (sessionId) => ({
+                url: `statistics/session/${sessionId}`
+            })
+        }),
+
     }),
 });
 
@@ -58,4 +81,5 @@ export const {
     useEndQuizMutation, useGetSessionQuery,
     useGetAllSessionQuery,
     useDeleteSessionMutation,
+    useSessionStatisticsQuery
 } = sessionApi;
