@@ -27,12 +27,12 @@ export const questionApi = createApi({
     reducerPath: 'questionApi',
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
-        getAllQuestions: builder.query<IQuestion, string | undefined>({
+        getAllQuestions: builder.query<IQuestion[], string | undefined>({
             query: (quizId) => `quizzes/${quizId}/questions`,
         }),
-        getQuestionById: builder.query<IQuestion, { quizId: string, id: string }>({
-            query: ({ quizId, id }) => ({
-                url: `/quizzes/${quizId}/questions/${id}`,
+        getQuestionById: builder.query<IQuestion, { quizId: string, questionId: string }>({
+            query: ({ quizId, questionId }) => ({
+                url: `/quizzes/${quizId}/questions/${questionId}`,
                 method: 'GET',
             })
         }),
