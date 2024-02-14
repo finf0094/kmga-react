@@ -1,0 +1,34 @@
+.pagination {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.pagination__page {
+  border: 1px solid #00000034;
+  background: none;
+  padding: 5px 9px;
+  font-weight: 600;
+  border-radius: 0;
+  font-size: 16px;
+  font-family: var(--manrope-font);
+}
+
+.pagination__button {
+  padding: 0;
+  background: none;
+}
+
+.pagination__button, .pagination__button:hover {
+  opacity: .5;
+}
+
+.pagination__button svg {
+  width: 30px;
+}
+
+.pagination__button:disabled {
+  opacity: 0.3;
+}

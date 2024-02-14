@@ -6,17 +6,14 @@ export const quizApi = createApi({
   reducerPath: "quizApi",
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    getAllQuiz: builder.query<
-      IPagination<IQuiz>,
-      {
+    getAllQuiz: builder.query<IPagination<IQuiz>, {
         page?: number;
         perPage?: number;
         search?: string;
         status?: QuizStatus | null;
-      }
-    >({
+      }>({
       query: ({ page = 1, perPage = 10, search = "", status = null }) => ({
-        // Use `status` here instead of `quizStatus`
+        // Use status here instead of quizStatus
         url: `/quiz?page=${page}&perPage=${perPage}&search=${search}&status=${status}`,
         method: "GET",
       }),
@@ -66,8 +63,15 @@ export const quizApi = createApi({
     >({
       query: ({ id, title, tags, status, description }) => ({
         url: `quiz/${id}`,
-        method: "PATCH",
+        method: "PUT",
         body: { title, description, tags, status },
+      }),
+    }),
+
+    getQuizStatistics: builder.query<number, string>({
+      query: (quizId: string) => ({
+        url: `/statistics/${quizId}/statistics`,
+        method: "GET",
       }),
     }),
   }),
@@ -79,4 +83,5 @@ export const {
   useCreateQuizMutation,
   useDeleteQuizByIdMutation,
   useUpdateQuizMutation,
+  useGetQuizStatisticsQuery,
 } = quizApi;

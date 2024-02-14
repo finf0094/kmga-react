@@ -35,20 +35,19 @@ const EditQuestionPage = () => {
     }, [questionData, setValue]);
 
     const onSubmit = async (data: { title: string; options: { id: string, value: string; weight: number }[] }) => {
-        const updatedOptions = data.options.map((option) => ({
-            id: option.id,
-            value: option.value,
-            weight: option.weight // Используем вес, введенный пользователем
+        const transformedOptions = data.options.map(option => ({
+            ...option,
+            weight: Number(option.weight)
         }));
         const submitData = {
             id: questionId,
             title: data.title,
-            options: updatedOptions
+            options: transformedOptions
         };
 
         try {
-            await updateQuestion({quizId, question: submitData}).unwrap();
-            toast.success(`Вопрос был успешно обновлён! Обновите страницу`);
+            await updateQuestion({ quizId, question: submitData }).unwrap();
+            toast.success(`Вопрос был успешно обновлён!`);
             navigate(-1);
         } catch (err) {
             const error = err as ErrorResponse;
