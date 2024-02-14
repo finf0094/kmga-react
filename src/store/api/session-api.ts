@@ -26,7 +26,7 @@ export const sessionApi = createApi({
            query: (sessionId) => ({
                url: `sessions/${sessionId}`,
                method: 'DELETE'
-           })
+           }),
         }),
         startQuiz: builder.mutation<void, string>({
             query: (quizSessionId) => ({
