@@ -15,6 +15,7 @@ const Layout: React.FC = () => {
     if (location.pathname === '/' && isAuthenticated) navigate('/dashboard');
     if (location.pathname === '/login' && isAuthenticated) navigate('/dashboard');
   }, [isAuthenticated, navigate]);
+  
   return (
     <div style={{ height: '100vh', overflowX: 'hidden' }}>
       {location.pathname !== '/login' && isAuthenticated && <button 

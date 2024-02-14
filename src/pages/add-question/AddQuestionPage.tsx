@@ -44,11 +44,16 @@ const AddQuestionPage: React.FC = () => {
 
     // SUBMIT
     const onSubmit = async (data: { title: string; options: { value: string; weight: number }[]}) => {
+        const transformedOptions = data.options.map(option => ({
+            ...option,
+            weight: Number(option.weight)
+        }));
+
         const submitData = {
             quizId,
             question: {
                 title: data.title,
-                options: data.options
+                options: transformedOptions
             }
         };
         try {
@@ -64,7 +69,6 @@ const AddQuestionPage: React.FC = () => {
             console.error(err);
         }
     };
-
 
     // DELETE
     const handleDelete = async (questionId: string) => {
@@ -130,14 +134,11 @@ const AddQuestionPage: React.FC = () => {
                                     placeholder={`Option ${index + 1}`}
                                 />
                                 <input
-                                    {...register(`options.${index}.weight`)} // Use unique registration name for weight
+                                    {...register(`options.${index}.weight`, { required: "Weight is required." })}
                                     type="number"
-                                    value={index}
-                                    className="option-radio"
+                                    className={`form-input option-input ${errors.options && errors.options[index] ? 'error' : ''}`}
+                                    placeholder={`Weight ${index + 1}`}
                                 />
-                                {errors.options && errors.options[index] && (
-                                    <p className="form-error-message">{errors.options[index]?.message}</p>
-                                )}
                             </div>
                         ))}
                     </div>

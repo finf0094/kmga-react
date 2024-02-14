@@ -39,10 +39,10 @@ function App() {
               path="quiz/:quizId/statistics"
               element={<QuizStatisticsPage />}
             />
-            <Route
-              path="quiz/:quizId/question/statistics"
-              element={<QuestionStatisticsPage />}
-            />
+            {/*<Route*/}
+            {/*  path="quiz/:quizId/question/statistics"*/}
+            {/*  element={<QuestionStatisticsPage />}*/}
+            {/*/>*/}
             <Route
               path="quiz/:quizId/allowed-emails"
               element={<AllowedEmailPage />}
