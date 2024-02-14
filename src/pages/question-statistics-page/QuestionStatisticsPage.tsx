@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetAllQuestionsQuery, useGetQuestionStatisticsQuery } from '@store/api';
+import { useGetAllQuestionsQuery, useGetQuestionStatisticsQuery, useGetQuizStatisticsQuery } from '@store/api';
 import { Loader } from '@src/components';
 import { UITitle } from '@src/components/Base UI';
 import './QuestionStatisticsPage.css'
@@ -46,6 +46,7 @@ const QuestionStatisticsPage = () => {
     const { quizId } = useParams<{ quizId: string }>() as { quizId: string };
     const navigate = useNavigate();
     const { data: questions, isLoading: isLoadingQuestions } = useGetAllQuestionsQuery(quizId);
+    const { data: averageScore, isLoading: isLoadingAverageScore } = useGetQuizStatisticsQuery(quizId);
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
     const [chartType, setChartType] = useState('doughnut');
 
@@ -78,7 +79,7 @@ const QuestionStatisticsPage = () => {
 
     console.log(statistics)
 
-    if (isLoadingQuestions || !chartData) return <Loader />;
+    if (isLoadingQuestions || !chartData || isLoadingAverageScore) return <Loader />;
     return (
         <Suspense fallback={<Loader />}>
             <div className='question-stat page'>
@@ -90,28 +91,35 @@ const QuestionStatisticsPage = () => {
                         <button className={chartType === 'bar' ? 'selected' : ''} onClick={() => setChartType('bar')}>Столбчатая</button>
                         <button className={chartType === 'line' ? 'selected' : ''} onClick={() => setChartType('line')}>Линейная</button>
                         <button className={chartType === 'radar' ? 'selected' : ''} onClick={() => setChartType('radar')}>Радарная</button>
+                        <button className={chartType === 'average' ? 'selected' : ''} onClick={() => setChartType('average')}>Общяя</button>
                     </div>
-                    <select className='select-custom' onChange={(e) => setSelectedQuestionId(e.target.value)} value={selectedQuestionId ?? ''}>
-                        {questions?.map((question) => (
-                            <option key={question.id} value={question.id}>
-                                {question.title}
-                            </option>
-                        ))}
-                    </select>
-                    {isLoadingStatistics ? (
-                        <Loader />
+                    {chartType !== 'average' ? (
+                        <div className="question-stat__content">
+                            <select className='select-custom' onChange={(e) => setSelectedQuestionId(e.target.value)} value={selectedQuestionId ?? ''}>
+                                {questions?.map((question) => (
+                                    <option key={question.id} value={question.id}>
+                                        {question.title}
+                                    </option>
+                                ))}
+                            </select>
+                            {isLoadingStatistics ? (
+                                <Loader />
+                            ) : (
+                                statistics && (
+                                    <div>
+                                        <h2 className='question-stat__name'>{statistics.question}</h2>
+                                        <Suspense fallback={<div>Загрузка диаграммы...</div>}>
+                                            {chartType === 'doughnut' && <LazyDoughnut data={chartData} />}
+                                            {chartType === 'bar' && <LazyBar data={chartData} />}
+                                            {chartType === 'line' && <LazyLine data={chartData} />}
+                                            {chartType === 'radar' && <LazyRadar data={chartData} />}
+                                        </Suspense>
+                                    </div>
+                                )
+                            )}
+                        </div>
                     ) : (
-                        statistics && (
-                            <div>
-                                <h2 className='question-stat__name'>{statistics.question}</h2>
-                                <Suspense fallback={<div>Загрузка диаграммы...</div>}>
-                                    {chartType === 'doughnut' && <LazyDoughnut data={chartData} />}
-                                    {chartType === 'bar' && <LazyBar data={chartData} />}
-                                    {chartType === 'line' && <LazyLine data={chartData} />}
-                                    {chartType === 'radar' && <LazyRadar data={chartData} />}
-                                </Suspense>
-                            </div>
-                        )
+                        <h1 className="loading">Общий балл теста: {averageScore}</h1>
                     )}
                 </div>
             </div>
