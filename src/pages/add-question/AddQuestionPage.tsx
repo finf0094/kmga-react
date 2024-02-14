@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import UIField from '@src/components/Base UI/UIField';
 import UIForm from '@src/components/Base UI/UIForm';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useCreateQuestionMutation, useDeleteQuestionMutation, useGetAllQuestionQuery } from '@src/store/api/question-api';
+import { useCreateQuestionMutation, useDeleteQuestionMutation, useGetAllQuestionsQuery } from '@src/store/api/question-api';
 import { ErrorResponse } from '@src/interfaces';
 import toast from 'react-hot-toast';
 
@@ -17,15 +17,14 @@ const AddQuestionPage: React.FC = () => {
     const { quizId } = useParams() as { quizId: string };
 
     // API
-    const { data: questions, refetch } = useGetAllQuestionQuery(quizId);
+    const { data: questions, refetch } = useGetAllQuestionsQuery(quizId);
     const [ deleteQuestion ] = useDeleteQuestionMutation();
     const [ createQuestion ] = useCreateQuestionMutation();
 
     // LOCAL STATE
     const { register, handleSubmit, formState: { errors } } = useForm<{
         title: string;
-        options: { value: string; isCorrect: boolean }[];
-        correctOption: string;
+        options: { value: string; weight: number }[];
     }>();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [activeItem, setActiveItem] = useState<number | null>(null);
@@ -44,15 +43,13 @@ const AddQuestionPage: React.FC = () => {
 
 
     // SUBMIT
-    const onSubmit = async (data: { title: string; options: { value: string; isCorrect: boolean }[], correctOption: string; }) => {
-        const updatedOptions = data.options.map((option, index) => ({
-            ...option,
-            isCorrect: data.correctOption === String(index) // Сравниваем с индексом правильного варианта
-        }));
+    const onSubmit = async (data: { title: string; options: { value: string; weight: number }[]}) => {
         const submitData = {
             quizId,
-            title: data.title,
-            options: updatedOptions
+            question: {
+                title: data.title,
+                options: data.options
+            }
         };
         try {
             const res = await createQuestion(submitData).unwrap();
@@ -67,6 +64,7 @@ const AddQuestionPage: React.FC = () => {
             console.error(err);
         }
     };
+
 
     // DELETE
     const handleDelete = async (questionId: string) => {
@@ -132,8 +130,8 @@ const AddQuestionPage: React.FC = () => {
                                     placeholder={`Option ${index + 1}`}
                                 />
                                 <input
-                                    {...register("correctOption")}
-                                    type="radio"
+                                    {...register(`options.${index}.weight`)} // Use unique registration name for weight
+                                    type="number"
                                     value={index}
                                     className="option-radio"
                                 />

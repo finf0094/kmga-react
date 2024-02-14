@@ -6,7 +6,6 @@ import { baseQueryWithReauth } from "@src/services/api/baseQuery.ts";
 
 
 interface ICreateQuestion {
-    quizId: string;
     title: string;
     options: {
         value: string;
