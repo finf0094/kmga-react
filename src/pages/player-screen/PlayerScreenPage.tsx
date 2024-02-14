@@ -4,7 +4,7 @@ import {
     useGetAllQuestionsQuery,
     useGetQuestionByIdQuery,
     useGetSessionQuery,
-    useEndQuizMutation,
+    useEndQuizMutation, useStartQuizMutation, useSubmitAnswerMutation,
 } from "@store/api";
 import {Loader} from "@src/components";
 import "./PlayerScreenPage.css";
@@ -23,7 +23,8 @@ export default function PlayerScreenPage() {
     const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
     const [isQuizFinished, setIsQuizFinished] = useState<boolean>(false);
     const [endQuizFn, {isLoading: isSubmitting}] = useEndQuizMutation();
-    const [startQuizFn] = useEndQuizMutation();
+    const [startQuizFn] = useStartQuizMutation();
+    const [submitAnswer] = useSubmitAnswerMutation();
 
     const {data: session, isLoading: isLoadingSession} = useGetSessionQuery(sessionId);
     const {data: questions, isLoading: isLoadingQuestions} = useGetAllQuestionsQuery(session?.quizId);
@@ -45,8 +46,19 @@ export default function PlayerScreenPage() {
         setSelectedOptions((prev) => ({...prev, [questionId]: optionId}));
     };
 
-    const handleNextQuestion = () => {
-        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    const handleNextQuestion = async () => {
+        const selectedOption = selectedOptions[currentQuestionId];
+        if (selectedOption) {
+            try {
+                await submitAnswer({ sessionId, questionId: currentQuestionId, answerId: selectedOption });
+                setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+            } catch (error) {
+                console.error("Ошибка при отправке ответа:", error);
+                toast.error("Ошибка при отправке ответа");
+            }
+        } else {
+            toast.error("Пожалуйста, выберите ответ перед переходом к следующему вопросу");
+        }
     };
 
     const startQuiz = async () => {

@@ -73,7 +73,7 @@ const AddQuestionPage: React.FC = () => {
     // DELETE
     const handleDelete = async (questionId: string) => {
         try {
-            await deleteQuestion(questionId).unwrap();
+            await deleteQuestion({quizId, questionId}).unwrap();
             toast.success("Вопрос был успешно удален!");
             refetch();
         } catch (err) {

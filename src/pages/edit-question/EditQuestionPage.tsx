@@ -10,17 +10,16 @@ import { ErrorResponse } from '@src/interfaces';
 
 const EditQuestionPage = () => {
     // OTHERS
-    const { questionId } = useParams() as { questionId: string };
+    const { questionId, quizId } = useParams() as { questionId: string, quizId: string };
     const navigate = useNavigate();
 
     // API
-    const { data: questionData } = useGetQuestionByIdQuery(questionId);
+    const { data: questionData } = useGetQuestionByIdQuery({quizId, questionId});
     const [updateQuestion] = useUpdateQuestionMutation();
 
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<{
         title: string;
-        options: { id: string; value: string; isCorrect: boolean }[];
-        correctOption: string;
+        options: { id: string; value: string; weight: number }[];
     }>();
 
     useEffect(() => {
@@ -28,35 +27,31 @@ const EditQuestionPage = () => {
             setValue('title', questionData.title);
             questionData.options.forEach((option, index) => {
                 setValue(`options.${index}.id`, option.id);
-                setValue(`options.${index}.value`, option.value)
-                // Установка правильного ответа
-                if (option.isCorrect) {
-                    setValue('correctOption', String(index));
-                }
+                setValue(`options.${index}.value`, option.value);
+                // Установка веса ответа
+                setValue(`options.${index}.weight`, option.weight || 0); // Предполагаем, что у вас есть поле weight
             });
         }
     }, [questionData, setValue]);
 
-    const onSubmit = async (data: { title: string; options: { id: string, value: string; isCorrect: boolean }[], correctOption: string; }) => {
-        const updatedOptions = data.options.map((option, index) => ({
-            ...option,
-            isCorrect: data.correctOption === String(index) // Сравниваем с индексом правильного варианта
+    const onSubmit = async (data: { title: string; options: { id: string, value: string; weight: number }[] }) => {
+        const updatedOptions = data.options.map((option) => ({
+            id: option.id,
+            value: option.value,
+            weight: option.weight // Используем вес, введенный пользователем
         }));
-        const submitData = { 
-            questionId,
+        const submitData = {
+            id: questionId,
             title: data.title,
             options: updatedOptions
         };
-        
+
         try {
-            await updateQuestion(submitData).unwrap();
+            await updateQuestion({quizId, question: submitData}).unwrap();
             toast.success(`Вопрос был успешно обновлён! Обновите страницу`);
             navigate(-1);
         } catch (err) {
             const error = err as ErrorResponse;
-            if (error.status === 403) {
-                toast.error('Не хватает прав для обновления вопроса!');
-            }
             toast.error(`${error.data?.message}`);
             console.error(err);
         }
@@ -86,11 +81,10 @@ const EditQuestionPage = () => {
                                     defaultValue={option.value} // Установка значения по умолчанию
                                 />
                                 <input
-                                    {...register("correctOption")}
-                                    type="radio"
-                                    value={index}
-                                    className="option-radio"
-                                    defaultChecked={option.isCorrect} // Установка выбранного правильного ответа
+                                    {...register(`options.${index}.weight`, { required: "Weight is required." })}
+                                    type="number"
+                                    className={`form-input option-input ${errors.options && errors.options[index] ? 'error' : ''}`}
+                                    placeholder={`Weight ${index + 1}`}
                                 />
                             </div>
                         ))}

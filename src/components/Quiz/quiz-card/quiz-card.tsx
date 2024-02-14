@@ -2,10 +2,8 @@ import "./quiz-card.css";
 import UserIcon from "@assets/icons/user.svg";
 import PlusIcon from "@assets/icons/plus.svg";
 import ChangeIcon from "@assets/icons/edit.svg";
-import StatisticsIcon from "@assets/icons/statistics.svg";
 import QuestionStatisticsIcon from "@assets/icons/question-statistics.svg";
-import LinkIcon from "@assets/icons/link.svg";
-import { copyToClipboard, formatDate } from "@src/utils";
+import { formatDate } from "@src/utils";
 import { getStatusText } from "@src/utils/getStatusText";
 import { Link } from "react-router-dom";
 import { useDeleteQuizByIdMutation } from "@src/store/api";
@@ -60,14 +58,11 @@ export default function QuizCard({
         </div>
         <div className="quiz-card-header-right">
           <div className="icons">
-            <Link to={`/quiz/${id}/allowed-emails`}>
-              <img src={UserIcon} alt="Add" />
-            </Link>
             <Link to={`/quiz/${id}/question`}>
               <img src={PlusIcon} alt="Add" />
             </Link>
-            <Link to={`/quiz/${id}/statistics`}>
-              <img src={StatisticsIcon} alt="statistics" />
+            <Link to={`/quiz/${id}/allowed-emails`}>
+              <img src={UserIcon} alt="Add" />
             </Link>
             <Link to={`/quiz/${id}/question/statistics`}>
               <img src={QuestionStatisticsIcon} alt="question statistics" />
@@ -75,14 +70,6 @@ export default function QuizCard({
             <Link to={`/quiz/${id}/edit`}>
               <img src={ChangeIcon} alt="Edit" />
             </Link>
-            <span
-              style={{ cursor: "pointer" }}
-              onClick={() =>
-                copyToClipboard(`http://localhost:5173/quiz/${id}/pass`)
-              }
-            >
-              <img src={LinkIcon} alt="Edit" />
-            </span>
             <span
               style={{ cursor: "pointer" }}
               onClick={() => handleDelete(id)}

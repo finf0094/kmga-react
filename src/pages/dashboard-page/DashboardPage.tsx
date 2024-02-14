@@ -7,17 +7,19 @@ import UITitle from "@src/components/Base UI/UITitle";
 import toast from "react-hot-toast";
 import { ErrorResponse, QuizStatus } from "@src/interfaces";
 import { Loader } from "@src/components";
+import {Pagination} from "@components";
 
 const DashboardPage: FC = () => {
     //LOCAL STATE
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
     const [selectedStatus, setSelectedStatus] = useState<QuizStatus | null>(null);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
 
     // API
-    const { data, isLoading, isError, error } = useGetAllQuizQuery({ page: 1, perPage: 10, status: selectedStatus });
+    const { data, isLoading, isError, error } = useGetAllQuizQuery({ page: currentPage, perPage: 10, status: selectedStatus });
     const [create] = useCreateQuizMutation()
 
     // HANDLERS
@@ -44,6 +46,9 @@ const DashboardPage: FC = () => {
         } else {
             setSelectedStatus(value as QuizStatus);
         }
+    };
+    const onPageChange = (newPage: number) => {
+        setCurrentPage(newPage);
     };
 
 
@@ -72,6 +77,7 @@ const DashboardPage: FC = () => {
                     <QuizCard key={item.id} id={item.id} title={item.title} description={item.description} tags={item.tags} status={item.status} createdAt={item.createdAt} />
                 ))}
             </section>
+            {data && <Pagination meta={data.meta} visiblePages={10} onPageChange={onPageChange} />}
             <CreateQuizModal isOpen={isModalOpen} onClose={closeModal} onSubmit={onSubmit} />
         </div>
     );

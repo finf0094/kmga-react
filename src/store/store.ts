@@ -7,9 +7,7 @@ import authReducer from "./slices/auth-slice.ts";
 import modalReducer from "@store/slices/modal-slice.ts";
 
 // API
-import {quizApi} from "@store/api";
-import { questionApi } from './api/question-api.ts';
-import { responseApi } from './api/response-api.ts';
+import {questionApi, quizApi, sessionApi} from "@store/api";
 
 
 
@@ -19,7 +17,7 @@ const rootReducer = combineReducers({
     modal: modalReducer,
     [quizApi.reducerPath]: quizApi.reducer,
     [questionApi.reducerPath]: questionApi.reducer,
-    [responseApi.reducerPath]: responseApi.reducer,
+    [sessionApi.reducerPath]: sessionApi.reducer,
 });
 
 // Создание хранилища
@@ -29,7 +27,8 @@ const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: false
         }).concat(
-            quizApi.middleware, questionApi.middleware, responseApi.middleware,
+            quizApi.middleware, questionApi.middleware,
+            sessionApi.middleware
         ),
 });
 

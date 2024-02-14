@@ -5,10 +5,8 @@ import { RequireAuth } from "@components";
 import { Roles } from "@interfaces";
 import AuthSuccess from "@components/AuthSuccess/AuthSuccess.tsx";
 import AddQuestionPage from "./pages/add-question/AddQuestionPage";
-import QuizStatisticsPage from "./pages/quiz-statistics/QuizStatisticsPage";
 import EditQuestionPage from "./pages/edit-question/EditQuestionPage";
 import PlayerScreenPage from "./pages/player-screen/PlayerScreenPage";
-import ResponseStatisticsPage from "./pages/response-statistics/ResponseStatistics";
 import QuestionStatisticsPage from "./pages/question-statistics-page/QuestionStatisticsPage";
 import EditQuizPage from "./pages/edit-quiz/EditQuizPage";
 import AllowedEmailPage from "@pages/allowed-email/AllowedEmail.tsx";
@@ -36,10 +34,6 @@ function App() {
               element={<EditQuestionPage />}
             />
             <Route
-              path="quiz/:quizId/statistics"
-              element={<QuizStatisticsPage />}
-            />
-            <Route
               path="quiz/:quizId/question/statistics"
               element={<QuestionStatisticsPage />}
             />
@@ -48,10 +42,10 @@ function App() {
               element={<AllowedEmailPage />}
             />
 
-            <Route
-              path="response/:responseId/statistics"
-              element={<ResponseStatisticsPage />}
-            />
+            {/*<Route*/}
+            {/*  path="response/:responseId/statistics"*/}
+            {/*  element={<ResponseStatisticsPage />}*/}
+            {/*/>*/}
           </Route>
         </Route>
       </Routes>

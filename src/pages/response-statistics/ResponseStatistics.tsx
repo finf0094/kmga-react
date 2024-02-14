@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetResponseQuery } from '@store/api'; 
 import { Loader } from '@src/components'; 
 import { UITitle } from '@src/components/Base UI';
 import './ResponseStatistics.css'

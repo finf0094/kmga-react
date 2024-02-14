@@ -64,7 +64,7 @@ const QuestionStatisticsPage = () => {
         const totalResponses = statistics.options.reduce((total, option) => total + option.count, 0);
         return {
             labels: statistics.options.map(option => {
-                const percentage = ((option.count / totalResponses) * 100).toFixed(2);
+                const percentage = totalResponses > 0 ? ((option.count / totalResponses) * 100).toFixed(2) : '0.00';
                 return `${option.value} (${percentage}%)`;
             }),
             datasets: [{
@@ -75,6 +75,8 @@ const QuestionStatisticsPage = () => {
             }]
         };
     }, [statistics]);
+
+    console.log(statistics)
 
     if (isLoadingQuestions || !chartData) return <Loader />;
     return (

@@ -1,8 +1,6 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { IQuestion } from "@src/interfaces";
-import { baseQueryWithReauth } from "@src/services/api/baseQuery.ts";
-
-
+import {createApi} from "@reduxjs/toolkit/query/react";
+import {IQuestion} from "@src/interfaces";
+import {baseQueryWithReauth} from "@src/services/api/baseQuery.ts";
 
 
 interface ICreateQuestion {
@@ -14,6 +12,7 @@ interface ICreateQuestion {
 }
 
 interface IUpdateQuestion {
+    id: string;
     title: string;
     options: {
         id: string
@@ -30,34 +29,37 @@ export const questionApi = createApi({
             query: (quizId) => `quizzes/${quizId}/questions`,
         }),
         getQuestionById: builder.query<IQuestion, { quizId: string, questionId: string }>({
-            query: ({ quizId, questionId }) => ({
+            query: ({quizId, questionId}) => ({
                 url: `/quizzes/${quizId}/questions/${questionId}`,
                 method: 'GET',
             })
         }),
         createQuestion: builder.mutation<IQuestion, { quizId: string, question: ICreateQuestion }>({
-            query: ({ quizId, question }) => ({
+            query: ({quizId, question}) => ({
                 url: `quizzes/${quizId}/questions`,
                 method: 'POST',
                 body: question,
             }),
         }),
-        updateQuestion: builder.mutation<IQuestion, { id: string, question: IUpdateQuestion }>({
-					query: ({ id, question }) => ({
-						url: `questions/${id}`,
-						method: 'PUT',
-						body: question,
-					}),
-				}),
-        deleteQuestion: builder.mutation<void, string>({
-					query: (id) => ({
-						url: `questions/${id}`,
-						method: 'DELETE',
-					}),
-				}),
-        getQuestionStatistics: builder.query<{question: string, options: {value: string, count: number}[]}, string>({
-					query: (questionId) => `statistics/questions/${questionId}/statistics`,
-				}),
+        updateQuestion: builder.mutation<IQuestion, { quizId: string, question: IUpdateQuestion }>({
+            query: ({quizId, question}) => ({
+                url: `quizzes/${quizId}/questions/${question.id}`,
+                method: 'PUT',
+                body: question,
+            }),
+        }),
+        deleteQuestion: builder.mutation<void, {quizId: string, questionId: string}>({
+            query: ({quizId, questionId}) => ({
+                url: `quizzes/${quizId}/questions/${questionId}`,
+                method: 'DELETE',
+            }),
+        }),
+        getQuestionStatistics: builder.query<{
+            question: string,
+            options: { value: string, count: number }[]
+        }, string>({
+            query: (questionId) => `statistics/questions/${questionId}/statistics`,
+        }),
     }),
 });
 

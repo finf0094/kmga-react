@@ -1,20 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "@src/services/api/baseQuery.ts";
 import { IPagination, IQuiz, QuizStatus } from "@interfaces";
-import { Session } from "@src/interfaces/session";
-
-interface UserList {
-  count: number;
-  users: User[];
-}
-
-interface User {
-  id: string;
-  email: string;
-  updatedAt: string;
-  roles: string[];
-  responseId: string;
-}
 
 export const quizApi = createApi({
   reducerPath: "quizApi",
@@ -84,65 +70,6 @@ export const quizApi = createApi({
         body: { title, description, tags, status },
       }),
     }),
-
-    getStatistics: builder.query<UserList, string>({
-      query: (quizId: string) => ({
-        url: `quiz/${quizId}/stats`,
-        method: "GET",
-      }),
-    }),
-
-    getSession: builder.query<Session, string>({
-      query: (sessionId) => `sessions/${sessionId}`,
-    }),
-
-    createSession: builder.mutation<void, { email: string; quizId: string }>({
-      query: ({ email, quizId }) => ({
-        url: 'sessions',
-        method: 'POST',
-        body: { email, quizId },
-      }),
-    }),
-    
-    submitAnswer: builder.mutation<void, { sessionId: string; questionId: string; answerId: string }>({
-      query: ({ sessionId, questionId, answerId }) => ({
-        url: `sessions/${sessionId}/submit-answer`,
-        method: 'POST',
-        body: { questionId, answerId },
-      }),
-    }),
-
-    startQuiz: builder.mutation<void, { quizSessionId: string }>({
-      query: (quizSessionId) => ({
-        url: `sessions/${quizSessionId}/start`,
-        method: 'POST',
-      }),
-    }),
-
-    
-    
-    endQuiz: builder.mutation<{ quizSessionId: string }, string>({
-      query: (quizSessionId) => ({
-        url: `sessions/${quizSessionId}/end`,
-        method: 'POST',
-      }),
-    }),
-
-    sendVerificationCode: builder.mutation<void, { quizId: string; email: string }>({
-      query: ({ quizId, email }) => ({
-        url: `quiz/${quizId}/send-verification-code`,
-        method: "POST",
-        body: { email, quizId }
-      })
-    }),
-
-    verifyCode: builder.query<void, { code: string, email: string, quizId: string }>({
-      query: ({ code, email, quizId }) => ({
-        url: `quiz/${quizId}/verify-code`,
-        method: "GET",
-        params: { email, code }
-      }),
-    }),
   }),
 });
 
@@ -152,12 +79,4 @@ export const {
   useCreateQuizMutation,
   useDeleteQuizByIdMutation,
   useUpdateQuizMutation,
-  useGetStatisticsQuery,
-  useGetSessionQuery,
-  useCreateSessionMutation,
-  useSubmitAnswerMutation,
-  useStartQuizMutation,
-  useEndQuizMutation,
-  useSendVerificationCodeMutation,
-  useVerifyCodeQuery
 } = quizApi;
