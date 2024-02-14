@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetAllQuestionQuery, useGetQuestionStatisticsQuery } from '@store/api';
+import { useGetAllQuestionsQuery, useGetQuestionStatisticsQuery } from '@store/api';
 import { Loader } from '@src/components';
 import { UITitle } from '@src/components/Base UI';
 import './QuestionStatisticsPage.css'
@@ -45,7 +45,7 @@ const LazyRadar = React.lazy(() =>
 const QuestionStatisticsPage = () => {
     const { quizId } = useParams<{ quizId: string }>() as { quizId: string };
     const navigate = useNavigate();
-    const { data: questions, isLoading: isLoadingQuestions } = useGetAllQuestionQuery(quizId);
+    const { data: questions, isLoading: isLoadingQuestions } = useGetAllQuestionsQuery(quizId);
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
     const [chartType, setChartType] = useState('doughnut');
 
@@ -108,7 +108,6 @@ const QuestionStatisticsPage = () => {
                                     {chartType === 'line' && <LazyLine data={chartData} />}
                                     {chartType === 'radar' && <LazyRadar data={chartData} />}
                                 </Suspense>
-                                <p>Last updated: {statistics.updatedAt}</p>
                             </div>
                         )
                     )}
