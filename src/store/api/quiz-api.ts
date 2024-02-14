@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "@src/services/api/baseQuery.ts";
 import { IPagination, IQuiz, QuizStatus } from "@interfaces";
+import { Session } from "@src/interfaces/session";
 
 interface UserList {
   count: number;
@@ -35,10 +36,7 @@ export const quizApi = createApi({
       }),
     }),
 
-    createQuiz: builder.mutation<
-      IQuiz,
-      { title: string; description: string; status?: string; tags: string[] }
-    >({
+    createQuiz: builder.mutation<IQuiz, { title: string; description: string; status?: string; tags: string[] }>({
       query: ({ title, description, tags, status }) => ({
         url: `/quiz`,
         method: "POST",
@@ -72,9 +70,7 @@ export const quizApi = createApi({
       }),
     }),
 
-    updateQuiz: builder.mutation<
-      IQuiz,
-      {
+    updateQuiz: builder.mutation<IQuiz, {
         id: string;
         title: string;
         description: string;
@@ -96,29 +92,55 @@ export const quizApi = createApi({
       }),
     }),
 
-    getAllowedEmails: builder.query<{ allowedEmails: string[] }, string>({
-      query: (quizId: string) => ({
-        url: `quiz/${quizId}/allowed-emails`,
-        method: "GET",
+    getSession: builder.query<Session, string>({
+      query: (sessionId) => `sessions/${sessionId}`,
+    }),
+
+    createSession: builder.mutation<void, { email: string; quizId: string }>({
+      query: ({ email, quizId }) => ({
+        url: 'sessions',
+        method: 'POST',
+        body: { email, quizId },
+      }),
+    }),
+    
+    submitAnswer: builder.mutation<void, { sessionId: string; questionId: string; answerId: string }>({
+      query: ({ sessionId, questionId, answerId }) => ({
+        url: `sessions/${sessionId}/submit-answer`,
+        method: 'POST',
+        body: { questionId, answerId },
       }),
     }),
 
-    addAllowedEmail: builder.mutation<void, { quizId: string; email: string }>({
+    startQuiz: builder.mutation<void, { quizSessionId: string }>({
+      query: (quizSessionId) => ({
+        url: `sessions/${quizSessionId}/start`,
+        method: 'POST',
+      }),
+    }),
+
+    
+    
+    endQuiz: builder.mutation<{ quizSessionId: string }, string>({
+      query: (quizSessionId) => ({
+        url: `sessions/${quizSessionId}/end`,
+        method: 'POST',
+      }),
+    }),
+
+    sendVerificationCode: builder.mutation<void, { quizId: string; email: string }>({
       query: ({ quizId, email }) => ({
-        url: `quiz/${quizId}/allowed-emails`,
+        url: `quiz/${quizId}/send-verification-code`,
         method: "POST",
-        body: { email },
-      }),
+        body: { email, quizId }
+      })
     }),
 
-    deleteAllowedEmail: builder.mutation<
-      void,
-      { quizId: string; email: string }
-    >({
-      query: ({ quizId, email }) => ({
-        url: `/quiz/${quizId}`,
-        method: "DELETE",
-        body: { email },
+    verifyCode: builder.query<void, { code: string, email: string, quizId: string }>({
+      query: ({ code, email, quizId }) => ({
+        url: `quiz/${quizId}/verify-code`,
+        method: "GET",
+        params: { email, code }
       }),
     }),
   }),
@@ -131,7 +153,11 @@ export const {
   useDeleteQuizByIdMutation,
   useUpdateQuizMutation,
   useGetStatisticsQuery,
-  useAddAllowedEmailMutation,
-  useDeleteAllowedEmailMutation,
-  useGetAllowedEmailsQuery,
+  useGetSessionQuery,
+  useCreateSessionMutation,
+  useSubmitAnswerMutation,
+  useStartQuizMutation,
+  useEndQuizMutation,
+  useSendVerificationCodeMutation,
+  useVerifyCodeQuery
 } = quizApi;

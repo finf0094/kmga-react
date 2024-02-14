@@ -1,9 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  useAddAllowedEmailMutation,
-  useGetAllowedEmailsQuery,
-  useDeleteAllowedEmailMutation,
-} from "@store/api";
+import { useCreateSessionMutation } from "@store/api";
 import { UIField, UITitle } from "@components/Base UI";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -15,13 +11,7 @@ const AllowedEmailPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
 
-  const [addAllowedEmail] = useAddAllowedEmailMutation();
-  const [deleteAllowedEmail] = useDeleteAllowedEmailMutation();
-  const {
-    data: allowedEmails,
-    isLoading,
-    refetch,
-  } = useGetAllowedEmailsQuery(quizId);
+  const [createSession, { isLoading }] = useCreateSessionMutation();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
@@ -29,28 +19,16 @@ const AllowedEmailPage = () => {
   const handleSubmit = async () => {
     if (email) {
       try {
-        await addAllowedEmail({ quizId, email });
-        toast.success("Email успешно добавлен.");
+        await createSession({ quizId, email });
+        toast.success("Сессия успешно была создана.");
         setEmail("");
-        refetch(); // Обновить список после добавления
+        // refetch(); // Обновить список после добавления
       } catch (error) {
-        console.error("Ошибка при добавлении email:", error);
-        toast.error("Ошибка при добавлении email.");
+        console.error("Ошибка при создании сессии:", error);
+        toast.error("Ошибка при создании сессии.");
       }
     } else {
       toast.error("Пожалуйста, введите email.");
-    }
-  };
-
-  const handleDelete = async (emailToDelete: string) => {
-    try {
-      await deleteAllowedEmail({ quizId, email: emailToDelete });
-      toast.success("Email успешно удален.");
-      setTimeout(() => window.location.reload(), 500);
-      refetch(); // Обновить список после удаления
-    } catch (error) {
-      console.error("Ошибка при удалении email:", error);
-      toast.error("Ошибка при удалении email.");
     }
   };
 
@@ -72,7 +50,7 @@ const AllowedEmailPage = () => {
         />
         <button onClick={handleSubmit} className="allowed-email__button">Добавить</button>
       </div>
-      <div className="allowed-email__table">
+      {/* <div className="allowed-email__table">
         <table>
           <thead>
             <tr>
@@ -91,7 +69,7 @@ const AllowedEmailPage = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 };

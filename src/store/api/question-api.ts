@@ -1,26 +1,25 @@
-import {createApi} from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { IQuestion } from "@src/interfaces";
-import {baseQueryWithReauth} from "@src/services/api/baseQuery.ts";
+import { baseQueryWithReauth } from "@src/services/api/baseQuery.ts";
 
 
 
 
-interface IQuestionCreate {
+interface ICreateQuestion {
     quizId: string;
     title: string;
     options: {
         value: string;
-        isCorrect: boolean;
+        weight: number;
     }[];
 }
 
-interface IQuestionUpdate {
-    questionId: string;
+interface IUpdateQuestion {
     title: string;
     options: {
         id: string
         value: string;
-        isCorrect: boolean;
+        weight: number;
     }[];
 }
 
@@ -28,49 +27,43 @@ export const questionApi = createApi({
     reducerPath: 'questionApi',
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
-        getAllQuestion: builder.query<{id: string, title: string}[], string>({
-            query: (quizId: string) => ({
-                url: `/question/all/${quizId}`,
+        getAllQuestions: builder.query<IQuestion, string | undefined>({
+            query: (quizId) => `quizzes/${quizId}/questions`,
+        }),
+        getQuestionById: builder.query<IQuestion, { quizId: string, id: string }>({
+            query: ({ quizId, id }) => ({
+                url: `/quizzes/${quizId}/questions/${id}`,
                 method: 'GET',
             })
         }),
-        getQuestionById: builder.query<IQuestion, string>({
-            query: (id: string) => ({
-                url: `/question/${id}`,
-                method: 'GET',
-            })
-        }),
-        createQuestion: builder.mutation<{ id: string, title: string}, IQuestionCreate>({
-            query: ({quizId, title, options}: IQuestionCreate) => ({
-                url: `/question/${quizId}`,
+        createQuestion: builder.mutation<IQuestion, { quizId: string, question: ICreateQuestion }>({
+            query: ({ quizId, question }) => ({
+                url: `quizzes/${quizId}/questions`,
                 method: 'POST',
-                body: {title: title, options: options}
-            })
+                body: question,
+            }),
         }),
-        updateQuestion: builder.mutation<{ id: string, title: string}, IQuestionUpdate>({
-            query: ({questionId, title, options}: IQuestionUpdate) => ({
-                url: `/question/${questionId}`,
-                method: 'PUT',
-                body: {title: title, options: options}
-            })
-        }),
+        updateQuestion: builder.mutation<IQuestion, { id: string, question: IUpdateQuestion }>({
+					query: ({ id, question }) => ({
+						url: `questions/${id}`,
+						method: 'PUT',
+						body: question,
+					}),
+				}),
         deleteQuestion: builder.mutation<void, string>({
-            query: (id: string) => ({
-                url: `/question/${id}`,
-                method: 'DELETE'
-            })
-        }),
-        getQuestionStatistics: builder.query<{question: string, options: {value: string, count: number}[], updatedAt: string }, string>({
-            query: (id: string) => ({
-                url: `/question/${id}/statistics`,
-                method: 'GET',
-            })
-        }),
+					query: (id) => ({
+						url: `questions/${id}`,
+						method: 'DELETE',
+					}),
+				}),
+        getQuestionStatistics: builder.query<void, string>({
+					query: (questionId) => `questions/${questionId}/statistics`,
+				}),
     }),
 });
 
 export const {
-    useGetAllQuestionQuery,
+    useGetAllQuestionsQuery,
     useCreateQuestionMutation,
     useDeleteQuestionMutation,
     useUpdateQuestionMutation,

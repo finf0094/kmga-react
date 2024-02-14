@@ -13,6 +13,7 @@ import QuestionStatisticsPage from "./pages/question-statistics-page/QuestionSta
 import EditQuizPage from "./pages/edit-quiz/EditQuizPage";
 import AllowedEmailPage from "@pages/allowed-email/AllowedEmail.tsx";
 
+
 function App() {
   return (
     <div className="app">
@@ -21,7 +22,7 @@ function App() {
           {/* default */}
           <Route path="login" element={<LoginPage />} />
           <Route path="auth/success" element={<AuthSuccess />} />
-          <Route path="quiz/:quizId/pass" element={<PlayerScreenPage />} />
+          <Route path="session/:sessionId" element={<PlayerScreenPage />} />
 
           {/* for admin or authorized user */}
           <Route

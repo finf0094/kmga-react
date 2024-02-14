@@ -3,10 +3,13 @@ import { useAppDispatch } from "@store";
 import { login } from "@store/slices";
 import './LoginPage.css'
 import { useNavigate } from "react-router-dom";
+import useAuth from "@src/hooks/useAuth";
 
 const LoginPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -19,6 +22,8 @@ const LoginPage: React.FC = () => {
         window.open(`${import.meta.env.VITE_API_URL}/api/auth/yandex`, `_self`);
     }
 
+    
+
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!email || !password) {
@@ -28,10 +33,13 @@ const LoginPage: React.FC = () => {
             try {
                 const data: any = await dispatch(login({ email, password }))
 
+                console.log(data);
+                
+
                 if ('message' in data.payload) {
                     setError(data.payload?.message);
                 } else {
-                    navigate('/dashboard');
+                    if (location.pathname === '/' && isAuthenticated) navigate('/dashboard');
                 }
 
             } catch (error) {
