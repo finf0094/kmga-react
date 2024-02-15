@@ -1,11 +1,11 @@
 export const getStatusText = (status: string) => {
     switch (status) {
         case 'DRAFT':
-            return 'Черновик';
+            return 'Draft';
         case 'ACTIVE':
-            return 'Активный';
+            return 'Active';
         case 'INACTIVE':
-            return 'Неактивный';
+            return 'Inactive';
         default:
             return status; // Возвращает исходный статус, если он не соответствует ни одному из кейсов
     }

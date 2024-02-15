@@ -52,8 +52,8 @@ const LoginPage: React.FC = () => {
         <div className="login">
             <div className="login__inner">
                 <div className="login__head">
-                    <h2 className="login__title">Вход в систему</h2>
-                    <p className="login__desc">Введите ваше имя и пароль для входа в аккаунт</p>
+                    <h2 className="login__title">Login</h2>
+                    <p className="login__desc">Login to your account</p>
                 </div>
                 <form onSubmit={handleLogin} className="login__form">
                     <div className="login__field">
@@ -61,25 +61,25 @@ const LoginPage: React.FC = () => {
                         <input
                             className="login__input"
                             id="email"
-                            placeholder="Введите ваш Email"
+                            placeholder="Enter your Email"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div className="login__field">
-                        <label htmlFor="password" className="login__label">Пароль</label>
+                        <label htmlFor="password" className="login__label">Password</label>
                         <input
                             className="login__input"
                             id="password"
-                            placeholder="Введите пароль"
+                            placeholder="Enter your password"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
                     <span className="error-message">{error}</span>
-                    <button type="submit" className="login__button">Войти</button>
+                    <button type="submit" className="login__button">Login</button>
 
                 </form>
                 <div className="login__oauth">

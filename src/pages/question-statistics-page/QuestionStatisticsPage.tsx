@@ -69,7 +69,7 @@ const QuestionStatisticsPage = () => {
                 return `${option.value} (${percentage}%)`;
             }),
             datasets: [{
-                label: 'Статистика вопросов',
+                label: 'Question statistics',
                 data: statistics.options.map(option => option.count),
                 backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#C9CB3F', '#3FCB9F'],
                 hoverOffset: 4
@@ -82,14 +82,14 @@ const QuestionStatisticsPage = () => {
         <Suspense fallback={<Loader />}>
             <div className='question-stat page'>
                 <div className="question-stat__inner">
-                    <div className="back" onClick={() => navigate(-1)}>Назад</div>
-                    <UITitle title='Статистика' subtitle='Статистика вопроса' />
+                    <div className="back" onClick={() => navigate(-1)}>Back</div>
+                    <UITitle title='Statistics' subtitle='Question statistics' />
                     <div className='question-stat__nav'>
-                        <button className={chartType === 'doughnut' ? 'selected' : ''} onClick={() => setChartType('doughnut')}>Круговая</button>
-                        <button className={chartType === 'bar' ? 'selected' : ''} onClick={() => setChartType('bar')}>Столбчатая</button>
-                        <button className={chartType === 'line' ? 'selected' : ''} onClick={() => setChartType('line')}>Линейная</button>
-                        <button className={chartType === 'radar' ? 'selected' : ''} onClick={() => setChartType('radar')}>Радарная</button>
-                        <button className={chartType === 'average' ? 'selected' : ''} onClick={() => setChartType('average')}>Общяя</button>
+                        <button className={chartType === 'doughnut' ? 'selected' : ''} onClick={() => setChartType('doughnut')}>Circular</button>
+                        <button className={chartType === 'bar' ? 'selected' : ''} onClick={() => setChartType('bar')}>Columnar</button>
+                        <button className={chartType === 'line' ? 'selected' : ''} onClick={() => setChartType('line')}>Linear</button>
+                        <button className={chartType === 'radar' ? 'selected' : ''} onClick={() => setChartType('radar')}>Radar</button>
+                        <button className={chartType === 'average' ? 'selected' : ''} onClick={() => setChartType('average')}>Average</button>
                     </div>
                     {chartType !== 'average' ? (
                         <div className="question-stat__content">
@@ -106,7 +106,7 @@ const QuestionStatisticsPage = () => {
                                 statistics && (
                                     <div>
                                         <h2 className='question-stat__name'>{statistics.question}</h2>
-                                        <Suspense fallback={<div>Загрузка диаграммы...</div>}>
+                                        <Suspense fallback={<div>Loading chart...</div>}>
                                             {chartType === 'doughnut' && <LazyDoughnut data={chartData} />}
                                             {chartType === 'bar' && <LazyBar data={chartData} />}
                                             {chartType === 'line' && <LazyLine data={chartData} />}

@@ -32,31 +32,36 @@ const AllowedEmailPage = () => {
 	const handleSubmit = async () => {
 		if (email) {
 			if (!validateEmail(email)) {
-				toast.error("Пожалуйста, введите корректный email.");
+				toast.error("Please, enter a valid email.");
 				return;
 			}
 			try {
+				if (sessions?.data.find((session) => session.email?.email === email)) {
+					toast.error("This email is already exists.");
+          return;
+				}
+
 				await createSession({ quizId, email });
-				toast.success("Сессия успешно была создана.");
+				toast.success("Session was created successfully.");
 				setEmail("");
 				refetch(); // Обновить список после добавления
 			} catch (error) {
-				console.error("Ошибка при создании сессии:", error);
-				toast.error("Ошибка при создании сессии.");
+				console.error("Error creating session:", error);
+				toast.error("Error creating session.");
 			}
 		} else {
-			toast.error("Пожалуйста, введите email.");
+			toast.error("Please, enter a email.");
 		}
 	};
 
 	const handleDelete = async (sessionId: string) => {
 		try {
 			await deleteSession(sessionId);
-			toast.success("Сессия успешно удалена.");
+			toast.success("Session was deleted successfully.");
 			refetch()
 		} catch (error) {
-			console.error("Ошибка при удалений сессии:", error);
-			toast.error("Ошибка при удалений сессии.");
+			console.error("Error deleting session:", error);
+			toast.error("Error deleting session.");
 		}
 	};
 	const onPageChange = (newPage: number) => {
@@ -65,7 +70,7 @@ const AllowedEmailPage = () => {
 
 	const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const { value } = event.target;
-		if (value === 'Все') {
+		if (value === 'All') {
 			setSelectedStatus(null);
 		} else {
 			setSelectedStatus(value as SessionStatus);
@@ -76,8 +81,8 @@ const AllowedEmailPage = () => {
 
 	return (
 		<div className="allowed-email page">
-			<div className="back" onClick={() => navigate(-1)}>Назад</div>
-			<UITitle title="Сессия" subtitle="Создать сессию для пользователя" />
+			<div className="back" onClick={() => navigate(-1)}>Back</div>
+			<UITitle title="Session" subtitle="Create a session for a user" />
 			<div className="allowed-email__create">
 				<UIField
 					id={`email-${quizId}`}
@@ -88,36 +93,40 @@ const AllowedEmailPage = () => {
 					}}
 					label="Email"
 				/>
-				<button onClick={handleSubmit} className="allowed-email__button">Добавить</button>
+				<button onClick={handleSubmit} className="allowed-email__button">Create</button>
 				<div className="allowed-email__select">
 					<select className="select-custom" onChange={handleStatusChange}>
-						<option value="Все">Все</option>
-						<option value={SessionStatus.COMPLETED}>Завершено</option>
-						<option value={SessionStatus.NOT_STARTED}>Не начато</option>
-						<option value={SessionStatus.IN_PROGRESS}>В прохождении</option>
+						<option value="Все">All</option>
+						<option value={SessionStatus.COMPLETED}>Completed</option>
+						<option value={SessionStatus.NOT_STARTED}>Not Started</option>
+						<option value={SessionStatus.IN_PROGRESS}>In Progress</option>
 					</select>
 				</div>
 			</div>
-			<div className="allowed-email__table">
-				<table>
-					<thead>
-						<tr>
-							<td className='user'><span>Пользователь</span> <span>Статус</span> <span>Удалить</span></td>
-						</tr>
-					</thead>
-					<tbody>
-						{sessions && sessions.data?.map((session) => (
-							<tr key={session.id}>
-								<td className='user'>
-									{session.status === 'COMPLETED' ? <Link to={`/session/${session.id}/statistics`} >{session?.email?.email}</Link> : <span>{session?.email?.email}</span>}
-									{session.status === 'COMPLETED' && 'Завершено' || session.status === 'NOT_STARTED' && 'Не начато' || session.status === 'IN_PROGRESS' && 'В прохождении'}
-									<button className="allowed-email__delete" onClick={() => handleDelete(session.id)}>Удалить</button>
-								</td>
+			{sessions && sessions.data.length > 0 ? (
+				<div className="allowed-email__table">
+					<table>
+						<thead>
+							<tr>
+								<td className='user'><span>Email</span> <span>Status</span> <span>Delete</span></td>
 							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
+						</thead>
+						<tbody>
+							{sessions.data?.map((session) => (
+								<tr key={session.id}>
+									<td className='user'>
+										{session.status === 'COMPLETED' ? <Link to={`/session/${session.id}/statistics?email=${session?.email?.email}`} >{session?.email?.email}</Link> : <span>{session?.email?.email}</span>}
+										{session.status === 'COMPLETED' && 'Completed' || session.status === 'NOT_STARTED' && 'Not Started' || session.status === 'IN_PROGRESS' && 'In Progress'}
+										<button className="allowed-email__delete" onClick={() => handleDelete(session.id)}>Delete</button>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			) : (
+				<h3 className="allowed-email__empty">No sessions</h3>
+			)}
 			{sessions && <Pagination meta={sessions.meta} visiblePages={10} onPageChange={onPageChange} />}
 		</div>
 	);

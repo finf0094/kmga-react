@@ -58,12 +58,12 @@ const AddQuestionPage: React.FC = () => {
         };
         try {
             const res = await createQuestion(submitData).unwrap();
-            toast.success(`Вопрос "${res.title}" был успешно создан!`);
+            toast.success(`Question "${res.title}" was successfully added!`);
             refetch();
         } catch (err) {
             const error = err as ErrorResponse
             if (error.status === 401) {
-                toast.error('Не хватает прав для создания вопроса!')
+                toast.error("You don't have enough rights to create a question")
             }
             toast.error(`${error.data?.message}`);
             console.error(err);
@@ -74,12 +74,12 @@ const AddQuestionPage: React.FC = () => {
     const handleDelete = async (questionId: string) => {
         try {
             await deleteQuestion({quizId, questionId}).unwrap();
-            toast.success("Вопрос был успешно удален!");
+            toast.success("Question was successfuly deleted!");
             refetch();
         } catch (err) {
             const error = err as ErrorResponse
             if (error.status === 401) {
-                toast.error('Не хватает прав для удаления вопроса!')
+                toast.error("You don't have enough rights to delete a question")
             }
             toast.error(`${error.data?.message}`);
             console.error(err);
@@ -111,21 +111,21 @@ const AddQuestionPage: React.FC = () => {
                 </div>
             </div>
             <UIForm submitFn={handleSubmit(onSubmit)} isButton={false}>
-                <div className="question-form__back" onClick={() => navigate(-1)}>Назад</div>
+                <div className="question-form__back" onClick={() => navigate(-1)}>Back</div>
                 <div className="ui-title__head" style={{ textAlign: 'left', marginBottom: '10px' }}>
-                    <h1 className="ui-title__title" style={{ fontSize: '36px' }}>Добавить вопрос</h1>
-                    <h1 className="ui-title__desc" style={{ fontSize: '18px' }}>Добавить вопрос для текущего теста</h1>
+                    <h1 className="ui-title__title" style={{ fontSize: '36px' }}>Add Question</h1>
+                    <p className="ui-title__desc" style={{ fontSize: '18px' }}>Add a question for the current test</p>
                 </div>
                 <UIField
-                    label='Название'
+                    label='Name'
                     id='questionTitle'
-                    inputProps={{ ...register("title", { required: "Название вопроса должно быть обязательным!" }), placeholder: 'Введите название вопроса' }}
+                    inputProps={{ ...register("title", { required: "Name is required!" }), placeholder: 'Enter a question title' }}
                     error={errors.title?.message}
                 />
                 <div className="options-section">
-                    <label className="form-label">Опций</label>
+                    <label className="form-label">Options</label>
                     <div className="options-list">
-                        {Array.from({ length: 4 }, (_, index) => (
+                        {Array.from({ length: 5 }, (_, index) => (
                             <div key={index} className="option-item">
                                 <input
                                     {...register(`options.${index}.value`, { required: "Option is required." })}
@@ -144,8 +144,8 @@ const AddQuestionPage: React.FC = () => {
                     </div>
                 </div>
                 <div className="button-group">
-                    <button type="button" className="add-question__button cancel" onClick={() => navigate('/dashboard')}>Отменить</button>
-                    <button type="submit" className="add-question__button submit">Создать</button>
+                    <button type="button" className="add-question__button cancel" onClick={() => navigate('/dashboard')}>Cancel</button>
+                    <button type="submit" className="add-question__button submit">Create</button>
                 </div>
             </UIForm>
         </div>

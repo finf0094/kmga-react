@@ -3,7 +3,7 @@ import './styles.css'
 
 interface UITitleProps {
   title: string;
-  subtitle: string;
+  subtitle: string | null;
 }
 
 const UITitle: React.FC<UITitleProps> = ({ title, subtitle }) => {

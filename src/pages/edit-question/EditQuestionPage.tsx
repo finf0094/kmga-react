@@ -47,7 +47,7 @@ const EditQuestionPage = () => {
 
         try {
             await updateQuestion({ quizId, question: submitData }).unwrap();
-            toast.success(`Вопрос был успешно обновлён!`);
+            toast.success(`Question was updated successfully!`);
             navigate(-1);
         } catch (err) {
             const error = err as ErrorResponse;
@@ -58,17 +58,17 @@ const EditQuestionPage = () => {
 
     return (
         <div className="edit-question page">
-            <div className="back" onClick={() => navigate(-1)}>Назад</div>
-            <UITitle title='Вопрос' subtitle='Редактирование вопроса' />
+            <div className="back" onClick={() => navigate(-1)}>Back</div>
+            <UITitle title='Question' subtitle='Edit a question' />
             <UIForm submitFn={handleSubmit(onSubmit)} isButton={false}>
                 <UIField
-                    label='Название'
+                    label='Name'
                     id='questionTitle'
-                    inputProps={{ ...register("title", { required: "Название вопроса должно быть обязательным!" }), placeholder: 'Введите название вопроса' }}
+                    inputProps={{ ...register("title", { required: "Question name is required!" }), placeholder: 'Enter a question name' }}
                     error={errors.title?.message}
                 />
                 <div className="options-section">
-                    <label className="form-label">Опций</label>
+                    <label className="form-label">Options</label>
                     <div className="options-list">
                         {questionData?.options.map((option, index) => (
                             <div key={index} className="option-item">
@@ -90,8 +90,8 @@ const EditQuestionPage = () => {
                     </div>
                 </div>
                 <div className="button-group">
-                    <button type="button" className="add-question__button cancel" onClick={() => navigate('/dashboard')}>Отменить</button>
-                    <button type="submit" className="add-question__button submit">Сохранить</button>
+                    <button type="button" className="add-question__button cancel" onClick={() => navigate('/dashboard')}>Cancel</button>
+                    <button type="submit" className="add-question__button submit">Save</button>
                 </div>
             </UIForm>
         </div>

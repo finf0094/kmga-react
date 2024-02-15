@@ -22,6 +22,7 @@ export default function PlayerScreenPage() {
     const [selectedOptions, setSelectedOptions] = useState<SelectedOption>({});
     const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
     const [isQuizFinished, setIsQuizFinished] = useState<boolean>(false);
+
     const [endQuizFn, {isLoading: isSubmitting}] = useEndQuizMutation();
     const [startQuizFn] = useStartQuizMutation();
     const [submitAnswer] = useSubmitAnswerMutation();
@@ -62,11 +63,11 @@ export default function PlayerScreenPage() {
                 await submitAnswer({ sessionId, questionId: currentQuestionId, answerId: selectedOption });
                 setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
             } catch (error) {
-                console.error("Ошибка при отправке ответа:", error);
-                toast.error("Ошибка при отправке ответа");
+                console.error("Error sending answer:", error);
+                toast.error("Error sending answer.");
             }
         } else {
-            toast.error("Пожалуйста, выберите ответ перед переходом к следующему вопросу");
+            toast.error("Please select an answer before moving on to the next question.");
         }
     };
 
@@ -75,19 +76,21 @@ export default function PlayerScreenPage() {
             await startQuizFn(sessionId);
             setIsQuizStarted(true);
         } catch (error) {
-            console.error("Ошибка при отправке ответов:", error);
-            toast.error("Ошибка при отправке ответов");
+            console.error("Error :", error);
+            toast.error("Error starting survey.");
         }
     };
 
     const endQuiz = async () => {
         try {
+            const selectedOption = selectedOptions[currentQuestionId];
+            await submitAnswer({ sessionId, questionId: currentQuestionId, answerId: selectedOption });
             await endQuizFn(sessionId);
-            toast.success("Опрос успешно окончен!");
+            toast.success("Survey completed successfully!");
             setIsQuizFinished(true);
         } catch (error) {
-            console.error("Ошибка при завершении теста:", error);
-            toast.error("Ошибка при завершении теста");
+            console.error("Error completing survey:", error);
+            toast.error("Error completing survey.");
         }
     };
 
@@ -95,10 +98,10 @@ export default function PlayerScreenPage() {
         return (
             <div className="page">
                 <div className="player-screen__quiz player-screen__start">
-                    <UITitle title="Тест" subtitle="Начало теста"/>
+                    <UITitle title="Start survey" subtitle="Start of the survey"/>
                     <div className="player-screen__start-content">
-                        <h1 className="player-screen__title">Для начала опроса нажмите на кнопку ниже</h1>
-                        <button onClick={startQuiz} className="player-screen__button">Начать опрос</button>
+                        <h1 className="player-screen__title">To start the survey, click the button below</h1>
+                        <button onClick={startQuiz} className="player-screen__button">Start survey</button>
                     </div>
                 </div>
             </div>
@@ -109,7 +112,7 @@ export default function PlayerScreenPage() {
         <div className="player-screen">
             {!isQuizFinished ? (
                 <div className="player-screen__quiz">
-                    <UITitle title={session.quiz.title} subtitle="Пройдите опрос"/>
+                    <UITitle title={session.quiz.title} subtitle="Take the survey"/>
                     <div key={currentQuestion?.id}>
                         <h3 className="player-screen__name">{currentQuestion?.title}</h3>
                         <ul className="player-screen__answers">
@@ -130,17 +133,17 @@ export default function PlayerScreenPage() {
                     </div>
                     {currentQuestionIndex < (questions?.length ?? 0) - 1 ? (
                         <button onClick={handleNextQuestion} className="player-screen__button quiz-button">
-                            Следующий вопрос
+                            Next Question
                         </button>
                     ) : (
                         <button onClick={endQuiz} disabled={isSubmitting} className="player-screen__button quiz-button">
-                            Отправить ответы
+                            Finish survey
                         </button>
                     )}
                 </div>
             ) : (
                 <div className="player-screen__finish">
-                    <h1>Опрос был пройден! Можете закрыть эту страницу.</h1>
+                    <h1>The survey has been completed! You can close this page.</h1>
                 </div>
             )}
         </div>

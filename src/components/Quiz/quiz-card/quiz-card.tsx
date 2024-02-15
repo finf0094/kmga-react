@@ -33,12 +33,12 @@ export default function QuizCard({
   const handleDelete = async (quizId: string) => {
     try {
       await deleteQuestion(quizId).unwrap();
-      toast.success(`Вопрос был успешно удален!`);
+      toast.success(`Question was deleted successfuly!`);
       window.location.reload();
     } catch (err: unknown) {
       const error = err as ErrorResponse;
       if (error?.status === 403) {
-        toast.error("Не хватает прав для удаления вопроса!");
+        toast.error("You don't have enough rights to delete a question!");
       }
       console.error("Failed to create quiz:", err);
     }
@@ -84,7 +84,7 @@ export default function QuizCard({
       </div>
       {tags.length > 0 ? (
         <div className="quiz-card-footer">
-          <span className="quiz-card-tags-title">Тэги</span>
+          <span className="quiz-card-tags-title">Tags</span>
           <ul className="quiz-card-tags">
             {tags.map((tag, index) => (
               <li className="quiz-tag" key={index}>
@@ -95,7 +95,7 @@ export default function QuizCard({
         </div>
       ) : (
         <div className="quiz-card-footer">
-          <span className="quiz-card-tags-title">Нету тэгов</span>
+          <span className="quiz-card-tags-title">No tags</span>
         </div>
       )}
     </div>

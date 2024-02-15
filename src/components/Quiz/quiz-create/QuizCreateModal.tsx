@@ -50,8 +50,8 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({ isOpen, onClose, onSu
 	return (
 		<Modal
 			id="createQuizModal"
-			title="Создать опрос"
-			subtitle='Введите нужные данные для создания опроса'
+			title="Create Survey"
+			subtitle='Enter the required fields to create a survey'
 			width='600'
 			button
 			buttonText="Создать"
@@ -61,9 +61,9 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({ isOpen, onClose, onSu
 			onConfirm={handleSubmit(onSubmit)}
 		>
 			<UIForm submitFn={handleSubmit(onSubmit)} isButton={false}>
-				<UIField label='Название' id='quizName' inputProps={{...register('title', { required: 'Данное поле должно быть заполненным!' }), placeholder: "Введите название для опроса"}} error={errors.title?.message} />
-				<UIField label='Описание' id='quizDesc' inputProps={{...register('description', { required: 'Данное поле должно быть заполненным!' }), placeholder: "Введите описание для опроса"}} error={errors.description?.message} />
-				<UIField label='Тэги' id='quizTags' inputProps={{placeholder: "Введите название тэга и нажмите ENTER для добавления", onKeyDown: handleTagsKeyDown}} error={errors.description?.message} />
+				<UIField label='Name' id='quizName' inputProps={{...register('title', { required: 'Name is required!' }), placeholder: "Enter a survey name"}} error={errors.title?.message} />
+				<UIField label='Description' id='quizDesc' inputProps={{...register('description', { required: 'Description is required!' }), placeholder: "Enter a survey description"}} error={errors.description?.message} />
+				<UIField label='Tags' id='quizTags' inputProps={{placeholder: "Enter a tag name and press ENTER to add", onKeyDown: handleTagsKeyDown}} error={errors.description?.message} />
 
 				<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
 					{tags.map((tag, index) => (

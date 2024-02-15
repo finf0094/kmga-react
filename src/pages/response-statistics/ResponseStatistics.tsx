@@ -8,14 +8,16 @@ const ResponseStatisticsPage = () => {
   const { sessionId } = useParams() as { sessionId: string };
   const { data, isLoading, isError } = useSessionStatisticsQuery(sessionId);
   const navigate = useNavigate();
+  const searchParams = new URLSearchParams(window.location.search);
+  const email = searchParams.get('email');
 
   if (isLoading) return <Loader />;
-  if (isError || !data) return <div className='loading'>Ошибка загрузки деталей ответа</div>;
+  if (isError || !data) return <div className='loading'>Error loading response details</div>;
 
   return (
     <div className="response-statistics page">
-      <div className="back" onClick={() => navigate(-1)}>Назад</div>
-      <UITitle title={data.quizTitle} subtitle={data.email} />
+      <div className="back" onClick={() => navigate(-1)}>Back</div>
+      <UITitle title={data.quizTitle} subtitle={email} />
       <div className='response-statistics__answers'>
         {data.questions.map((question, index) => (
           <div key={index} className='response-statistics__answer'>
@@ -32,7 +34,7 @@ const ResponseStatisticsPage = () => {
           </div>
         ))}
       </div>
-      <p className='response-statistics__date'><span>Дата ответа:</span> {new Date(data.createdAt).toLocaleDateString()}</p>
+      <p className='response-statistics__date'><span>Date of response:</span> {new Date(data.createdAt).toLocaleDateString()}</p>
     </div>
   );
 };

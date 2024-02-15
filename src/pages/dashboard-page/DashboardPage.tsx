@@ -60,15 +60,15 @@ const DashboardPage: FC = () => {
 
     return (
         <div className='dashboard page'>
-            <UITitle title='Все опросы' subtitle='Все опросы нашей организации' />
+            <UITitle title='All Surveys' subtitle='All surveys of our organization' />
             <div className="dashboard__action">
-                <button type="submit" className="dashboard__button" onClick={openModal}>Новый опрос</button>
+                <button type="submit" className="dashboard__button" onClick={openModal}>New survey</button>
                 <div className="select-container">
                     <select className="select-custom" onChange={handleStatusChange}>
-                        <option value="Все">Все</option>
-                        <option value={QuizStatus.ACTIVE}>Активные</option>
-                        <option value={QuizStatus.INACTIVE}>Неактивные</option>
-                        <option value={QuizStatus.DRAFT}>Черновик</option>
+                        <option value="Все">All</option>
+                        <option value={QuizStatus.ACTIVE}>Active</option>
+                        <option value={QuizStatus.INACTIVE}>Inactive</option>
+                        <option value={QuizStatus.DRAFT}>Draft</option>
                     </select>
                 </div>
             </div>

@@ -75,22 +75,22 @@ const EditQuizPage: React.FC = () => {
 	watch('tags');
 
     if (isLoading) return <Loader />;
-    if (error) return <div className='loading'>Ошибка при загрузке страницы теста</div>;
+    if (error) return <div className='loading'>Error loading survey page</div>;
 
     return (
         <div className='edit-quiz page'>
-            <div className="back" onClick={() => navigate(-1)}>Назад</div>
-            <UITitle title='Тест' subtitle='Редактирование теста' />
-            <UIForm submitFn={handleSubmit(onSubmit)} isButton={true} buttonText='Обновить'>
-                <UIField label='Название' id='quizTitle' inputProps={{ ...register('title', { required: 'This field is required!' }) }} error={errors.title?.message} />
-                <UIField label='Описание' id='quizDescription' inputProps={{ ...register('description', { required: 'This field is required!' }) }} error={errors.description?.message} />
-                <UIField label='Тэги' id='quizTags' inputProps={{placeholder: "Введите название тэга и нажмите ENTER для добавления", onKeyDown: handleTagsKeyDown}} error={errors.description?.message} />
+            <div className="back" onClick={() => navigate(-1)}>Back</div>
+            <UITitle title='Edit Survey' subtitle='Edit or correct the survey' />
+            <UIForm submitFn={handleSubmit(onSubmit)} isButton={true} buttonText='Update'>
+                <UIField label='Name' id='quizTitle' inputProps={{ ...register('title', { required: 'Name is required!' }) }} error={errors.title?.message} />
+                <UIField label='Description' id='quizDescription' inputProps={{ ...register('description', { required: 'Description is required!' }) }} error={errors.description?.message} />
+                <UIField label='Tags' id='quizTags' inputProps={{placeholder: "Enter a tag name and press ENTER to add", onKeyDown: handleTagsKeyDown}} error={errors.description?.message} />
                 <div className='ui-field'>
-                    <label htmlFor="quizStatus" className='ui-field__label'>Статус</label>
-                    <select id="quizStatus" className="select-custom" {...register('status', { required: 'This field is required!' })} onChange={handleStatusChange}>
-                        <option value={QuizStatus.ACTIVE}>Активный</option>
-                        <option value={QuizStatus.INACTIVE}>Неактивный</option>
-                        <option value={QuizStatus.DRAFT}>Черновик</option>
+                    <label htmlFor="quizStatus" className='ui-field__label'>Status</label>
+                    <select id="quizStatus" className="select-custom" {...register('status', { required: 'Status is required!' })} onChange={handleStatusChange}>
+                        <option value={QuizStatus.ACTIVE}>Active</option>
+                        <option value={QuizStatus.INACTIVE}>Inactive</option>
+                        <option value={QuizStatus.DRAFT}>Draft</option>
                     </select>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>

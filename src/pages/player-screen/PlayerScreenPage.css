@@ -7,7 +7,7 @@
 }
 
 .player-screen__button {
-  width: 250px;
+  width: 200px;
   margin: 0 auto;
   background: var(--se-life-green);
   padding: 15px 0;
@@ -63,13 +63,13 @@
 }
 
 .player-screen__answer.selected {
-  background: var(--se-sky-blue);
+  background: var(--se-life-green);
   color: #fff;
 }
 
 .quiz-button {
   margin: 0;
-  width: 270px;
+  width: 200px;
 }
 
 .player-screen__start {

@@ -50,7 +50,7 @@
 }
 
 .allowed-email .user span, .allowed-email td>a {
-  width: 5%;
+  width: 4%;
   font-family: var(--manrope-font);
   font-weight: 500;
 }
@@ -62,6 +62,10 @@
 
 .allowed-email tr:last-child {
   border: 0;
+}
+
+.allowed-email thead td span:first-child {
+  text-align: left;
 }
 
 .allowed-email th, td {
@@ -80,4 +84,14 @@
   font-weight: 500;
   font-size: 14px;
   border-radius: 7px;
+}
+
+.allowed-email__empty {
+  font-size: 30px;
+  font-weight: 500;
+  font-family: var(--inter-font);
+  letter-spacing: -2px;
+  text-align: center;
+  margin-top: 20px;
+  color: var(--se-dark-grey);
 }
