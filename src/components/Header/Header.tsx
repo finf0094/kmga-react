@@ -13,7 +13,7 @@ const Header: React.FC = () => {
     <header className='header'>
       <div className="header__inner">
         <img src={headerLogo} alt="KMGAutomation" className="header__logo" onClick={() => { isAuthenticated && navigate('/dashboard') }} />
-        <Profile />
+        { isAuthenticated && <Profile /> }
       </div>
     </header>
   );
