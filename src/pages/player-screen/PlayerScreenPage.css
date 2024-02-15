@@ -6,24 +6,6 @@
   padding: 25px;
 }
 
-.check-access {
-  width: 30vw !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.check-access .ui-title__head {
-  margin-bottom: 32px;
-}
-
-.player-screen__check {
-  width: 100%;
-  display: grid;
-  grid-gap: 32px;
-}
-
 .player-screen__button {
   width: 250px;
   margin: 0 auto;
@@ -49,10 +31,15 @@
   text-align: left;
 }
 
+.player-screen .ui-title__title {
+  font-size: 34px;
+}
+
 .player-screen__name {
   font-size: 22px;
   font-weight: 500;
   margin-bottom: 20px;
+  font-family: var(--manrope-font);
 }
 
 .player-screen__answers {
@@ -67,6 +54,7 @@
   border-radius: 10px;
   padding: 13px 20px;
   cursor: pointer;
+  font-family: var(--manrope-font);
   transition: .25s ease-out;
 }
 

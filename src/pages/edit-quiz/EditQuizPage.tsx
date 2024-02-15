@@ -75,7 +75,7 @@ const EditQuizPage: React.FC = () => {
 	watch('tags');
 
     if (isLoading) return <Loader />;
-    if (error) return <div className='loader'>Ошибка при загрузке страницы теста</div>;
+    if (error) return <div className='loading'>Ошибка при загрузке страницы теста</div>;
 
     return (
         <div className='edit-quiz page'>

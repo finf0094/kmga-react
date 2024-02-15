@@ -10,7 +10,7 @@ const ResponseStatisticsPage = () => {
   const navigate = useNavigate();
 
   if (isLoading) return <Loader />;
-  if (isError || !data) return <div>Ошибка загрузки деталей ответа</div>;
+  if (isError || !data) return <div className='loading'>Ошибка загрузки деталей ответа</div>;
 
   return (
     <div className="response-statistics page">

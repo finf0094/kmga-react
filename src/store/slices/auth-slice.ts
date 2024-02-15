@@ -24,7 +24,6 @@ export const login = createAsyncThunk(
             return response.data;
         } catch (error) {
             const axiosError = error as AxiosError;
-            console.log(axiosError.response?.data);
             
             return rejectWithValue(axiosError.response?.data);
         }

@@ -5,6 +5,14 @@
   width: 100%;
 }
 
+.allowed-email .select-custom {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
 .allowed-email__button {
   margin: 15px auto 0;
   width: 170px;
@@ -14,10 +22,6 @@
   font-size: 18px;
   padding: 13px 0;
   margin-bottom: 25px;
-}
-
-.allowed-email__select {
-  margin: 0 auto 25px;
 }
 
 

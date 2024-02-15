@@ -9,7 +9,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: "http://195.49.210.212:3002",
+        target: "http://localhost:3000",
         changeOrigin: true,
         secure: false,
         cookiePathRewrite: {

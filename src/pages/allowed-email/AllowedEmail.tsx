@@ -22,11 +22,19 @@ const AllowedEmailPage = () => {
 	const [deleteSession, { isLoading: isDeleting }] = useDeleteSessionMutation();
 	const { data: sessions, isLoading: isSessionsLoading, refetch } = useGetAllSessionQuery({ page: currentPage, status: selectedStatus });
 
-	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-		setEmail(e.target.value);
+	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+
+	const validateEmail = (email: string) => {
+		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return re.test(email);
+	};
 
 	const handleSubmit = async () => {
 		if (email) {
+			if (!validateEmail(email)) {
+				toast.error("Пожалуйста, введите корректный email.");
+				return;
+			}
 			try {
 				await createSession({ quizId, email });
 				toast.success("Сессия успешно была создана.");
@@ -40,10 +48,11 @@ const AllowedEmailPage = () => {
 			toast.error("Пожалуйста, введите email.");
 		}
 	};
+
 	const handleDelete = async (sessionId: string) => {
 		try {
 			await deleteSession(sessionId);
-			toast.success("Сессия успешно удалено.");
+			toast.success("Сессия успешно удалена.");
 			refetch()
 		} catch (error) {
 			console.error("Ошибка при удалений сессии:", error);
@@ -62,8 +71,6 @@ const AllowedEmailPage = () => {
 			setSelectedStatus(value as SessionStatus);
 		}
 	};
-
-	console.log(sessions?.data)
 
 	if (isLoading || isSessionsLoading || isDeleting) return <Loader />;
 

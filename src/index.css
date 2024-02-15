@@ -53,6 +53,7 @@ body {
 
 main {
   height: calc(100% - 70px);
+  margin-bottom: 25px;
 }
 
 a {
@@ -108,11 +109,28 @@ button {
   letter-spacing: -3px;
 }
 
-.back {
-  position: absolute;
-  left: 20px;
-  top: 20px;
+.logout__container {
+  width: 100%;
+  display: flex;
+  align-self: flex-end;
+  justify-content: flex-end;
+  padding-top: 20px;
+  padding-right: 15px;
+  margin-bottom: -50px;
+}
 
+.logout {
+  background: red;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px 25px;
+  border-radius: 10px;
+}
+
+.back {
+  margin-left: -20px;
+  margin-top: -60px;
   color: var(--se-dark-grey);
   cursor: pointer;
   font-weight: 600;

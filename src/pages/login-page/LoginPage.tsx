@@ -33,12 +33,10 @@ const LoginPage: React.FC = () => {
             try {
                 const data: any = await dispatch(login({ email, password }))
 
-                console.log(data);
-                
-
                 if ('message' in data.payload) {
                     setError(data.payload?.message);
                 } else {
+                    navigate('/dashboard');
                     if (location.pathname === '/' && isAuthenticated) navigate('/dashboard');
                 }
 

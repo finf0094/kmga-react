@@ -50,8 +50,6 @@ const QuestionStatisticsPage = () => {
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
     const [chartType, setChartType] = useState('doughnut');
 
-    console.log(averageScore)
-
     const { data: statistics, isLoading: isLoadingStatistics } = useGetQuestionStatisticsQuery(selectedQuestionId ?? '', {
         skip: !selectedQuestionId,
     });
@@ -78,8 +76,6 @@ const QuestionStatisticsPage = () => {
             }]
         };
     }, [statistics]);
-
-    console.log(statistics)
 
     if (isLoadingQuestions || !chartData || isLoadingAverageScore) return <Loader />;
     return (

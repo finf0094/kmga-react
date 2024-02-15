@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {
     useGetAllQuestionsQuery,
@@ -28,6 +28,15 @@ export default function PlayerScreenPage() {
 
     const {data: session, isLoading: isLoadingSession} = useGetSessionQuery(sessionId);
     const {data: questions, isLoading: isLoadingQuestions} = useGetAllQuestionsQuery(session?.quizId);
+    
+    useEffect(() => {
+        console.log(session);
+        
+        if (session?.status === 'COMPLETED') {
+            setIsQuizStarted(true);
+            setIsQuizFinished(true);
+        }
+    }, [setIsQuizFinished, session]);
 
     const currentQuestionId = questions?.[currentQuestionIndex]?.id as string;
     const currentQuizId = session?.quizId as string;
@@ -100,7 +109,7 @@ export default function PlayerScreenPage() {
         <div className="player-screen">
             {!isQuizFinished ? (
                 <div className="player-screen__quiz">
-                    <UITitle title={`Опрос "${session.quiz.title}"`} subtitle="Пройдите опрос"/>
+                    <UITitle title={session.quiz.title} subtitle="Пройдите опрос"/>
                     <div key={currentQuestion?.id}>
                         <h3 className="player-screen__name">{currentQuestion?.title}</h3>
                         <ul className="player-screen__answers">
