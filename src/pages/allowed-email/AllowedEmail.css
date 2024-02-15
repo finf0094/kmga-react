@@ -45,9 +45,10 @@
   padding: 15px 20px;
 }
 
-.allowed-email .user span {
+.allowed-email .user span, .allowed-email td>a {
   width: 5%;
   font-family: var(--manrope-font);
+  font-weight: 500;
 }
 
 .allowed-email tr {
@@ -66,7 +67,6 @@
 
 .allowed-email td>a {
   color: var(--se-sky-blue);
-  font-weight: 500;
 }
 
 .allowed-email__delete {

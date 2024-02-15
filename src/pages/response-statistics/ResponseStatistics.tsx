@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { Loader } from '@src/components'; 
+import { Loader } from '@src/components';
 import { UITitle } from '@src/components/Base UI';
 import './ResponseStatistics.css'
-import {useSessionStatisticsQuery} from "@store/api";
+import { useSessionStatisticsQuery } from "@store/api";
 
 const ResponseStatisticsPage = () => {
   const { sessionId } = useParams() as { sessionId: string };
@@ -15,21 +15,20 @@ const ResponseStatisticsPage = () => {
   return (
     <div className="response-statistics page">
       <div className="back" onClick={() => navigate(-1)}>Назад</div>
-      <UITitle title={`Тест ${data.quizTitle}`} subtitle={`Пользователь ${data.email}`} />
+      <UITitle title={data.quizTitle} subtitle={data.email} />
       <div className='response-statistics__answers'>
         {data.questions.map((question, index) => (
           <div key={index} className='response-statistics__answer'>
             <h3>{question.title}</h3>
-              <div>Ответ:
-                  <span>
+            <div>
+              Ответ:
+              <span>
                 {question.options
-                    .filter(option => option.isSelected)
-                    .map((option, optionIndex) => (
-                        <span key={optionIndex}>{option.value}</span>
-                    ))
+                  .filter(option => option.isSelected)
+                  .map((option, optionIndex) => <span key={optionIndex}>{option.value}</span>)
                 }
               </span>
-              </div>
+            </div>
           </div>
         ))}
       </div>
