@@ -12,12 +12,17 @@
     width: 55px;
     padding: 15px 13px;
     border-right: 1px solid #F1F1F1;
+    overflow: hidden;
     white-space: nowrap;
     transition: 0.3s ease;
 }
 
 .sidebar.open {
     width: 300px;
+}
+
+.sidebar.open .sidebar__content {
+    overflow-y: scroll;
 }
 
 .sidebar__toggle {
@@ -31,8 +36,21 @@
 }
 
 .sidebar__content {
+    max-height: 83vh;
     display: grid;
     grid-gap: 15px;
+    padding-bottom: 25px;
+}
+
+.sidebar__content::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 20px;
+    background: #fff;
+}
+
+.sidebar__content::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #f1f1f1;
 }
 
 .sidebar__item {
