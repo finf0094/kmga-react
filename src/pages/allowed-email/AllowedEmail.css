@@ -24,6 +24,9 @@
   margin-bottom: 25px;
 }
 
+.allowed-email .pagination {
+  padding-bottom: 40px;
+}
 
 .allowed-email table {
   width: 100%;
@@ -77,13 +80,28 @@
   color: var(--se-sky-blue);
 }
 
-.allowed-email__delete {
+.allowed-email__actions {
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.allowed-email__action {
   padding: 7px 15px;
   color: #fff;
-  background: #ee2020;
   font-weight: 500;
   font-size: 14px;
   border-radius: 7px;
+}
+
+.allowed-email__action.send {
+  background: var(--se-life-green);
+}
+
+.allowed-email__action.delete {
+  background: #ee2020;
 }
 
 .allowed-email__empty {

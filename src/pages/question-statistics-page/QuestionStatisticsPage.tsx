@@ -104,7 +104,7 @@ const QuestionStatisticsPage = () => {
                                 <Loader />
                             ) : (
                                 statistics && (
-                                    <div>
+                                    <div className='question-stat__chart'>
                                         <h2 className='question-stat__name'>{statistics.question}</h2>
                                         <Suspense fallback={<div>Loading chart...</div>}>
                                             {chartType === 'doughnut' && <LazyDoughnut data={chartData} />}
@@ -117,7 +117,7 @@ const QuestionStatisticsPage = () => {
                             )}
                         </div>
                     ) : (
-                        <h1 className="loading">Общяя: {averageScore?.averageScorePercentage}</h1>
+                        <h1 className="loading">{averageScore?.averageScorePercentage}</h1>
                     )}
                 </div>
             </div>

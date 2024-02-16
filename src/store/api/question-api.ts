@@ -54,10 +54,7 @@ export const questionApi = createApi({
                 method: 'DELETE',
             }),
         }),
-        getQuestionStatistics: builder.query<{
-            question: string,
-            options: { value: string, count: number }[]
-        }, string>({
+        getQuestionStatistics: builder.query<{ question: string, options: { value: string, count: number }[] }, string>({
             query: (questionId) => `statistics/questions/${questionId}`,
         }),
     }),

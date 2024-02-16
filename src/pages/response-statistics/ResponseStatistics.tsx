@@ -8,8 +8,8 @@ const ResponseStatisticsPage = () => {
   const { sessionId } = useParams() as { sessionId: string };
   const { data, isLoading, isError } = useSessionStatisticsQuery(sessionId);
   const navigate = useNavigate();
-  const searchParams = new URLSearchParams(window.location.search);
-  const email = searchParams.get('email');
+  console.log(data);
+  
 
   if (isLoading) return <Loader />;
   if (isError || !data) return <div className='loading'>Error loading response details</div>;
@@ -17,13 +17,13 @@ const ResponseStatisticsPage = () => {
   return (
     <div className="response-statistics page">
       <div className="back" onClick={() => navigate(-1)}>Back</div>
-      <UITitle title={data.quizTitle} subtitle={email} />
+      <UITitle title={data.quizTitle} subtitle={data.email} />
       <div className='response-statistics__answers'>
         {data.questions.map((question, index) => (
           <div key={index} className='response-statistics__answer'>
             <h3>{question.title}</h3>
             <div>
-              Ответ:
+              Answer:
               <span>
                 {question.options
                   .filter(option => option.isSelected)

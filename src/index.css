@@ -131,7 +131,7 @@ button {
 }
 
 .back {
-  margin-left: -20px;
+  margin-left: -10px;
   margin-top: -60px;
   color: var(--se-dark-grey);
   cursor: pointer;

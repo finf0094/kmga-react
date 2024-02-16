@@ -2,7 +2,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
 	useCreateSessionMutation,
 	useDeleteSessionMutation,
-	useGetAllSessionQuery
+	useGetAllSessionsQuery,
+	useSendSessionToEmailMutation,
 } from "@store/api";
 import { UIField, UITitle } from "@components/Base UI";
 import { useState } from "react";
@@ -18,9 +19,10 @@ const AllowedEmailPage = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [selectedStatus, setSelectedStatus] = useState<SessionStatus | null>(null);
 
-	const [createSession, { isLoading }] = useCreateSessionMutation();
+	const [createSession, { isLoading: isCreating }] = useCreateSessionMutation();
+	const [sendSession, { isLoading: isSending }] = useSendSessionToEmailMutation();
 	const [deleteSession, { isLoading: isDeleting }] = useDeleteSessionMutation();
-	const { data: sessions, isLoading: isSessionsLoading, refetch } = useGetAllSessionQuery({ page: currentPage, status: selectedStatus });
+	const { data: sessions, isLoading: isSessionsLoading, refetch } = useGetAllSessionsQuery({ page: currentPage, status: selectedStatus, quizId });
 
 	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
 
@@ -29,7 +31,7 @@ const AllowedEmailPage = () => {
 		return re.test(email);
 	};
 
-	const handleSubmit = async () => {
+	const handleCreate = async () => {
 		if (email) {
 			if (!validateEmail(email)) {
 				toast.error("Please, enter a valid email.");
@@ -38,7 +40,7 @@ const AllowedEmailPage = () => {
 			try {
 				if (sessions?.data.find((session) => session.email?.email === email)) {
 					toast.error("This email is already exists.");
-          return;
+					return;
 				}
 
 				await createSession({ quizId, email });
@@ -51,6 +53,17 @@ const AllowedEmailPage = () => {
 			}
 		} else {
 			toast.error("Please, enter a email.");
+		}
+	};
+
+	const sendSessionToEmail = async (sessionId: string) => {
+		try {
+			await sendSession({ sessionId });
+			toast.success("Session was sended successfully.");
+			refetch();
+		} catch (error) {
+			console.error("Error sending session:", error);
+			toast.error("Error sending session.");
 		}
 	};
 
@@ -77,7 +90,7 @@ const AllowedEmailPage = () => {
 		}
 	};
 
-	if (isLoading || isSessionsLoading || isDeleting) return <Loader />;
+	if (isCreating || isSessionsLoading || isDeleting || isSending) return <Loader />;
 
 	return (
 		<div className="allowed-email page">
@@ -93,11 +106,12 @@ const AllowedEmailPage = () => {
 					}}
 					label="Email"
 				/>
-				<button onClick={handleSubmit} className="allowed-email__button">Create</button>
+				<button onClick={handleCreate} className="allowed-email__button">Create</button>
 				<div className="allowed-email__select">
 					<select className="select-custom" onChange={handleStatusChange}>
-						<option value="Все">All</option>
+						<option value="All">All</option>
 						<option value={SessionStatus.COMPLETED}>Completed</option>
+						<option value={SessionStatus.MAIL_SENDED}>Mail Sent</option>
 						<option value={SessionStatus.NOT_STARTED}>Not Started</option>
 						<option value={SessionStatus.IN_PROGRESS}>In Progress</option>
 					</select>
@@ -115,9 +129,12 @@ const AllowedEmailPage = () => {
 							{sessions.data?.map((session) => (
 								<tr key={session.id}>
 									<td className='user'>
-										{session.status === 'COMPLETED' ? <Link to={`/session/${session.id}/statistics?email=${session?.email?.email}`} >{session?.email?.email}</Link> : <span>{session?.email?.email}</span>}
-										{session.status === 'COMPLETED' && 'Completed' || session.status === 'NOT_STARTED' && 'Not Started' || session.status === 'IN_PROGRESS' && 'In Progress'}
-										<button className="allowed-email__delete" onClick={() => handleDelete(session.id)}>Delete</button>
+										{session.status === 'COMPLETED' ? <Link to={`/session/${session.id}/statistics`} >{session?.email?.email}</Link> : <span>{session?.email?.email}</span>}
+										{session.status === 'COMPLETED' && 'Completed' || session.status === 'NOT_STARTED' && 'Not Started' || session.status === 'IN_PROGRESS' && 'In Progress' || session.status === 'MAIL_SENDED' && 'Mail Sent'}
+										<div className="allowed-email__actions">
+											{session.status === "NOT_STARTED" && <button className="allowed-email__action send" onClick={() => sendSessionToEmail(session.id)}>Send</button>}
+											<button className="allowed-email__action delete" onClick={() => handleDelete(session.id)}>Delete</button>
+										</div>
 									</td>
 								</tr>
 							))}

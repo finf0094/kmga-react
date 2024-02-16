@@ -88,6 +88,19 @@
   gap: 20px;
 }
 
+.player-screen__feedback {
+  width: 550px;
+  height: 300px;
+  resize: none;
+  border: 1px solid #d6d6d6;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  padding: 15px;
+  outline: none;
+  font-size: 17px;
+  font-family: var(--manrope-font);
+}
+
 .player-screen__title {
   font-size: 36px !important;
 }

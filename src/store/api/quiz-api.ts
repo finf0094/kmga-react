@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "@src/services/api/baseQuery.ts";
-import { IPagination, IQuiz, QuizStatus } from "@interfaces";
+import { IPagination, IQuiz, QuizStatus, SessionStatus } from "@interfaces";
+import { Session } from "@src/interfaces/session";
 
 export const quizApi = createApi({
   reducerPath: "quizApi",
@@ -17,6 +18,10 @@ export const quizApi = createApi({
         url: `/quiz?page=${page}&perPage=${perPage}&search=${search}&status=${status}`,
         method: "GET",
       }),
+    }),
+
+    getAllSessions: builder.query<IPagination<Session>, { page: number, perPage?: number, search?: string, status?: SessionStatus | null, quizId: string }>({
+      query: ({page = 1, perPage = 10, search = '', status = null, quizId}) => `/quiz/${quizId}/sessions?page${page}&perPage=${perPage}&search=${search}&status=${status}`
     }),
 
     createQuiz: builder.mutation<IQuiz, { title: string; description: string; status?: string; tags: string[] }>({
@@ -79,6 +84,7 @@ export const quizApi = createApi({
 
 export const {
   useGetAllQuizQuery,
+  useGetAllSessionsQuery,
   useGetQuizByIdQuery,
   useCreateQuizMutation,
   useDeleteQuizByIdMutation,

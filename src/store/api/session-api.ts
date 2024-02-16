@@ -1,7 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "@src/services/api";
 import {Session} from "@interfaces/session.ts";
-import {IPagination, SessionStatus} from "@interfaces";
 
 interface Option {
     value: string;
@@ -24,11 +23,6 @@ export const sessionApi = createApi({
     reducerPath: 'sessionApi',
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
-        getAllSession: builder.query<IPagination<Session>, {page: number, perPage?: number, search?: string, status?: SessionStatus | null}>({
-            query:
-                ({page = 1, perPage = 10, search = '', status = null}) =>
-                `sessions?page${page}&perPage=${perPage}&search=${search}&status=${status}`
-        }),
         getSession: builder.query<Session, string>({
             query: (sessionId) => `sessions/${sessionId}`,
         }),
@@ -37,6 +31,12 @@ export const sessionApi = createApi({
                 url: 'sessions',
                 method: 'POST',
                 body: { email, quizId },
+            }),
+        }),
+        sendSessionToEmail: builder.mutation<void, { sessionId: string }>({
+            query: ({ sessionId }) => ({
+                url: `sessions/${sessionId}/send`,
+                method: 'POST',
             }),
         }),
         deleteSession: builder.mutation<void, string>({
@@ -58,10 +58,11 @@ export const sessionApi = createApi({
                 body: { questionId, answerId },
             }),
         }),
-        endQuiz: builder.mutation<{ quizSessionId: string }, string>({
-            query: (quizSessionId) => ({
+        endQuiz: builder.mutation<void, { quizSessionId: string, feedback: string }>({
+            query: ({ quizSessionId, feedback }) => ({
                 url: `sessions/${quizSessionId}/end`,
                 method: 'POST',
+                body: { feedback },
             }),
         }),
 
@@ -76,10 +77,11 @@ export const sessionApi = createApi({
 
 export const {
     useCreateSessionMutation,
+    useSendSessionToEmailMutation,
     useSubmitAnswerMutation,
     useStartQuizMutation,
-    useEndQuizMutation, useGetSessionQuery,
-    useGetAllSessionQuery,
+    useEndQuizMutation, 
+    useGetSessionQuery,
     useDeleteSessionMutation,
     useSessionStatisticsQuery
 } = sessionApi;

@@ -11,6 +11,7 @@ export enum QuizStatus{
 
 export enum SessionStatus {
     NOT_STARTED = 'NOT_STARTED',
+    MAIL_SENDED = 'MAIL_SENDED',
     IN_PROGRESS = 'IN_PROGRESS',
     COMPLETED = 'COMPLETED'
 }
