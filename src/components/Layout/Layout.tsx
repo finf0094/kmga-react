@@ -22,7 +22,7 @@ const Layout: React.FC = () => {
       <Header />
       {location.pathname !== '/login' && isAuthenticated && (
         <div className="logout__container">
-          <button className="logout" onClick={() => dispatch(logout())}>Выйти</button>
+          <button className="logout" onClick={() => dispatch(logout())}>Log out</button>
         </div>
       )}
       <main>
