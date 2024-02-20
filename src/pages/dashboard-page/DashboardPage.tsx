@@ -58,6 +58,7 @@ const DashboardPage: FC = () => {
         return <div className="loading">Произошла ошибка: {JSON.stringify(error)}</div>
     }
 
+
     return (
         <div className='dashboard page'>
             <UITitle title='All Surveys' subtitle='All surveys of our organization' />

@@ -46,7 +46,7 @@ const QuestionStatisticsPage = () => {
     const { quizId } = useParams<{ quizId: string }>() as { quizId: string };
     const navigate = useNavigate();
     const { data: questions, isLoading: isLoadingQuestions } = useGetAllQuestionsQuery(quizId);
-    const { data: averageScore, isLoading: isLoadingAverageScore } = useGetQuizStatisticsQuery(quizId);
+    const { data: quizStatistics, isLoading: isLoadingQuizStatistics } = useGetQuizStatisticsQuery(quizId);
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
     const [chartType, setChartType] = useState('doughnut');
 
@@ -77,7 +77,39 @@ const QuestionStatisticsPage = () => {
         };
     }, [statistics]);
 
-    if (isLoadingQuestions || !chartData || isLoadingAverageScore) return <Loader />;
+    const averageChartData = useMemo(() => {
+        if (!quizStatistics) return null;
+
+        return {
+            labels: quizStatistics.questions.map(q => q.title),
+            datasets: [{
+                label: 'Average Score Percentage',
+                data: quizStatistics.questions.map(q => q.averageScore),
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+            }],
+        };
+    }, [quizStatistics]);
+
+    if (isLoadingQuestions || !chartData || isLoadingQuizStatistics) return <Loader />;
+
+    const options = {
+        scales: {
+            x: {
+                ticks: {
+                    maxRotation: 0, 
+                    minRotation: 0,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    callback: function(_: any, index: number) {
+                        return index + 1;
+                      }
+                }
+            }
+        },
+        
+    };
+    
     return (
         <Suspense fallback={<Loader />}>
             <div className='question-stat page'>
@@ -117,7 +149,13 @@ const QuestionStatisticsPage = () => {
                             )}
                         </div>
                     ) : (
-                        <h1 className="loading">{averageScore?.averageScorePercentage}</h1>
+                        <div className='question-stat__chart'>
+                            {averageChartData && (
+                                <Suspense fallback={<div>Loading chart...</div>}>
+                                    <LazyBar data={averageChartData} options={options} />
+                                </Suspense>
+                            )}
+                        </div>
                     )}
                 </div>
             </div>

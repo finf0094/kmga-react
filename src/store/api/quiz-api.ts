@@ -7,12 +7,15 @@ export const quizApi = createApi({
   reducerPath: "quizApi",
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    getAllQuiz: builder.query<IPagination<IQuiz>, {
+    getAllQuiz: builder.query<
+      IPagination<IQuiz>,
+      {
         page?: number;
         perPage?: number;
         search?: string;
         status?: QuizStatus | null;
-      }>({
+      }
+    >({
       query: ({ page = 1, perPage = 10, search = "", status = null }) => ({
         // Use status here instead of quizStatus
         url: `/quiz?page=${page}&perPage=${perPage}&search=${search}&status=${status}`,
@@ -20,11 +23,24 @@ export const quizApi = createApi({
       }),
     }),
 
-    getAllSessions: builder.query<IPagination<Session>, { page: number, perPage?: number, search?: string, status?: SessionStatus | null, quizId: string }>({
-      query: ({page = 1, perPage = 10, search = '', status = null, quizId}) => `/quiz/${quizId}/sessions?page${page}&perPage=${perPage}&search=${search}&status=${status}`
+    getAllSessions: builder.query<
+      IPagination<Session>,
+      {
+        page: number;
+        perPage?: number;
+        search?: string;
+        status?: SessionStatus | null;
+        quizId: string;
+      }
+    >({
+      query: ({ page = 1, perPage = 10, search = "", status = null, quizId }) =>
+        `/quiz/${quizId}/sessions?page=${page}&perPage=${perPage}&search=${search}&status=${status}`,
     }),
 
-    createQuiz: builder.mutation<IQuiz, { title: string; description: string; status?: string; tags: string[] }>({
+    createQuiz: builder.mutation<
+      IQuiz,
+      { title: string; description: string; status?: string; tags: string[] }
+    >({
       query: ({ title, description, tags, status }) => ({
         url: `/quiz`,
         method: "POST",
@@ -58,7 +74,9 @@ export const quizApi = createApi({
       }),
     }),
 
-    updateQuiz: builder.mutation<IQuiz, {
+    updateQuiz: builder.mutation<
+      IQuiz,
+      {
         id: string;
         title: string;
         description: string;
@@ -73,7 +91,11 @@ export const quizApi = createApi({
       }),
     }),
 
-    getQuizStatistics: builder.query<{averageScorePercentage: number}, string>({
+    getQuizStatistics: builder.query<
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      { averageScorePercentage: number; questions: any[] },
+      string
+    >({
       query: (quizId: string) => ({
         url: `/statistics/quiz/${quizId}`,
         method: "GET",

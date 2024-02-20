@@ -9,7 +9,7 @@ const ResponseStatisticsPage = () => {
   const { data, isLoading, isError } = useSessionStatisticsQuery(sessionId);
   const navigate = useNavigate();
   console.log(data);
-  
+
 
   if (isLoading) return <Loader />;
   if (isError || !data) return <div className='loading'>Error loading response details</div>;
@@ -34,6 +34,8 @@ const ResponseStatisticsPage = () => {
           </div>
         ))}
       </div>
+      <p className='response-statistics__date'><span>Average:</span> {data.averageWeight.toFixed(2)}%</p>
+      <p className='response-statistics__date'><span>feedback:</span> {data.feedBack} </p>
       <p className='response-statistics__date'><span>Date of response:</span> {new Date(data.createdAt).toLocaleDateString()}</p>
     </div>
   );

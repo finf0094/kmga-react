@@ -15,6 +15,8 @@ interface Question {
 interface SessionStatistics {
     createdAt: string;
     email: string;
+    feedBack: string;
+    averageWeight: number;
     quizTitle: string;
     questions: Question[];
 }
