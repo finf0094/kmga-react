@@ -92,7 +92,7 @@ const QuestionStatisticsPage = () => {
         };
     }, [quizStatistics]);
 
-    if (isLoadingQuestions || !chartData || isLoadingQuizStatistics) return <Loader />;
+    if (isLoadingQuestions || !chartData || isLoadingQuizStatistics || !statistics) return <Loader />;
 
     const options = {
         scales: {
