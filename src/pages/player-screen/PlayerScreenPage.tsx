@@ -86,8 +86,8 @@ export default function PlayerScreenPage() {
         } else {
             toast.error("Please select an answer before moving on to the next question.");
         }
-        
-        
+
+
     }
 
     const startQuiz = async () => {
@@ -168,6 +168,7 @@ export default function PlayerScreenPage() {
                             Leave feedback
                         </button>
                     ) : <button onClick={endQuiz} className="player-screen__button">Finish survey</button>}
+
                 </div>
             ) : (
                 <div className="player-screen__finish">
