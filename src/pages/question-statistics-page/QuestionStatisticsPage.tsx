@@ -79,12 +79,12 @@ const QuestionStatisticsPage = () => {
 
     const averageChartData = useMemo(() => {
         if (!quizStatistics) return null;
-
+    
         return {
-            labels: quizStatistics.questions.map(q => q.title),
+            labels: quizStatistics.questions ? quizStatistics.questions.map(question => question.title) : [],
             datasets: [{
                 label: 'Average Score Percentage',
-                data: quizStatistics.questions.map(q => q.averageScore),
+                data: quizStatistics.questions ? quizStatistics.questions.map(question => question.averageScore) : [],
                 backgroundColor: 'rgba(54, 162, 235, 0.5)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1,
@@ -92,7 +92,7 @@ const QuestionStatisticsPage = () => {
         };
     }, [quizStatistics]);
 
-    if (isLoadingQuestions || !chartData || isLoadingQuizStatistics || !statistics) return <Loader />;
+    if (isLoadingQuestions || !chartData || isLoadingQuizStatistics || !statistics || !averageChartData) return <Loader />;
 
     const options = {
         scales: {
