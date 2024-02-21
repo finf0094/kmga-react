@@ -56,7 +56,7 @@ export const logout = createAsyncThunk(
   "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
-      await axios.get(`${baseUrl}/auth/logout`);
+      await axios.get(`${baseUrl}/auth/logout`, { withCredentials: true });
       return;
     } catch (error) {
       const axiosError = error as AxiosError; // Явное приведение типа к AxiosError

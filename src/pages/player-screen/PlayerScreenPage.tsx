@@ -153,7 +153,7 @@ export default function PlayerScreenPage() {
                         </div>
                     ) : (
                         <div key={currentQuestion?.id}>
-                            <h3 className="player-screen__name">Please leave feedback on this survey (not necessary).</h3>
+                            <h3 className="player-screen__name">Please leave feedback on this survey (not necessary) / Please, leave feedback (optional)/ Пожалуйста, оставьте отзыв (необязательно)</h3>
                             <textarea id="feedback" value={feedback} onChange={(e) => setFeedback(e.target.value)} className="player-screen__feedback">
 
                             </textarea>
