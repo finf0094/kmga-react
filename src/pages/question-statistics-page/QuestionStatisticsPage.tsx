@@ -103,11 +103,14 @@ const QuestionStatisticsPage = () => {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     callback: function(_: any, index: number) {
                         return index + 1;
-                      }
+                    }
                 }
+            },
+            y: {
+                beginAtZero: true, 
+                suggestedMax: 100
             }
         },
-        
     };
     
     return (
