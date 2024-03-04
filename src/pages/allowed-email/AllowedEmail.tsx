@@ -128,7 +128,7 @@ const AllowedEmailPage = () => {
           <select className="select-custom" onChange={handleStatusChange}>
             <option value="All">All</option>
             <option value={SessionStatus.COMPLETED}>Completed</option>
-            <option value={SessionStatus.MAIL_SENDED}>Mail Sent</option>
+            <option value={SessionStatus.MAIL_SENDED}>Mail send</option>
             <option value={SessionStatus.NOT_STARTED}>Not Started</option>
             <option value={SessionStatus.IN_PROGRESS}>In Progress</option>
           </select>
@@ -158,26 +158,26 @@ const AllowedEmailPage = () => {
                     {(session.status === "COMPLETED" && "Completed") ||
                       (session.status === "NOT_STARTED" && "Not Started") ||
                       (session.status === "IN_PROGRESS" && "In Progress") ||
-                      (session.status === "MAIL_SENDED" && "Mail Sent")}
+                      (session.status === "MAIL_SENDED" && "Mail Send")}
                     <div className="allowed-email__actions">
-                      {session.status === "NOT_STARTED" ||
-                        (session.status === "MAIL_SENDED" && (
-                          <button
-                            className="allowed-email__action send"
-                            onClick={() => sendSessionToEmail(session.id, "ru")}
-                          >
-                            Send ru
-                          </button>
-                        ))}
-                      {session.status === "NOT_STARTED" ||
-                        (session.status === "MAIL_SENDED" && (
-                          <button
-                            className="allowed-email__action send"
-                            onClick={() => sendSessionToEmail(session.id, "en")}
-                          >
-                            Send en
-                          </button>
-                        ))}
+                      {(session.status === "NOT_STARTED" ||
+                        session.status === "MAIL_SENDED") && (
+                        <button
+                          className="allowed-email__action send"
+                          onClick={() => sendSessionToEmail(session.id, "ru")}
+                        >
+                          Send ru
+                        </button>
+                      )}
+                      {(session.status === "NOT_STARTED" ||
+                        session.status === "MAIL_SENDED") && (
+                        <button
+                          className="allowed-email__action send"
+                          onClick={() => sendSessionToEmail(session.id, "en")}
+                        >
+                          Send en
+                        </button>
+                      )}
                       <button
                         className="allowed-email__action delete"
                         onClick={() => handleDelete(session.id)}
