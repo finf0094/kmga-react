@@ -18,7 +18,7 @@ const AllowedEmailPage = () => {
   const [email, setEmail] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState<SessionStatus | null>(
-    null
+    null,
   );
 
   const [createSession, { isLoading: isCreating }] = useCreateSessionMutation();
@@ -160,22 +160,24 @@ const AllowedEmailPage = () => {
                       (session.status === "IN_PROGRESS" && "In Progress") ||
                       (session.status === "MAIL_SENDED" && "Mail Sent")}
                     <div className="allowed-email__actions">
-                      {session.status === "NOT_STARTED" && (
-                        <button
-                          className="allowed-email__action send"
-                          onClick={() => sendSessionToEmail(session.id, "ru")}
-                        >
-                          Send ru
-                        </button>
-                      )}
-                      {session.status === "NOT_STARTED" && (
-                        <button
-                          className="allowed-email__action send"
-                          onClick={() => sendSessionToEmail(session.id, "en")}
-                        >
-                          Send en
-                        </button>
-                      )}
+                      {session.status === "NOT_STARTED" ||
+                        (session.status === "MAIL_SENDED" && (
+                          <button
+                            className="allowed-email__action send"
+                            onClick={() => sendSessionToEmail(session.id, "ru")}
+                          >
+                            Send ru
+                          </button>
+                        ))}
+                      {session.status === "NOT_STARTED" ||
+                        (session.status === "MAIL_SENDED" && (
+                          <button
+                            className="allowed-email__action send"
+                            onClick={() => sendSessionToEmail(session.id, "en")}
+                          >
+                            Send en
+                          </button>
+                        ))}
                       <button
                         className="allowed-email__action delete"
                         onClick={() => handleDelete(session.id)}
