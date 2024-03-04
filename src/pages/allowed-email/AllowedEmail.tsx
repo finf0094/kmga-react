@@ -140,7 +140,8 @@ const AllowedEmailPage = () => {
             <thead>
               <tr>
                 <td className="user">
-                  <span>Email</span> <span>Status</span> <span>Delete</span>
+                  <span>Email</span> <span>Status</span>{" "}
+                  <span>sended time</span> <span>Delete</span>
                 </td>
               </tr>
             </thead>
@@ -159,6 +160,7 @@ const AllowedEmailPage = () => {
                       (session.status === "NOT_STARTED" && "Not Started") ||
                       (session.status === "IN_PROGRESS" && "In Progress") ||
                       (session.status === "MAIL_SENDED" && "Mail Send")}
+                    <span>{session.sendedTime && session?.sendedTime}</span>
                     <div className="allowed-email__actions">
                       {(session.status === "NOT_STARTED" ||
                         session.status === "MAIL_SENDED") && (
