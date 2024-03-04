@@ -45,8 +45,8 @@ const AllowedEmailPage = () => {
   };
 
   const formatSessionSendedDate = (isoString: string) => {
-    const { day, month, year, hours, minutes } = formatDate(isoString);
-    return `${day} ${month} ${year}, ${hours}:${minutes}`;
+    const { day, month, hours, minutes } = formatDate(isoString);
+    return `${day} ${month}, ${hours}:${minutes}`;
   };
 
   const handleCreate = async () => {
