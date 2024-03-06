@@ -263,8 +263,9 @@ const QuestionStatisticsPage = () => {
             </div>
           ) : chartType === "last" ? (
             <div className="question-stat__chart">
+              <h2 className="question-stat__name">{statistics.question}</h2>
               <Suspense fallback={<div>Loading chart...</div>}>
-                <LazyBar data={chartData} options={options} />
+                <LazyBar data={chartData} />
               </Suspense>
             </div>
           ) : (
