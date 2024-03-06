@@ -250,7 +250,7 @@ const QuestionStatisticsPage = () => {
                       {statistics.question}
                     </h2>
                     <h3 className="question-stat__name">
-                      Average: {statistics.averageWeight}
+                      Average: {statistics.averageWeight.toFixed(2)}%
                     </h3>
                     <Suspense fallback={<div>Loading chart...</div>}>
                       {chartType === "doughnut" && (
@@ -268,7 +268,7 @@ const QuestionStatisticsPage = () => {
             <div className="question-stat__chart">
               <h2 className="question-stat__name">{statistics.question}</h2>
               <h3 className="question-stat__name">
-                Average: {statistics.averageWeight}
+                Average: {statistics.averageWeight.toFixed(2)}%
               </h3>
               <Suspense fallback={<div>Loading chart...</div>}>
                 <LazyBar data={chartData} />
