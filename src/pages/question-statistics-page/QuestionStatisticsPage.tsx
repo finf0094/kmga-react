@@ -127,7 +127,6 @@ const QuestionStatisticsPage = () => {
             "#C9CB3F",
             "#3FCB9F",
           ],
-          hoverOffset: 4,
         },
       ],
     };
