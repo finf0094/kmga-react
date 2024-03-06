@@ -287,6 +287,7 @@ const QuestionStatisticsPage = () => {
           ) : chartType === "last" ? (
             <div className="question-stat__chart">
               <h2 className="question-stat__name">{statistics.question}</h2>
+              Average: {calculateOverallPercentage(statistics.options)}
               <Suspense fallback={<div>Loading chart...</div>}>
                 <LazyBar data={chartData} />
               </Suspense>
