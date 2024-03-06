@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  Option,
   useGetAllQuestionsQuery,
   useGetQuestionStatisticsQuery,
   useGetQuizStatisticsQuery,
@@ -155,27 +154,6 @@ const QuestionStatisticsPage = () => {
     };
   }, [quizStatistics]);
 
-  const calculateOverallPercentage = (options: Option[]): string => {
-    let totalWeightedPercentage = 0;
-    let totalCount = 0;
-
-    // Calculate the total count of all options
-    totalCount = options.reduce((sum, option) => sum + option.count, 0);
-
-    // Calculate the weighted percentage for each option and sum them up
-    totalWeightedPercentage = options.reduce((sum, option) => {
-      const percentage = (option.count / totalCount) * 100;
-      return sum + percentage * option.count;
-    }, 0);
-
-    // Calculate the overall average percentage
-    const overallPercentage =
-      totalCount > 0 ? totalWeightedPercentage / totalCount : 0;
-
-    // Return the overall percentage as a string with two decimal places
-    return overallPercentage.toFixed(2);
-  };
-
   if (
     isLoadingQuestions ||
     !chartData ||
@@ -272,7 +250,7 @@ const QuestionStatisticsPage = () => {
                       {statistics.question}
                     </h2>
                     <h3 className="question-stat__name">
-                      Average: {calculateOverallPercentage(statistics.options)}
+                      Average: {statistics.averageWeight}
                     </h3>
                     <Suspense fallback={<div>Loading chart...</div>}>
                       {chartType === "doughnut" && (
@@ -290,7 +268,7 @@ const QuestionStatisticsPage = () => {
             <div className="question-stat__chart">
               <h2 className="question-stat__name">{statistics.question}</h2>
               <h3 className="question-stat__name">
-                Average: {calculateOverallPercentage(statistics.options)}
+                Average: {statistics.averageWeight}
               </h3>
               <Suspense fallback={<div>Loading chart...</div>}>
                 <LazyBar data={chartData} />
