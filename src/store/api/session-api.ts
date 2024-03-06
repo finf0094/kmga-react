@@ -2,9 +2,9 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "@src/services/api";
 import { Session } from "@interfaces/session.ts";
 
-interface Option {
+export interface Option {
   value: string;
-  isSelected: boolean;
+  count: number;
 }
 
 interface Question {
