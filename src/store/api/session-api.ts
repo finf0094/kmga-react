@@ -5,6 +5,7 @@ import { Session } from "@interfaces/session.ts";
 export interface Option {
   value: string;
   count: number;
+  isSelected?: boolean;
 }
 
 interface Question {
