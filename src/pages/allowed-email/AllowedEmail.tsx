@@ -201,7 +201,7 @@ const AllowedEmailPage = () => {
                         className="allowed-email"
                         to={`/session/${session.id}`}
                       >
-                        Перейти
+                        Open
                       </Link>
                     </div>
                   </td>
