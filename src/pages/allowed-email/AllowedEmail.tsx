@@ -146,9 +146,8 @@ const AllowedEmailPage = () => {
             <thead>
               <tr>
                 <td className="user">
-                  <span>Link</span>
                   <span>Email</span> <span>Status</span>{" "}
-                  <span>sended time</span> <span>Delete</span>
+                  <span>sended time</span> <span>Delete</span> <span>Link</span>
                 </td>
               </tr>
             </thead>
@@ -162,7 +161,6 @@ const AllowedEmailPage = () => {
                       </Link>
                     ) : (
                       <>
-                        <span>https://kmgasurvey.kz/session/{session?.id}</span>
                         <span>{session?.email?.email}</span>
                       </>
                     )}
@@ -199,6 +197,7 @@ const AllowedEmailPage = () => {
                       >
                         Delete
                       </button>
+                      <Link to={`/session/${session.id}`}>Перейти</Link>
                     </div>
                   </td>
                 </tr>
