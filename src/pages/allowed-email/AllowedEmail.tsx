@@ -197,7 +197,12 @@ const AllowedEmailPage = () => {
                       >
                         Delete
                       </button>
-                      <Link to={`/session/${session.id}`}>Перейти</Link>
+                      <Link
+                        className="allowed-email"
+                        to={`/session/${session.id}`}
+                      >
+                        Перейти
+                      </Link>
                     </div>
                   </td>
                 </tr>
