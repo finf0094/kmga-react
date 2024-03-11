@@ -146,6 +146,7 @@ const AllowedEmailPage = () => {
             <thead>
               <tr>
                 <td className="user">
+                  <span>Link</span>
                   <span>Email</span> <span>Status</span>{" "}
                   <span>sended time</span> <span>Delete</span>
                 </td>
@@ -160,7 +161,10 @@ const AllowedEmailPage = () => {
                         {session?.email?.email}
                       </Link>
                     ) : (
-                      <span>{session?.email?.email}</span>
+                      <>
+                        <span>https://kmgasurvey.kz/session/{session?.id}</span>
+                        <span>{session?.email?.email}</span>
+                      </>
                     )}
                     {(session.status === "COMPLETED" && "Completed") ||
                       (session.status === "NOT_STARTED" && "Not Started") ||
