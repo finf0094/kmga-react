@@ -167,7 +167,7 @@ const AllowedEmailPage = () => {
                     {(session.status === "COMPLETED" && "Completed") ||
                       (session.status === "NOT_STARTED" && "Not Started") ||
                       (session.status === "IN_PROGRESS" && "In Progress") ||
-                      (session.status === "MAIL_SENDED" && "Mail Send")}
+                      (session.status === "MAIL_SENDED" && "Mail Sent")}
                     <span>
                       {session.sendedTime &&
                         formatSessionSendedDate(session?.sendedTime)}

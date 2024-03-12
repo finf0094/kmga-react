@@ -179,6 +179,11 @@ const QuestionStatisticsPage = () => {
         beginAtZero: true,
         suggestedMax: 100,
       },
+      ticks: {
+        callback: function (value: string) {
+          return value + "%";
+        },
+      },
     },
   };
 
