@@ -11,7 +11,6 @@ import toast from "react-hot-toast";
 import { Loader, Pagination } from "@components";
 import "./AllowedEmail.css";
 import { SessionStatus } from "@interfaces";
-import { formatDate } from "@utils";
 
 const AllowedEmailPage = () => {
   const { quizId } = useParams() as { quizId: string };
@@ -42,11 +41,6 @@ const AllowedEmailPage = () => {
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
-  };
-
-  const formatSessionSendedDate = (isoString: string) => {
-    const { day, month, hours, minutes } = formatDate(isoString);
-    return `${day} ${month}, ${hours}:${minutes}`;
   };
 
   const handleCreate = async () => {
@@ -146,7 +140,7 @@ const AllowedEmailPage = () => {
             <thead>
               <tr>
                 <td className="user">
-                  <span>Email</span> <span>Status</span> <span>sent time</span>{" "}
+                  <span>Email</span> <span>Status</span>
                   <span>Delete</span>
                 </td>
               </tr>
@@ -168,10 +162,6 @@ const AllowedEmailPage = () => {
                       (session.status === "NOT_STARTED" && "Not Started") ||
                       (session.status === "IN_PROGRESS" && "In Progress") ||
                       (session.status === "MAIL_SENDED" && "Mail Sent")}
-                    <span>
-                      {session.sendedTime &&
-                        formatSessionSendedDate(session?.sendedTime)}
-                    </span>
                     <div className="allowed-email__actions">
                       {(session.status === "NOT_STARTED" ||
                         session.status === "MAIL_SENDED") && (
