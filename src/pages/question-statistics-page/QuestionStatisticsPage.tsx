@@ -178,10 +178,12 @@ const QuestionStatisticsPage = () => {
       y: {
         beginAtZero: true,
         suggestedMax: 100,
-      },
-      ticks: {
-        callback: function (value: string) {
-          return value + "%";
+        ticks: {
+          callback: function (tickValue: string | number) {
+            const value =
+              typeof tickValue === "number" ? tickValue : parseFloat(tickValue);
+            return `${value}%`;
+          },
         },
       },
     },
