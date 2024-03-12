@@ -134,7 +134,7 @@ const AllowedEmailPage = () => {
           <select className="select-custom" onChange={handleStatusChange}>
             <option value="All">All</option>
             <option value={SessionStatus.COMPLETED}>Completed</option>
-            <option value={SessionStatus.MAIL_SENDED}>Mail send</option>
+            <option value={SessionStatus.MAIL_SENDED}>Mail sent</option>
             <option value={SessionStatus.NOT_STARTED}>Not Started</option>
             <option value={SessionStatus.IN_PROGRESS}>In Progress</option>
           </select>
@@ -146,8 +146,8 @@ const AllowedEmailPage = () => {
             <thead>
               <tr>
                 <td className="user">
-                  <span>Email</span> <span>Status</span>{" "}
-                  <span>sended time</span> <span>Delete</span> <span>Link</span>
+                  <span>Email</span> <span>Status</span> <span>sent time</span>{" "}
+                  <span>Delete</span>
                 </td>
               </tr>
             </thead>
@@ -197,12 +197,6 @@ const AllowedEmailPage = () => {
                       >
                         Delete
                       </button>
-                      <Link
-                        className="allowed-email"
-                        to={`/session/${session.id}`}
-                      >
-                        Open
-                      </Link>
                     </div>
                   </td>
                 </tr>
