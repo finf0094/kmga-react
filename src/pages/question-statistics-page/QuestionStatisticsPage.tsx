@@ -242,9 +242,9 @@ const QuestionStatisticsPage = () => {
                 onChange={(e) => setSelectedQuestionId(e.target.value)}
                 value={selectedQuestionId ?? ""}
               >
-                {questions?.map((question) => (
+                {questions?.map((question, index) => (
                   <option key={question.id} value={question.id}>
-                    {question.title}
+                    {index + 1}. {question.title}
                   </option>
                 ))}
               </select>
