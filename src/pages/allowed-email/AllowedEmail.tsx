@@ -197,6 +197,7 @@ const AllowedEmailPage = () => {
       ) : (
         <h3 className="allowed-email__empty">No sessions</h3>
       )}
+      {sessions && <p>Количество: {sessions.meta.total}</p>}
       {sessions && (
         <Pagination
           meta={sessions.meta}

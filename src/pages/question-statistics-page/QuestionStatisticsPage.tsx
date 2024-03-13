@@ -119,7 +119,7 @@ const QuestionStatisticsPage = () => {
           label: "Question statistics",
           data: statistics.options.map((option) => option.count),
           backgroundColor: [
-            "#FF6384",
+            "#ffb138",
             "#36A2EB",
             "#FFCE56",
             "#4BC0C0",
