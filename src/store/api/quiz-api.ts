@@ -93,7 +93,7 @@ export const quizApi = createApi({
 
     getQuizStatistics: builder.query<
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      { averageScorePercentage: number; questions: any[] },
+      { count: number; averageScorePercentage: number; questions: any[] },
       string
     >({
       query: (quizId: string) => ({

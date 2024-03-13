@@ -285,9 +285,16 @@ const QuestionStatisticsPage = () => {
           ) : chartType === "last" ? (
             <div className="question-stat__chart">
               <h2 className="question-stat__name">{statistics.question}</h2>
-              <h3 className="question-stat__name">
-                Average: {statistics.averageWeight.toFixed(2)}%
-              </h3>
+              <div style={{ display: "flex", gap: 15 }}>
+                <h3 className="question-stat__name">
+                  Average: {statistics.averageWeight.toFixed(2)}%
+                </h3>
+                {quizStatistics && (
+                  <h3 className="question-stat__name">
+                    Count {quizStatistics.count}
+                  </h3>
+                )}
+              </div>
               <Suspense fallback={<div>Loading chart...</div>}>
                 <LazyBar data={chartData} />
               </Suspense>
