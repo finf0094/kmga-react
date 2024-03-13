@@ -97,7 +97,7 @@ export const quizApi = createApi({
       { quizId: string; searchEmail: string | undefined | null }
     >({
       query: ({ quizId, searchEmail }) => ({
-        url: `/statistics/quiz/${quizId}?searchEmail=${searchEmail}`,
+        url: `/statistics/quiz/${quizId}?email=${searchEmail}`,
         method: "GET",
       }),
     }),
