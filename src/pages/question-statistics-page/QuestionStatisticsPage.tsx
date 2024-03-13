@@ -261,7 +261,15 @@ const QuestionStatisticsPage = () => {
                     </h3>
                     <Suspense fallback={<div>Loading chart...</div>}>
                       {chartType === "doughnut" && (
-                        <div style={{ width: "30vw" }}>
+                        <div
+                          style={{
+                            width: "30vw",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            margin: "0px auto",
+                          }}
+                        >
                           {" "}
                           <LazyDoughnut data={chartData} />
                         </div>
