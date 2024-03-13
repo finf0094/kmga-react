@@ -76,7 +76,7 @@ const QuestionStatisticsPage = () => {
   const navigate = useNavigate();
   const { data: questions, isLoading: isLoadingQuestions } =
     useGetAllQuestionsQuery(quizId);
-  const [emailFilter, setEmailFilter] = useState<string | undefined>(undefined);
+  const [emailFilter, setEmailFilter] = useState<string>("");
   const { data: quizStatistics, isLoading: isLoadingQuizStatistics } =
     useGetQuizStatisticsQuery({ quizId, searchEmail: emailFilter });
   const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(
