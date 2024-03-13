@@ -76,8 +76,9 @@ const QuestionStatisticsPage = () => {
   const navigate = useNavigate();
   const { data: questions, isLoading: isLoadingQuestions } =
     useGetAllQuestionsQuery(quizId);
+  const [emailFilter, setEmailFilter] = useState<string | undefined>(undefined);
   const { data: quizStatistics, isLoading: isLoadingQuizStatistics } =
-    useGetQuizStatisticsQuery(quizId);
+    useGetQuizStatisticsQuery({ quizId, searchEmail: emailFilter });
   const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(
     null,
   );
@@ -284,6 +285,16 @@ const QuestionStatisticsPage = () => {
             </div>
           ) : chartType === "last" ? (
             <div className="question-stat__chart">
+              <select
+                value={emailFilter}
+                onChange={(e) => setEmailFilter(e.target.value)}
+                className="select-custom"
+              >
+                <option value="">Select email to filter</option>
+                <option value="kpo">kpo</option>
+                <option value="ncoc">ncoc</option>
+                <option value="tengizchevroil">tengizchevroil</option>
+              </select>
               <h2 className="question-stat__name">{statistics.question}</h2>
               <div
                 style={{
@@ -299,7 +310,7 @@ const QuestionStatisticsPage = () => {
                 </h3>
                 {quizStatistics && (
                   <h3 className="question-stat__name">
-                    Count {quizStatistics.count}
+                    Count: {quizStatistics.count}
                   </h3>
                 )}
               </div>

@@ -94,10 +94,10 @@ export const quizApi = createApi({
     getQuizStatistics: builder.query<
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       { count: number; averageScorePercentage: number; questions: any[] },
-      string
+      { quizId: string; searchEmail: string | undefined | null }
     >({
-      query: (quizId: string) => ({
-        url: `/statistics/quiz/${quizId}`,
+      query: ({ quizId, searchEmail }) => ({
+        url: `/statistics/quiz/${quizId}?searchEmail=${searchEmail}`,
         method: "GET",
       }),
     }),
