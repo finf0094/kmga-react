@@ -101,6 +101,15 @@ export const quizApi = createApi({
         method: "GET",
       }),
     }),
+    getCompanyAverages: builder.query<
+      { company: string; averageScore: number }[],
+      string
+    >({
+      query: (quizId) => ({
+        url: `/statistics/quiz/${quizId}/company-averages`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -112,4 +121,5 @@ export const {
   useDeleteQuizByIdMutation,
   useUpdateQuizMutation,
   useGetQuizStatisticsQuery,
+  useGetCompanyAveragesQuery,
 } = quizApi;

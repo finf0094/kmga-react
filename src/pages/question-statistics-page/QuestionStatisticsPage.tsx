@@ -2,6 +2,7 @@ import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetAllQuestionsQuery,
+  useGetCompanyAveragesQuery,
   useGetQuestionStatisticsQuery,
   useGetQuizStatisticsQuery,
 } from "@store/api";
@@ -88,6 +89,8 @@ const QuestionStatisticsPage = () => {
     useGetQuestionStatisticsQuery(selectedQuestionId ?? "", {
       skip: !selectedQuestionId,
     });
+  const { data: companyAverages, isLoading: isLoadingCompanyAverages } =
+    useGetCompanyAveragesQuery(quizId);
 
   useEffect(() => {
     if (questions && questions.length > 0 && !selectedQuestionId) {
@@ -154,15 +157,36 @@ const QuestionStatisticsPage = () => {
       ],
     };
   }, [quizStatistics]);
+  const companyAveragesChartData = useMemo(() => {
+    if (!companyAverages) return null;
+
+    return {
+      labels: companyAverages.map((companyAverage) => companyAverage.company),
+      datasets: [
+        {
+          label: "Company Average Scores",
+          data: companyAverages.map(
+            (companyAverage) => companyAverage.averageScore,
+          ),
+          backgroundColor: "rgba(54, 162, 235, 0.5)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 1,
+        },
+      ],
+    };
+  }, [companyAverages]);
 
   if (
     isLoadingQuestions ||
-    !chartData ||
     isLoadingQuizStatistics ||
+    isLoadingCompanyAverages ||
+    !chartData ||
     !statistics ||
-    !averageChartData
-  )
+    !averageChartData ||
+    !companyAveragesChartData
+  ) {
     return <Loader />;
+  }
 
   const options = {
     scales: {
@@ -234,6 +258,12 @@ const QuestionStatisticsPage = () => {
               onClick={() => setChartType("last")}
             >
               Last
+            </button>
+            <button
+              className={chartType === "company" ? "selected" : ""}
+              onClick={() => setChartType("company")}
+            >
+              Company
             </button>
           </div>
           {chartType !== "average" && chartType !== "last" ? (
@@ -324,6 +354,22 @@ const QuestionStatisticsPage = () => {
                 <Suspense fallback={<div>Loading chart...</div>}>
                   <LazyBar data={averageChartData} options={options} />
                 </Suspense>
+              )}
+            </div>
+          )}
+          {chartType === "company" && (
+            <div className="question-stat__chart">
+              {isLoadingCompanyAverages ? (
+                <Loader />
+              ) : (
+                companyAveragesChartData && (
+                  <Suspense fallback={<div>Loading chart...</div>}>
+                    <LazyBar
+                      data={companyAveragesChartData}
+                      options={options}
+                    />
+                  </Suspense>
+                )
               )}
             </div>
           )}
