@@ -285,7 +285,15 @@ const QuestionStatisticsPage = () => {
           ) : chartType === "last" ? (
             <div className="question-stat__chart">
               <h2 className="question-stat__name">{statistics.question}</h2>
-              <div style={{ display: "flex", gap: 15 }}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: 15,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  margin: "0 auto",
+                }}
+              >
                 <h3 className="question-stat__name">
                   Average: {statistics.averageWeight.toFixed(2)}%
                 </h3>
