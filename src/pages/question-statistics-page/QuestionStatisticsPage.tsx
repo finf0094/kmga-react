@@ -189,6 +189,11 @@ const QuestionStatisticsPage = () => {
     },
   };
 
+  const doughnutOptions = {
+    maintainAspectRatio: false,
+    aspectRatio: 1,
+  };
+
   return (
     <Suspense fallback={<Loader />}>
       <div className="question-stat page">
@@ -261,7 +266,13 @@ const QuestionStatisticsPage = () => {
                     </h3>
                     <Suspense fallback={<div>Loading chart...</div>}>
                       {chartType === "doughnut" && (
-                        <LazyDoughnut data={chartData} />
+                        <div style={{ width: "30vw" }}>
+                          {" "}
+                          <LazyDoughnut
+                            data={chartData}
+                            options={doughnutOptions}
+                          />
+                        </div>
                       )}
                       {chartType === "bar" && <LazyBar data={chartData} />}
                       {chartType === "line" && <LazyLine data={chartData} />}
