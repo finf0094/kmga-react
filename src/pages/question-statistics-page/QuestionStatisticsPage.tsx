@@ -407,15 +407,10 @@ const QuestionStatisticsPage = () => {
               )}
               {companyAveragesChartData && (
                 <div className="question-stat__chart">
-                  {isLoadingCompanyAverages ? (
-                    <Loader />
-                  ) : (
-                    companyAveragesChartData && (
-                      <Suspense fallback={<div>Loading chart...</div>}>
-                        <LazyBar data={companyAveragesChartData} />
-                      </Suspense>
-                    )
-                  )}
+                  <Suspense fallback={<div>Loading chart...</div>}>
+                    <LazyBar data={companyAveragesChartData} />
+                  </Suspense>
+                  )
                 </div>
               )}
             </div>
