@@ -71,7 +71,14 @@ const LazyRadar = React.lazy(() =>
     });
   }),
 );
-
+type ChartType =
+  | "doughnut"
+  | "bar"
+  | "line"
+  | "radar"
+  | "average"
+  | "last"
+  | "company";
 const QuestionStatisticsPage = () => {
   const { quizId } = useParams<{ quizId: string }>() as { quizId: string };
   const navigate = useNavigate();
@@ -83,7 +90,7 @@ const QuestionStatisticsPage = () => {
   const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(
     null,
   );
-  const [chartType, setChartType] = useState("doughnut");
+  const [chartType, setChartType] = useState<ChartType>("doughnut");
 
   const { data: statistics, isLoading: isLoadingStatistics } =
     useGetQuestionStatisticsQuery(selectedQuestionId ?? "", {
@@ -398,7 +405,7 @@ const QuestionStatisticsPage = () => {
                   </Suspense>
                 </>
               )}
-              {chartType === "company" && (
+              {companyAveragesChartData && (
                 <div className="question-stat__chart">
                   {isLoadingCompanyAverages ? (
                     <Loader />
