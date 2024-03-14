@@ -406,7 +406,7 @@ const QuestionStatisticsPage = () => {
                     {
                       quizStatistics.questions[
                         quizStatistics.questions.length - 1
-                      ]
+                      ].averageScore
                     }
                     %
                   </h3>
