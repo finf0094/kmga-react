@@ -390,7 +390,7 @@ const QuestionStatisticsPage = () => {
             </div>
           ) : (
             <div className="question-stat__chart">
-              {averageChartData && (
+              {chartType === "average" && (
                 <>
                   <select
                     value={emailFilter}
