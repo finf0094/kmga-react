@@ -410,7 +410,6 @@ const QuestionStatisticsPage = () => {
                   <Suspense fallback={<div>Loading chart...</div>}>
                     <LazyBar data={companyAveragesChartData} />
                   </Suspense>
-                  )
                 </div>
               )}
             </div>
