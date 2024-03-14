@@ -300,7 +300,9 @@ const QuestionStatisticsPage = () => {
               Company
             </button>
           </div>
-          {chartType !== "average" && chartType !== "last" ? (
+          {chartType !== "average" &&
+          chartType !== "last" &&
+          chartType !== "company" ? (
             <div className="question-stat__content">
               <select
                 className="select-custom"
@@ -405,7 +407,7 @@ const QuestionStatisticsPage = () => {
                   </Suspense>
                 </>
               )}
-              {companyAveragesChartData && (
+              {chartType === "company" && (
                 <div className="question-stat__chart">
                   <Suspense fallback={<div>Loading chart...</div>}>
                     <LazyBar data={companyAveragesChartData} />
