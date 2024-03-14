@@ -398,18 +398,18 @@ const QuestionStatisticsPage = () => {
                   </Suspense>
                 </>
               )}
-            </div>
-          )}
-          {chartType === "company" && (
-            <div className="question-stat__chart">
-              {isLoadingCompanyAverages ? (
-                <Loader />
-              ) : (
-                companyAveragesChartData && (
-                  <Suspense fallback={<div>Loading chart...</div>}>
-                    <LazyBar data={companyAveragesChartData} />
-                  </Suspense>
-                )
+              {chartType === "company" && (
+                <div className="question-stat__chart">
+                  {isLoadingCompanyAverages ? (
+                    <Loader />
+                  ) : (
+                    companyAveragesChartData && (
+                      <Suspense fallback={<div>Loading chart...</div>}>
+                        <LazyBar data={companyAveragesChartData} />
+                      </Suspense>
+                    )
+                  )}
+                </div>
               )}
             </div>
           )}
