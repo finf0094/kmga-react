@@ -151,7 +151,7 @@ const QuestionStatisticsPage = () => {
 
     return {
       labels: quizStatistics.questions
-        ? quizStatistics.questions.map((question) => question.title)
+        ? quizStatistics.questions.map((question) => question?.title)
         : [],
       datasets: [
         {
@@ -199,7 +199,7 @@ const QuestionStatisticsPage = () => {
       quizStatistics.questions[quizStatistics.questions.length];
 
     return {
-      labels: [lastQuestion.title],
+      labels: [lastQuestion?.title],
       datasets: [
         {
           label: "Last Question Average Score",
@@ -340,7 +340,7 @@ const QuestionStatisticsPage = () => {
               >
                 {questions?.map((question, index) => (
                   <option key={question.id} value={question.id}>
-                    {index + 1}. {question.title}
+                    {index + 1}. {question?.title}
                   </option>
                 ))}
               </select>
