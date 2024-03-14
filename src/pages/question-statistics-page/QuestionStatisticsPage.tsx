@@ -184,6 +184,7 @@ const QuestionStatisticsPage = () => {
       ],
     };
   }, [companyAverages]);
+
   const lastAverageChartData = useMemo(() => {
     // Ensure that quizStatistics and its questions array are available
     if (
@@ -220,12 +221,12 @@ const QuestionStatisticsPage = () => {
       datasets: [
         {
           label: "Total quantity respondents to whom sent Survey",
-          data: [92, 83, 33, 44, quizStatistics.count],
+          data: [92, 83, 33, 44, quizStatistics?.totalSessions],
           backgroundColor: "rgba(54, 162, 235, 0.5)",
         },
         {
           label: "Number of respondents who voted",
-          data: [7, 8, 5, 9, 11],
+          data: [7, 8, 5, 9, 11, quizStatistics?.completedSessions],
           backgroundColor: "#ffb138",
         },
       ],
@@ -403,11 +404,9 @@ const QuestionStatisticsPage = () => {
                 {quizStatistics && (
                   <h3 className="question-stat__name">
                     Average:{" "}
-                    {
-                      quizStatistics.questions[
-                        quizStatistics.questions.length - 1
-                      ].averageScore
-                    }
+                    {quizStatistics.questions[
+                      quizStatistics.questions.length - 1
+                    ].averageScore.toFixed(2)}
                     %
                   </h3>
                 )}

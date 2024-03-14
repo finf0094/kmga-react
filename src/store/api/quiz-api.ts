@@ -92,8 +92,14 @@ export const quizApi = createApi({
     }),
 
     getQuizStatistics: builder.query<
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      { count: number; averageScorePercentage: number; questions: any[] },
+      {
+        totalSessions: number;
+        completedSessions: number;
+        count: number;
+        averageScorePercentage: number;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        questions: any[];
+      },
       { quizId: string; searchEmail: string }
     >({
       query: ({ quizId, searchEmail }) => ({
