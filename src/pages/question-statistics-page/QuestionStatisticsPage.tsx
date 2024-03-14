@@ -402,7 +402,11 @@ const QuestionStatisticsPage = () => {
               >
                 {quizStatistics && (
                   <h3 className="question-stat__name">
-                    Average: {quizStatistics.averageScorePercentage.toFixed(2)}%
+                    Average:{" "}
+                    {quizStatistics.questions[
+                      quizStatistics.questions.length - 1
+                    ].toFixed(2)}
+                    %
                   </h3>
                 )}
                 {quizStatistics && (
