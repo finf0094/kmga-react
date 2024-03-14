@@ -388,7 +388,7 @@ const QuestionStatisticsPage = () => {
                     onChange={(e) => setEmailFilter(e.target.value)}
                     className="select-custom"
                   >
-                    <option value="">Select email to filter</option>
+                    <option value="">All</option>
                     <option value="kpo">kpo</option>
                     <option value="ncoc">ncoc</option>
                     <option value="tengizchevroil">tengizchevroil</option>
@@ -407,10 +407,7 @@ const QuestionStatisticsPage = () => {
               ) : (
                 companyAveragesChartData && (
                   <Suspense fallback={<div>Loading chart...</div>}>
-                    <LazyBar
-                      data={companyAveragesChartData}
-                      options={options}
-                    />
+                    <LazyBar data={companyAveragesChartData} />
                   </Suspense>
                 )
               )}
