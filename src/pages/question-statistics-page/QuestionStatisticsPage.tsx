@@ -316,13 +316,13 @@ const QuestionStatisticsPage = () => {
             >
               Company
             </button>
+            <button
+              className={chartType === "responseStats" ? "selected" : ""}
+              onClick={() => setChartType("responseStats")}
+            >
+              Response Stats
+            </button>
           </div>
-          <button
-            className={chartType === "responseStats" ? "selected" : ""}
-            onClick={() => setChartType("responseStats")}
-          >
-            Response Stats
-          </button>
           {chartType !== "average" &&
           chartType !== "last" &&
           chartType !== "company" &&
@@ -441,10 +441,7 @@ const QuestionStatisticsPage = () => {
               {chartType === "responseStats" && (
                 <div className="question-stat__chart">
                   <Suspense fallback={<div>Loading chart...</div>}>
-                    <LazyBar
-                      data={responseStatisticsChartData}
-                      options={options}
-                    />
+                    <LazyBar data={responseStatisticsChartData} />
                   </Suspense>
                 </div>
               )}
