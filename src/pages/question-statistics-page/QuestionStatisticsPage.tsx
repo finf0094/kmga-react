@@ -222,7 +222,7 @@ const QuestionStatisticsPage = () => {
         {
           label: "Total quantity respondents to whom sent Survey",
           data: [92, 83, 33, 44, quizStatistics?.totalSessions],
-          backgroundColor: "rgba(54, 162, 235, 0.5)",
+          backgroundColor: "rgba(54, 162, 235)",
         },
         {
           label: "Number of respondents who voted",
