@@ -320,7 +320,7 @@ const QuestionStatisticsPage = () => {
               className={chartType === "responseStats" ? "selected" : ""}
               onClick={() => setChartType("responseStats")}
             >
-              Response Stats
+              Response
             </button>
           </div>
           {chartType !== "average" &&
