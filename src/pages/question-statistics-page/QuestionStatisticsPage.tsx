@@ -175,6 +175,33 @@ const QuestionStatisticsPage = () => {
       ],
     };
   }, [companyAverages]);
+  const lastAverageChartData = useMemo(() => {
+    // Ensure that quizStatistics and its questions array are available
+    if (
+      !quizStatistics ||
+      !quizStatistics.questions ||
+      quizStatistics.questions.length === 0
+    ) {
+      return null;
+    }
+
+    // Get the last question from the quizStatistics
+    const lastQuestion =
+      quizStatistics.questions[quizStatistics.questions.length - 1];
+
+    return {
+      labels: [lastQuestion.title],
+      datasets: [
+        {
+          label: "Last Question Average Score",
+          data: [lastQuestion.averageScore],
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          borderColor: "rgba(255, 99, 132, 1)",
+          borderWidth: 1,
+        },
+      ],
+    };
+  }, [quizStatistics]);
 
   if (
     isLoadingQuestions ||
@@ -335,9 +362,11 @@ const QuestionStatisticsPage = () => {
                   margin: "0 auto",
                 }}
               >
-                <h3 className="question-stat__name">
-                  Average: {statistics.averageWeight.toFixed(2)}%
-                </h3>
+                {quizStatistics && (
+                  <h3 className="question-stat__name">
+                    Average: {quizStatistics.averageScorePercentage.toFixed(2)}%
+                  </h3>
+                )}
                 {quizStatistics && (
                   <h3 className="question-stat__name">
                     Count: {quizStatistics.count}
@@ -345,15 +374,29 @@ const QuestionStatisticsPage = () => {
                 )}
               </div>
               <Suspense fallback={<div>Loading chart...</div>}>
-                <LazyBar data={chartData} />
+                {lastAverageChartData && (
+                  <LazyBar data={lastAverageChartData} />
+                )}
               </Suspense>
             </div>
           ) : (
             <div className="question-stat__chart">
               {averageChartData && (
-                <Suspense fallback={<div>Loading chart...</div>}>
-                  <LazyBar data={averageChartData} options={options} />
-                </Suspense>
+                <>
+                  <select
+                    value={emailFilter}
+                    onChange={(e) => setEmailFilter(e.target.value)}
+                    className="select-custom"
+                  >
+                    <option value="">Select email to filter</option>
+                    <option value="kpo">kpo</option>
+                    <option value="ncoc">ncoc</option>
+                    <option value="tengizchevroil">tengizchevroil</option>
+                  </select>
+                  <Suspense fallback={<div>Loading chart...</div>}>
+                    <LazyBar data={averageChartData} options={options} />
+                  </Suspense>
+                </>
               )}
             </div>
           )}
