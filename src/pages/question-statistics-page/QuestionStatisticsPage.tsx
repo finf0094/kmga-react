@@ -78,7 +78,9 @@ type ChartType =
   | "radar"
   | "average"
   | "last"
-  | "company";
+  | "company"
+  | "responseStats";
+
 const QuestionStatisticsPage = () => {
   const { quizId } = useParams<{ quizId: string }>() as { quizId: string };
   const navigate = useNavigate();
@@ -209,6 +211,21 @@ const QuestionStatisticsPage = () => {
       ],
     };
   }, [quizStatistics]);
+  const responseStatisticsChartData = {
+    labels: ["2019", "2020", "2021", "2022"],
+    datasets: [
+      {
+        label: "Total quantity respondents to whom sent Survey",
+        data: [92, 83, 33, 44],
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+      },
+      {
+        label: "Number of respondents who voted",
+        data: [7, 8, 5, 9],
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
+  };
 
   if (
     isLoadingQuestions ||
@@ -300,9 +317,16 @@ const QuestionStatisticsPage = () => {
               Company
             </button>
           </div>
+          <button
+            className={chartType === "responseStats" ? "selected" : ""}
+            onClick={() => setChartType("responseStats")}
+          >
+            Response Stats
+          </button>
           {chartType !== "average" &&
           chartType !== "last" &&
-          chartType !== "company" ? (
+          chartType !== "company" &&
+          chartType !== "responseStats" ? (
             <div className="question-stat__content">
               <select
                 className="select-custom"
@@ -411,6 +435,16 @@ const QuestionStatisticsPage = () => {
                 <div className="question-stat__chart">
                   <Suspense fallback={<div>Loading chart...</div>}>
                     <LazyBar data={companyAveragesChartData} />
+                  </Suspense>
+                </div>
+              )}
+              {chartType === "responseStats" && (
+                <div className="question-stat__chart">
+                  <Suspense fallback={<div>Loading chart...</div>}>
+                    <LazyBar
+                      data={responseStatisticsChartData}
+                      options={options}
+                    />
                   </Suspense>
                 </div>
               )}
