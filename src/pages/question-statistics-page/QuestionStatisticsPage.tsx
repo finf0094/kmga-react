@@ -403,9 +403,11 @@ const QuestionStatisticsPage = () => {
                 {quizStatistics && (
                   <h3 className="question-stat__name">
                     Average:{" "}
-                    {quizStatistics.questions[
-                      quizStatistics.questions.length - 1
-                    ].toFixed(2)}
+                    {
+                      quizStatistics.questions[
+                        quizStatistics.questions.length - 1
+                      ]
+                    }
                     %
                   </h3>
                 )}
