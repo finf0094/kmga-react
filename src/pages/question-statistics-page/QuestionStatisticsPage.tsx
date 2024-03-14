@@ -151,7 +151,7 @@ const QuestionStatisticsPage = () => {
 
     return {
       labels: quizStatistics.questions
-        ? quizStatistics.questions.map((question) => question?.title)
+        ? quizStatistics.questions.map((question) => question.title)
         : [],
       datasets: [
         {
@@ -199,7 +199,7 @@ const QuestionStatisticsPage = () => {
       quizStatistics.questions[quizStatistics.questions.length];
 
     return {
-      labels: [lastQuestion?.title],
+      labels: [lastQuestion.title],
       datasets: [
         {
           label: "Last Question Average Score",
@@ -212,25 +212,21 @@ const QuestionStatisticsPage = () => {
     };
   }, [quizStatistics]);
 
-  const responseStatisticsChartData = useMemo(() => {
-    if (!quizStatistics) return null;
-
-    return {
-      labels: ["2019", "2020", "2021", "2022", "2023"],
-      datasets: [
-        {
-          label: "Total quantity respondents to whom sent Survey",
-          data: [92, 83, 33, 44, quizStatistics.count],
-          backgroundColor: "rgba(54, 162, 235, 0.5)",
-        },
-        {
-          label: "Number of respondents who voted",
-          data: [7, 8, 5, 9, 11],
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
-        },
-      ],
-    };
-  }, [quizStatistics]);
+  const responseStatisticsChartData = {
+    labels: ["2019", "2020", "2021", "2022", "2023"],
+    datasets: [
+      {
+        label: "Total quantity respondents to whom sent Survey",
+        data: [92, 83, 33, 44, 52],
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+      },
+      {
+        label: "Number of respondents who voted",
+        data: [7, 8, 5, 9, 11],
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
+  };
 
   if (
     isLoadingQuestions ||
@@ -340,7 +336,7 @@ const QuestionStatisticsPage = () => {
               >
                 {questions?.map((question, index) => (
                   <option key={question.id} value={question.id}>
-                    {index + 1}. {question?.title}
+                    {index + 1}. {question.title}
                   </option>
                 ))}
               </select>
@@ -443,12 +439,12 @@ const QuestionStatisticsPage = () => {
                   </Suspense>
                 </div>
               )}
-              {chartType === "responseStats" && responseStatisticsChartData && (
-                <Suspense fallback={<div>Loading chart...</div>}>
-                  <div className="chart-container">
+              {chartType === "responseStats" && (
+                <div className="question-stat__chart">
+                  <Suspense fallback={<div>Loading chart...</div>}>
                     <LazyBar data={responseStatisticsChartData} />
-                  </div>
-                </Suspense>
+                  </Suspense>
+                </div>
               )}
             </div>
           )}
