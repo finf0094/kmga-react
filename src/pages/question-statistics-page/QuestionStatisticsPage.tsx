@@ -196,7 +196,7 @@ const QuestionStatisticsPage = () => {
 
     // Get the last question from the quizStatistics
     const lastQuestion =
-      quizStatistics.questions[quizStatistics.questions.length - 1];
+      quizStatistics.questions[quizStatistics.questions.length];
 
     return {
       labels: [lastQuestion.title],
@@ -211,21 +211,26 @@ const QuestionStatisticsPage = () => {
       ],
     };
   }, [quizStatistics]);
-  const responseStatisticsChartData = {
-    labels: ["2019", "2020", "2021", "2022"],
-    datasets: [
-      {
-        label: "Total quantity respondents to whom sent Survey",
-        data: [92, 83, 33, 44],
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
-      },
-      {
-        label: "Number of respondents who voted",
-        data: [7, 8, 5, 9],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-    ],
-  };
+
+  const responseStatisticsChartData = useMemo(() => {
+    if (!quizStatistics) return null;
+
+    return {
+      labels: ["2019", "2020", "2021", "2022", "2023"],
+      datasets: [
+        {
+          label: "Total quantity respondents to whom sent Survey",
+          data: [92, 83, 33, 44, quizStatistics.count],
+          backgroundColor: "rgba(54, 162, 235, 0.5)",
+        },
+        {
+          label: "Number of respondents who voted",
+          data: [7, 8, 5, 9, 11],
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+        },
+      ],
+    };
+  }, [quizStatistics]);
 
   if (
     isLoadingQuestions ||
@@ -438,12 +443,12 @@ const QuestionStatisticsPage = () => {
                   </Suspense>
                 </div>
               )}
-              {chartType === "responseStats" && (
-                <div className="question-stat__chart">
-                  <Suspense fallback={<div>Loading chart...</div>}>
+              {chartType === "responseStats" && responseStatisticsChartData && (
+                <Suspense fallback={<div>Loading chart...</div>}>
+                  <div className="chart-container">
                     <LazyBar data={responseStatisticsChartData} />
-                  </Suspense>
-                </div>
+                  </div>
+                </Suspense>
               )}
             </div>
           )}
