@@ -35,6 +35,7 @@ const EditQuizPage: React.FC = () => {
     if (quiz) {
       setValue("title", quiz.title);
       setValue("description", quiz.description);
+      setValue("emailTitle", quiz.emailTitle);
       setValue("status", quiz.status as QuizStatus);
       setTags(quiz.tags);
     }
