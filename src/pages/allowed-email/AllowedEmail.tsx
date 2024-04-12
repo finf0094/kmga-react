@@ -3,6 +3,7 @@ import {
   useCreateSessionMutation,
   useDeleteSessionMutation,
   useGetAllSessionsQuery,
+  useSendCustomSessionToEmailMutation,
   useSendSessionToEmailMutation,
 } from "@store/api";
 import { UIField, UITitle } from "@components/Base UI";
@@ -24,6 +25,8 @@ const AllowedEmailPage = () => {
   const [createSession, { isLoading: isCreating }] = useCreateSessionMutation();
   const [sendSession, { isLoading: isSending }] =
     useSendSessionToEmailMutation();
+  const [sendCustomSession, { isLoading: isCustomSending }] =
+    useSendCustomSessionToEmailMutation();
   const [deleteSession, { isLoading: isDeleting }] = useDeleteSessionMutation();
   const {
     data: sessions,
@@ -79,6 +82,17 @@ const AllowedEmailPage = () => {
     }
   };
 
+  const sendCustomSessionToEmail = async (sessionId: string) => {
+    try {
+      await sendCustomSession({ sessionId });
+      toast.success("Session was sended successfully.");
+      refetch();
+    } catch (error) {
+      console.error("Error sending session:", error);
+      toast.error("Error sending session.");
+    }
+  };
+
   const handleDelete = async (sessionId: string) => {
     try {
       await deleteSession(sessionId);
@@ -102,7 +116,13 @@ const AllowedEmailPage = () => {
     }
   };
 
-  if (isCreating || isSessionsLoading || isDeleting || isSending)
+  if (
+    isCreating ||
+    isSessionsLoading ||
+    isDeleting ||
+    isSending ||
+    isCustomSending
+  )
     return <Loader />;
 
   return (
@@ -163,6 +183,15 @@ const AllowedEmailPage = () => {
                       (session.status === "IN_PROGRESS" && "In Progress") ||
                       (session.status === "MAIL_SENDED" && "Mail Sent")}
                     <div className="allowed-email__actions">
+                      {(session.status === "NOT_STARTED" ||
+                        session.status === "MAIL_SENDED") && (
+                        <button
+                          className="allowed-email__action send"
+                          onClick={() => sendCustomSessionToEmail(session.id)}
+                        >
+                          Send custom
+                        </button>
+                      )}
                       {(session.status === "NOT_STARTED" ||
                         session.status === "MAIL_SENDED") && (
                         <button

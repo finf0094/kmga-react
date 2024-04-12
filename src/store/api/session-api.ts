@@ -46,6 +46,12 @@ export const sessionApi = createApi({
         method: "POST",
       }),
     }),
+    sendCustomSessionToEmail: builder.mutation<void, { sessionId: string }>({
+      query: ({ sessionId }) => ({
+        url: `sessions/${sessionId}/sendCustom`,
+        method: "POST",
+      }),
+    }),
     deleteSession: builder.mutation<void, string>({
       query: (sessionId) => ({
         url: `sessions/${sessionId}`,
@@ -90,6 +96,7 @@ export const sessionApi = createApi({
 export const {
   useCreateSessionMutation,
   useSendSessionToEmailMutation,
+  useSendCustomSessionToEmailMutation,
   useSubmitAnswerMutation,
   useStartQuizMutation,
   useEndQuizMutation,

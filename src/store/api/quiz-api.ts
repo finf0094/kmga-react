@@ -39,7 +39,13 @@ export const quizApi = createApi({
 
     createQuiz: builder.mutation<
       IQuiz,
-      { title: string; description: string; status?: string; tags: string[] }
+      {
+        title: string;
+        description: string;
+        emailTitle: string;
+        status?: string;
+        tags: string[];
+      }
     >({
       query: ({ title, description, tags, status }) => ({
         url: `/quiz`,
@@ -80,6 +86,7 @@ export const quizApi = createApi({
         id: string;
         title: string;
         description: string;
+        emailTitle: string;
         status: string;
         tags: string[];
       }
