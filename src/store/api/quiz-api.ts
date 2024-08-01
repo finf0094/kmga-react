@@ -53,6 +53,7 @@ export const quizApi = createApi({
         body: {
           title: title,
           description: description,
+          emailTitle: emailTitle,
           tags: tags,
           status: status,
         },
