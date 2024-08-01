@@ -47,7 +47,7 @@ export const quizApi = createApi({
         tags: string[];
       }
     >({
-      query: ({ title, description, tags, status }) => ({
+      query: ({ title, description, emailTitle, tags, status }) => ({
         url: `/quiz`,
         method: "POST",
         body: {
