@@ -9,4 +9,5 @@ export interface IQuiz {
   emailTitle: string;
   updatedAt: string;
   uniqueToken: string;
+  footer?: string;
 }

@@ -34,6 +34,7 @@ const DashboardPage: FC = () => {
     description: string;
     emailTitle: string;
     tags: string[];
+    footer?: string;
   }) => {
     try {
       await create(quizData).unwrap();

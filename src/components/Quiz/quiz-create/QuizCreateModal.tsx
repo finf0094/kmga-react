@@ -12,6 +12,7 @@ interface CreateQuizModalProps {
     description: string;
     emailTitle: string;
     tags: string[];
+    footer?: string;
   }) => void;
 }
 
@@ -32,6 +33,7 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({
     description: string;
     emailTitle: string;
     tags: string[];
+    footer?: string;
   }>({
     defaultValues: {
       tags: [],
@@ -111,6 +113,15 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({
             onKeyDown: handleTagsKeyDown,
           }}
           error={errors.description?.message}
+        />
+        <UIField
+            label="Footer"
+            id="footer"
+            inputProps={{
+              placeholder: "Enter a footer text",
+              ...register("footer"),
+            }}
+            error={errors.footer?.message}
         />
 
         <div
