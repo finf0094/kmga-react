@@ -14,7 +14,7 @@ interface IUpdateQuestion {
   id: string;
   title: string;
   options: {
-    id: string;
+    id?: string;
     value: string;
     weight: number;
   }[];

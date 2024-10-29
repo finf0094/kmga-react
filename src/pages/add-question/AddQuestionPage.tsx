@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import SidebarIcon from "@assets/icons/sidebar-icon.svg"
-import DeleteIcon from "@assets/icons/delete.svg"
-import EditIcon from "@assets/icons/edit.svg"
-import "./AddQuestionPage.css"
-import { useForm } from 'react-hook-form';
+import SidebarIcon from "@assets/icons/sidebar-icon.svg";
+import DeleteIcon from "@assets/icons/delete.svg";
+import EditIcon from "@assets/icons/edit.svg";
+import "./AddQuestionPage.css";
+import { useForm, useFieldArray } from 'react-hook-form';
 import UIField from '@src/components/Base UI/UIField';
 import UIForm from '@src/components/Base UI/UIForm';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -22,10 +22,21 @@ const AddQuestionPage: React.FC = () => {
     const [ createQuestion ] = useCreateQuestionMutation();
 
     // LOCAL STATE
-    const { register, handleSubmit, formState: { errors } } = useForm<{
+    const { register, handleSubmit, control, formState: { errors } } = useForm<{
         title: string;
         options: { value: string; weight: number }[];
-    }>();
+    }>({
+        defaultValues: {
+            title: '',
+            options: [{ value: '', weight: 0 }] // Начальное значение с одним вариантом
+        }
+    });
+
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "options"
+    });
+
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [activeItem, setActiveItem] = useState<number | null>(null);
     const toggleSidebar = () => {
@@ -74,7 +85,7 @@ const AddQuestionPage: React.FC = () => {
     const handleDelete = async (questionId: string) => {
         try {
             await deleteQuestion({quizId, questionId}).unwrap();
-            toast.success("Question was successfuly deleted!");
+            toast.success("Question was successfully deleted!");
             refetch();
         } catch (err) {
             const error = err as ErrorResponse
@@ -90,14 +101,14 @@ const AddQuestionPage: React.FC = () => {
     const handleEdit = (questionId: string) => {
         navigate(`/quiz/${quizId}/question/${questionId}`);
     };
-    
+
     return (
         <div className="add-question">
             <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
                 <img src={SidebarIcon} alt="sidebar icon" onClick={toggleSidebar} className='sidebar__toggle' />
                 <div className="sidebar__content">
                     {questions?.map((question, index) => (
-                        <div key={index} className={`sidebar__item ${activeItem === index ? 'active' : ''}`} onClick={() => handleItemClick(index)}>
+                        <div key={question.id} className={`sidebar__item ${activeItem === index ? 'active' : ''}`} onClick={() => handleItemClick(index)}>
                             <span className="sidebar__item-number">{index + 1}</span>
                             <span className="sidebar__item-text">{question.title}</span>
                             {activeItem === index && (
@@ -119,29 +130,51 @@ const AddQuestionPage: React.FC = () => {
                 <UIField
                     label='Name'
                     id='questionTitle'
-                    inputProps={{ ...register("title", { required: "Name is required!" }), placeholder: 'Enter a question title' }}
+                    inputProps={{
+                        ...register("title", { required: "Name is required!" }),
+                        placeholder: 'Enter a question title'
+                    }}
                     error={errors.title?.message}
                 />
                 <div className="options-section">
                     <label className="form-label">Options</label>
                     <div className="options-list">
-                        {Array.from({ length: 5 }, (_, index) => (
-                            <div key={index} className="option-item">
+                        {fields.map((field, index) => (
+                            <div key={field.id} className="option-item">
                                 <input
                                     {...register(`options.${index}.value`, { required: "Option is required." })}
                                     type="text"
-                                    className={`form-input option-input ${errors.options && errors.options[index] ? 'error' : ''}`}
+                                    className={`form-input option-input ${errors.options?.[index]?.value ? 'error' : ''}`}
                                     placeholder={`Option ${index + 1}`}
                                 />
                                 <input
-                                    {...register(`options.${index}.weight`, { required: "Weight is required." })}
+                                    {...register(`options.${index}.weight`, {
+                                        required: "Weight is required.",
+                                        valueAsNumber: true,
+                                        validate: value => !isNaN(value) || "Weight must be a number."
+                                    })}
                                     type="number"
-                                    className={`form-input option-input ${errors.options && errors.options[index] ? 'error' : ''}`}
+                                    className={`form-input option-input ${errors.options?.[index]?.weight ? 'error' : ''}`}
                                     placeholder={`Weight ${index + 1}`}
                                 />
+                                <button type="button" className="remove-option-button" onClick={() => remove(index)}>
+                                    &times;
+                                </button>
+                                {errors.options?.[index]?.value && (
+                                    <p className="error-message">{errors.options[index]?.value?.message}</p>
+                                )}
+                                {errors.options?.[index]?.weight && (
+                                    <p className="error-message">{errors.options[index]?.weight?.message}</p>
+                                )}
                             </div>
                         ))}
                     </div>
+                    <button type="button" className="add-option-button" onClick={() => append({ value: '', weight: 0 })}>
+                        Add Option
+                    </button>
+                    {errors.options && typeof errors.options.message === 'string' && (
+                        <p className="error-message">{errors.options.message}</p>
+                    )}
                 </div>
                 <div className="button-group">
                     <button type="button" className="add-question__button cancel" onClick={() => navigate('/dashboard')}>Cancel</button>
