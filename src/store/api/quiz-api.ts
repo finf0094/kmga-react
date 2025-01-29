@@ -95,10 +95,10 @@ export const quizApi = createApi({
                 footer?: string;
             }
         >({
-            query: ({id, title, tags, status, description}) => ({
+            query: ({id, title, tags, status, description, footer, emailTitle}) => ({
                 url: `quiz/${id}`,
                 method: "PUT",
-                body: {title, description, tags, status},
+                body: {title, description, tags, status, footer, emailTitle},
             }),
         }),
 

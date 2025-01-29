@@ -1,20 +1,20 @@
-import {configureStore, combineReducers} from '@reduxjs/toolkit';
-import {setupListeners} from "@reduxjs/toolkit/query";
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
 
 // REDUCER
-import authReducer from "./slices/auth-slice.ts";
-import modalReducer from "@store/slices/modal-slice.ts";
+import authReducer from './slices/auth-slice.ts';
+import modalReducer from '@store/slices/modal-slice.ts';
 
 // API
-import {questionApi, quizApi, sessionApi} from "@store/api";
-
+import { questionApi, quizApi, sessionApi, mailMessageApi } from '@store/api';
 
 
 // Объединение редьюсеров с поддержкой Redux Persist
 const rootReducer = combineReducers({
     auth: authReducer,
     modal: modalReducer,
+    [mailMessageApi.reducerPath]: mailMessageApi.reducer,
     [quizApi.reducerPath]: quizApi.reducer,
     [questionApi.reducerPath]: questionApi.reducer,
     [sessionApi.reducerPath]: sessionApi.reducer,
@@ -25,10 +25,12 @@ const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-            serializableCheck: false
+            serializableCheck: false,
         }).concat(
-            quizApi.middleware, questionApi.middleware,
-            sessionApi.middleware
+            quizApi.middleware,
+            questionApi.middleware,
+            sessionApi.middleware,
+            mailMessageApi.middleware,
         ),
 });
 
@@ -40,4 +42,4 @@ export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
 // Экспорт хранилища и persistor
-export {store};
+export { store };

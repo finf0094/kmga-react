@@ -48,7 +48,7 @@ export default function PlayerScreenPage() {
         quizId: currentQuizId,
         questionId: currentQuestionId
     }, {
-        skip: !currentQuestionId, // Пропускаем запрос, если ID текущего вопроса не определен
+        skip: !currentQuestionId,
     });
 
     if (isLoadingSession || isLoadingQuestions || !session || isLoadingCurrentQuestion || isSubmitting) return <Loader />;
