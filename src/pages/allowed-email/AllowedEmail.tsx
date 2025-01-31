@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {
     useCreateSessionMutation,
     useDeleteSessionMutation,
@@ -6,15 +6,15 @@ import {
     useSendCustomSessionToEmailMutation,
     useSendSessionToEmailMutation,
 } from '@store/api';
-import { UIField, UITitle } from '@components/Base UI';
-import { useState } from 'react';
+import {UIField, UITitle} from '@components/Base UI';
+import {useState} from 'react';
 import toast from 'react-hot-toast';
-import { Loader, Pagination } from '@components';
+import {Loader, Pagination} from '@components';
 import './AllowedEmail.css';
-import { SessionStatus } from '@interfaces';
+import {SessionStatus} from '@interfaces';
 
 const AllowedEmailPage = () => {
-    const { quizId } = useParams() as { quizId: string };
+    const {quizId} = useParams() as { quizId: string };
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,12 +22,12 @@ const AllowedEmailPage = () => {
         null,
     );
 
-    const [createSession, { isLoading: isCreating }] = useCreateSessionMutation();
-    const [sendSession, { isLoading: isSending }] =
+    const [createSession, {isLoading: isCreating}] = useCreateSessionMutation();
+    const [sendSession, {isLoading: isSending}] =
         useSendSessionToEmailMutation();
-    const [sendCustomSession, { isLoading: isCustomSending }] =
+    const [sendCustomSession, {isLoading: isCustomSending}] =
         useSendCustomSessionToEmailMutation();
-    const [deleteSession, { isLoading: isDeleting }] = useDeleteSessionMutation();
+    const [deleteSession, {isLoading: isDeleting}] = useDeleteSessionMutation();
     const {
         data: sessions,
         isLoading: isSessionsLoading,
@@ -38,7 +38,7 @@ const AllowedEmailPage = () => {
         quizId,
     });
 
-    const { data: mailMessages } = useMailMessages({ quizId });
+    const {data: mailMessages} = useMailMessages({quizId});
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
         setEmail(e.target.value);
@@ -60,7 +60,7 @@ const AllowedEmailPage = () => {
                     return;
                 }
 
-                await createSession({ quizId, email });
+                await createSession({quizId, email});
                 toast.success('Session was created successfully.');
                 setEmail('');
                 refetch(); // Обновить список после добавления
@@ -75,7 +75,7 @@ const AllowedEmailPage = () => {
 
     const sendSessionToEmail = async (sessionId: string, language: string) => {
         try {
-            await sendSession({ sessionId, language });
+            await sendSession({sessionId, language});
             toast.success('Session was sended successfully.');
             refetch();
         } catch (error) {
@@ -84,12 +84,12 @@ const AllowedEmailPage = () => {
         }
     };
 
-    const sendCustomSessionToEmail = async ({ sessionId, mailMessageId }: {
+    const sendCustomSessionToEmail = async ({sessionId, mailMessageId}: {
         sessionId: string,
         mailMessageId: string
     }) => {
         try {
-            await sendCustomSession({ sessionId, mailMessageId });
+            await sendCustomSession({sessionId, mailMessageId});
             toast.success('Session was sended successfully.');
             refetch();
         } catch (error) {
@@ -113,11 +113,21 @@ const AllowedEmailPage = () => {
     };
 
     const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const { value } = event.target;
+        const {value} = event.target;
         if (value === 'All') {
             setSelectedStatus(null);
         } else {
             setSelectedStatus(value as SessionStatus);
+        }
+    };
+
+    const handleCopyToClipboard = async (sessionLink: string) => {
+        try {
+            await navigator.clipboard.writeText(sessionLink);
+            toast.success('Session link copied to clipboard!');
+        } catch (err) {
+            console.error('Failed to copy:', err);
+            toast.error('Failed to copy session link.');
         }
     };
 
@@ -128,14 +138,14 @@ const AllowedEmailPage = () => {
         isSending ||
         isCustomSending
     )
-        return <Loader />;
+        return <Loader/>;
 
     return (
         <div className="allowed-email page">
             <div className="back" onClick={() => navigate(-1)}>
                 Back
             </div>
-            <UITitle title="Session" subtitle="Create a session for a user" />
+            <UITitle title="Session" subtitle="Create a session for a user"/>
             <Link to={`/mail-message?quizId=${quizId}`} className="create-mail__button">
                 Create mail message
             </Link>
@@ -193,12 +203,20 @@ const AllowedEmailPage = () => {
                                     <div className="allowed-email__actions">
                                         {(session.status === 'NOT_STARTED' ||
                                             session.status === 'MAIL_SENDED') && (
-                                            <button
-                                                className="allowed-email__action send"
-                                                onClick={() => sendSessionToEmail(session.id, 'ru')}
-                                            >
-                                                Send ru
-                                            </button>
+                                            <div style={{display: 'flex', gap: '12px'}}>
+                                                <button
+                                                    className="allowed-email__action send"
+                                                    onClick={() => handleCopyToClipboard(`https://kmgasurvey.kz/session/${session.id}`)}
+                                                >
+                                                    Copy link
+                                                </button>
+                                                <button
+                                                    className="allowed-email__action send"
+                                                    onClick={() => sendSessionToEmail(session.id, 'ru')}
+                                                >
+                                                    Send ru
+                                                </button>
+                                            </div>
                                         )}
                                         {(session.status === 'NOT_STARTED' ||
                                             session.status === 'MAIL_SENDED') && (
@@ -212,7 +230,7 @@ const AllowedEmailPage = () => {
                                         {(session.status === 'NOT_STARTED' ||
                                                 session.status === 'MAIL_SENDED') &&
                                             mailMessages?.map(mailMessage => (
-                                                <div style={{ border: '1px green solid', padding: 6 }}>
+                                                <div style={{border: '1px green solid', padding: 6}}>
                                                     <p
                                                         style={{
                                                             fontSize: 12,

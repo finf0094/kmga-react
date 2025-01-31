@@ -31,16 +31,21 @@ export default function QuizCard({
   const [deleteQuestion] = useDeleteQuizByIdMutation();
 
   const handleDelete = async (quizId: string) => {
+    const isConfirmed = window.confirm('Are you sure you want to delete?')
+    if (!isConfirmed) {
+      return;
+    }
+
     try {
       await deleteQuestion(quizId).unwrap();
-      toast.success(`Question was deleted successfuly!`);
+      toast.success(`Quiz was deleted successfuly!`);
       window.location.reload();
     } catch (err: unknown) {
       const error = err as ErrorResponse;
       if (error?.status === 403) {
-        toast.error("You don't have enough rights to delete a question!");
+        toast.error("You don't have enough rights to delete a Quiz!");
       }
-      console.error("Failed to create quiz:", err);
+      console.error("Failed to create Quiz:", err);
     }
   };
 
