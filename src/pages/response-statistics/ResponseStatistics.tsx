@@ -36,10 +36,10 @@ const ResponseStatisticsPage = () => {
             <p className="response-statistics__date"><span>Average:</span> {data.averageWeight.toFixed(2)}%</p>
             <p className="response-statistics__date"><span>feedback:</span> {data.feedBack} </p>
             <p className="response-statistics__date">
-                <span>Date of start:</span> {dayjs(data.createdAt).format('DD.MM.YYYY HH:mm')}
+                <span>Date of send:</span> {dayjs(data.createdAt).format('DD.MM.YYYY HH:mm')}
             </p>
             <p className="response-statistics__date">
-                <span>Date of send:</span> {dayjs(data.sendedTime).format('DD.MM.YYYY HH:mm')}
+                <span>Date of start:</span> {dayjs(data.sendedTime).format('DD.MM.YYYY HH:mm')}
             </p>
             <p className="response-statistics__date">
                 <span>Date of response:</span> {dayjs(data.endTime).format('DD.MM.YYYY HH:mm')}
