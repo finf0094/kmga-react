@@ -1,10 +1,10 @@
-import {createApi} from "@reduxjs/toolkit/query/react";
-import {baseQueryWithReauth} from "@src/services/api/baseQuery.ts";
-import {IPagination, IQuiz, QuizStatus, SessionStatus} from "@interfaces";
-import {Session} from "@src/interfaces/session";
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { baseQueryWithReauth } from '@src/services/api/baseQuery.ts';
+import { IPagination, IQuiz, QuizStatus, SessionStatus } from '@interfaces';
+import { Session } from '@src/interfaces/session';
 
 export const quizApi = createApi({
-    reducerPath: "quizApi",
+    reducerPath: 'quizApi',
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
         getAllQuiz: builder.query<
@@ -16,10 +16,10 @@ export const quizApi = createApi({
                 status?: QuizStatus | null;
             }
         >({
-            query: ({page = 1, perPage = 10, search = "", status = null}) => ({
+            query: ({ page = 1, perPage = 10, search = '', status = null }) => ({
                 // Use status here instead of quizStatus
                 url: `/quiz?page=${page}&perPage=${perPage}&search=${search}&status=${status}`,
-                method: "GET",
+                method: 'GET',
             }),
         }),
 
@@ -33,7 +33,7 @@ export const quizApi = createApi({
                 quizId: string;
             }
         >({
-            query: ({page = 1, perPage = 10, search = "", status = null, quizId}) =>
+            query: ({ page = 1, perPage = 10, search = '', status = null, quizId }) =>
                 `/quiz/${quizId}/sessions?page=${page}&perPage=${perPage}&search=${search}&status=${status}`,
         }),
 
@@ -41,23 +41,17 @@ export const quizApi = createApi({
             IQuiz,
             {
                 title: string;
-                description: string;
-                emailTitle: string;
                 status?: string;
                 tags: string[];
-                footer?: string;
             }
         >({
-            query: ({title, description, emailTitle, tags, status, footer}) => ({
+            query: ({ title, tags, status }) => ({
                 url: `/quiz`,
-                method: "POST",
+                method: 'POST',
                 body: {
                     title: title,
-                    description: description,
-                    emailTitle: emailTitle,
                     tags: tags,
                     status: status,
-                    footer: footer,
                 },
             }),
         }),
@@ -65,21 +59,21 @@ export const quizApi = createApi({
         getQuizById: builder.query<IQuiz, string>({
             query: (id: string) => ({
                 url: `/quiz/${id}`,
-                method: "GET",
+                method: 'GET',
             }),
         }),
 
         getQuizByToken: builder.query<IQuiz, string>({
             query: (token: string) => ({
                 url: `/quiz?token=${token}`,
-                method: "GET",
+                method: 'GET',
             }),
         }),
 
         deleteQuizById: builder.mutation<void, string>({
             query: (id: string) => ({
                 url: `/quiz/${id}`,
-                method: "DELETE",
+                method: 'DELETE',
             }),
         }),
 
@@ -88,17 +82,14 @@ export const quizApi = createApi({
             {
                 id: string;
                 title: string;
-                description: string;
-                emailTitle: string;
                 status: string;
                 tags: string[];
-                footer?: string;
             }
         >({
-            query: ({id, title, tags, status, description, footer, emailTitle}) => ({
+            query: ({ id, title, tags, status }) => ({
                 url: `quiz/${id}`,
-                method: "PUT",
-                body: {title, description, tags, status, footer, emailTitle},
+                method: 'PUT',
+                body: { title, tags, status },
             }),
         }),
 
@@ -113,9 +104,9 @@ export const quizApi = createApi({
             },
             { quizId: string; searchEmail: string }
         >({
-            query: ({quizId, searchEmail}) => ({
+            query: ({ quizId, searchEmail }) => ({
                 url: `/statistics/quiz/${quizId}?email=${searchEmail}`,
-                method: "GET",
+                method: 'GET',
             }),
         }),
         getCompanyAverages: builder.query<
@@ -124,7 +115,7 @@ export const quizApi = createApi({
         >({
             query: (quizId) => ({
                 url: `/statistics/quiz/${quizId}/company-averages`,
-                method: "GET",
+                method: 'GET',
             }),
         }),
     }),

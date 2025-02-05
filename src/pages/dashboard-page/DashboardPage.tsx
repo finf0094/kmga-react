@@ -31,10 +31,7 @@ const DashboardPage: FC = () => {
   // HANDLERS
   const onSubmit = async (quizData: {
     title: string;
-    description: string;
-    emailTitle: string;
     tags: string[];
-    footer?: string;
   }) => {
     try {
       await create(quizData).unwrap();

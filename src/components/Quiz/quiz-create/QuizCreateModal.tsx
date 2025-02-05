@@ -9,10 +9,7 @@ interface CreateQuizModalProps {
     onClose: () => void;
     onSubmit: (data: {
         title: string;
-        description: string;
-        emailTitle: string;
         tags: string[];
-        footer?: string;
     }) => void;
 }
 
@@ -27,13 +24,9 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({
         register,
         setValue,
         formState: { errors, isValid },
-        watch,
     } = useForm<{
         title: string;
-        description: string;
-        emailTitle: string;
         tags: string[];
-        footer?: string;
     }>({
         defaultValues: {
             tags: [],
@@ -59,8 +52,6 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({
         setValue('tags', newTags);
     };
 
-    // Watch the tags to update the local state when they change
-    watch('tags');
 
     return (
         <Modal
@@ -92,7 +83,7 @@ const CreateQuizModal: React.FC<CreateQuizModalProps> = ({
                         placeholder: 'Enter a tag name and press ENTER to add',
                         onKeyDown: handleTagsKeyDown,
                     }}
-                    error={errors.description?.message}
+                    error={errors.tags?.message}
                 />
                 <div
                     style={{
