@@ -4,4 +4,5 @@ export interface MailMessage {
     content: string;
     footer?: string;
     quizId: string;
+    btnText: string;
 }

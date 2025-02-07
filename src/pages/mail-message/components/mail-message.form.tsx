@@ -80,6 +80,7 @@ export const MailMessageForm = ({ quizId, mailMessageId }: MailMessageFormProps)
             quizId,
             title: '',
             footer: '',
+            btnText: '',
             content: '',
         },
     });
@@ -130,6 +131,15 @@ export const MailMessageForm = ({ quizId, mailMessageId }: MailMessageFormProps)
                     content={existingMessage?.content || form.getValues('content')}
                     onChangeContent={(val) => form.setValue('content', val)}
                     extensions={extensions}
+                />
+                <UIField
+                    label="Title"
+                    id="title"
+                    inputProps={{
+                        ...form.register('btnText', { required: 'button text is required!' }),
+                        placeholder: 'Enter a button text',
+                    }}
+                    error={form.formState.errors.title?.message}
                 />
                 <RichTextEditor
                     label="Enter a footer for mail message"
