@@ -226,7 +226,7 @@ const QuestionStatisticsPage = () => {
                 },
                 {
                     label: 'Number of respondents who voted',
-                    data: [7, 8, 5, 9, 11, 11, quizStatistics?.completedSessions],
+                    data: [7, 8, 5, 9, 11, quizStatistics?.completedSessions],
                     backgroundColor: '#ffb138',
                 },
             ],
